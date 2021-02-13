@@ -1,8 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "9WClTC7lWuOWPjEXqpR28fW+c6RGk0eDNwwAzAaurk5kTIfaF4gtBIa866XtQy7lCDhmkf3ZPAMuSIciado7wA==",
+  "dgSpecHash": "PHrd0lsxfp61vmAxA3sg/I3QOneOQ9n6Zj08MqEY5yAN4mhkzIfSWx1sycOBa3taPLTzjD6PwVElbOWunQC3bw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Student\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.1\\microsoft.netcore.platforms.5.0.1.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.codedom\\5.0.0\\system.codedom.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.diagnostics.performancecounter\\5.0.1\\system.diagnostics.performancecounter.5.0.1.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.management\\5.0.0\\system.management.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.security.cryptography.protecteddata\\5.0.0\\system.security.cryptography.protecteddata.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.security.permissions\\5.0.0\\system.security.permissions.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
+    "C:\\Users\\Student\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
