@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PHrd0lsxfp61vmAxA3sg/I3QOneOQ9n6Zj08MqEY5yAN4mhkzIfSWx1sycOBa3taPLTzjD6PwVElbOWunQC3bw==",
+  "dgSpecHash": "WVNfMxlHBBuAMzezVSCRJZb93M2I7X5sTWtad5ACbl1dG4QgXqFzC7YsIIb3ScSp9IMmQP3oCunZzxdC4TNfbw==",
   "success": true,
-  "projectFilePath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+  "projectFilePath": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.1\\microsoft.netcore.platforms.5.0.1.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
@@ -18,5 +18,12 @@
     "C:\\Users\\Student\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file c:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
