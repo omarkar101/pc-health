@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9WClTC7lWuOWPjEXqpR28fW+c6RGk0eDNwwAzAaurk5kTIfaF4gtBIa866XtQy7lCDhmkf3ZPAMuSIciado7wA==",
+  "dgSpecHash": "oBh/GTQsHng8T6krbcV+agUm5Tq6nlPswypElt21A/0VrMrVzbG/oe13fE7uux+e2CZ9S0GF6a8em6qibtkj8w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
+  "projectFilePath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

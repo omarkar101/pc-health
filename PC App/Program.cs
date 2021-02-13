@@ -1,4 +1,6 @@
 ﻿using System;
+using Cpu;
+using Disk;
 
 namespace PC_App
 {
