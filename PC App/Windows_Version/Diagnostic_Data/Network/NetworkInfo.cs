@@ -4,17 +4,22 @@ namespace Network_Windows
 {
     public class NetworkInfo
     {
-        private PerformanceCounter bandwidthCounter = new PerformanceCounter(); //creates a performance counter for network interface to monitor current bandwith
+        private PerformanceCounter bandwidthCounter; //creates a performance counter for network interface to monitor current bandwith
         private float bandwidth = 0;//sets bandwith value to 0
-        private PerformanceCounter dataSentCounter = new PerformanceCounter(); //creates a performance counter for network interface to monitor data sent
-        private PerformanceCounter dataReceivedCounter = new PerformanceCounter();////creates a performance counter for network interface to monitor data received
+        private PerformanceCounter dataSentCounter; //creates a performance counter for network interface to monitor data sent
+        private PerformanceCounter dataReceivedCounter;////creates a performance counter for network interface to monitor data received
 
         public PerformanceCounter BandwidthCounter { get => bandwidthCounter; set => bandwidthCounter = value; }
         public float Bandwidth { get => bandwidth; set => bandwidth = value; }
         public PerformanceCounter DataSentCounter { get => dataSentCounter; set => dataSentCounter = value; }
         public PerformanceCounter DataReceivedCounter { get => dataReceivedCounter; set => dataReceivedCounter = value; }
 
-        public NetworkInfo(){
+        public NetworkInfo()
+        {
+            bandwidthCounter = new PerformanceCounter();
+            bandwidth = 0;
+            dataSentCounter = new PerformanceCounter();
+            dataReceivedCounter = new PerformanceCounter();
             BandwidthCounter.CategoryName = "Network Interface";
             BandwidthCounter.CounterName = "Current Bandwith";
             DataSentCounter.CategoryName = "Network Interface";
@@ -22,7 +27,7 @@ namespace Network_Windows
             DataReceivedCounter.CategoryName = "Network Interface";
             DataReceivedCounter.CounterName = "Bytes Received/sec";
         }
-      
+
         public void printNetworkUsage() //prints a percentage showing network traffic
         {
             PerformanceCounterCategory category = new PerformanceCounterCategory("Network Interface"); //creates a category object representing the network interface
