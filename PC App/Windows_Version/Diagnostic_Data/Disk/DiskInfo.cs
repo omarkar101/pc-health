@@ -4,9 +4,21 @@ using System.IO;
 
 namespace Disk_Windows{
 public class DiskInfo{
-public static PerformanceCounter diskCounter = new PerformanceCounter("PhysicalDisk", "% Disk Time", "_Total"); //creates a performanceCounter object indicating how much of the disk's read/write capability is used
- public static float j = 0; //sets j to 0
-public static void printAvailableFreeSpace() //prints the available free space in all the disks
+        private PerformanceCounter diskCounter = new PerformanceCounter(); //creates a performanceCounter object indicating how much of the disk's read/write capability is used
+        private float j = 0; //sets j to 0
+
+        public PerformanceCounter DiskCounter { get => diskCounter; set => diskCounter = value; }
+        public float J { get => j; set => j = value; }
+
+        public DiskInfo(){
+        DiskCounter.CategoryName = "PhysicalDisk";
+        DiskCounter.CounterName = "% Disk Time";
+        DiskCounter.InstanceName = "_Total";
+        J = 0;
+    }
+
+ 
+public void printAvailableFreeSpace() //prints the available free space in all the disks
 {
     foreach (DriveInfo drive in DriveInfo.GetDrives())
     {
@@ -19,11 +31,11 @@ public static void printAvailableFreeSpace() //prints the available free space i
     
 }
 
-public static void printDiskUsage(){ //prints the percentage of disk read/write capability used
-j = diskCounter.NextValue(); //always starts at 0
+public void printDiskUsage(){ //prints the percentage of disk read/write capability used
+J = DiskCounter.NextValue(); //always starts at 0
 System.Threading.Thread.Sleep(1000);
-j = diskCounter.NextValue();// now matches task manager value
-Console.WriteLine("Disk usage is : " + j +" %");
+J = DiskCounter.NextValue();// now matches task manager value
+Console.WriteLine("Disk usage is : " + J +" %");
 }
 
 }
