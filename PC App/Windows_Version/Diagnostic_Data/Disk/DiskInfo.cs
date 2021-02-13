@@ -9,12 +9,18 @@ namespace Disk_Windows
         private PerformanceCounter diskCounter;//creates a performanceCounter object indicating how much of the disk's read/write capability is used
 
         public PerformanceCounter DiskCounter { get => diskCounter; set => diskCounter = value; }
+        public float DiskCounterPercentage { get => diskCounterPercentage; set => diskCounterPercentage = value; }
+        public long FreespaceinGB { get => freespaceinGB; set => freespaceinGB = value; }
+
+        private float diskCounterPercentage;
+        private long freespaceinGB;
         public DiskInfo()
         {
             diskCounter = new PerformanceCounter();
             DiskCounter.CategoryName = "PhysicalDisk";
             DiskCounter.CounterName = "% Disk Time";
             DiskCounter.InstanceName = "_Total";
+            DiskCounterPercentage = 0;
         }
 
 
@@ -24,7 +30,8 @@ namespace Disk_Windows
             {
                 if (drive.IsReady)
                 {
-                    Console.WriteLine("available space is : " + drive.AvailableFreeSpace / 1000000000 + " GB");
+                    FreespaceinGB = drive.AvailableFreeSpace / 1000000000;
+                    Console.WriteLine("available space is : " + FreespaceinGB + " GB");
                 }
             }
 
@@ -33,11 +40,11 @@ namespace Disk_Windows
 
         public void printDiskUsage()
         { //prints the percentage of disk read/write capability used
-            int diskCounterTmp;
-            diskCounterTmp = DiskCounter.NextValue(); //always starts at 0
+
+            DiskCounterPercentage = DiskCounter.NextValue(); //always starts at 0
             System.Threading.Thread.Sleep(1000);
-            diskCounterTmp = DiskCounter.NextValue();// now matches task manager value
-            Console.WriteLine("Disk usage is : " + diskCounterTmp + " %");
+            DiskCounterPercentage = DiskCounter.NextValue();// now matches task manager value
+            Console.WriteLine("Disk usage is : " + DiskCounterPercentage + " %");
         }
 
     }

@@ -9,12 +9,13 @@ namespace Memory_Windows
 {
     public class MemoryInfo
     {
-        ManagementObjectSearcher wmiObject;
-        dynamic memoryValues;
+        private ManagementObjectSearcher wmiObject;
+        private dynamic memoryValues;
+        private dynamic RamUsagePercentage;
         public MemoryInfo()
         {
             WmiObject = new ManagementObjectSearcher("select * from Win32_OperatingSystem"); //creates a WMI object that contains multiple management objects
-
+            RamUsagePercentage = 0;
 
             MemoryValues = WmiObject.Get().Cast<ManagementObject>().Select(mo => new
             {
@@ -32,8 +33,8 @@ namespace Memory_Windows
         { //prints a percentage showing memory usage(Ram usage)
             if (MemoryValues != null)
             {
-                var percent = ((MemoryValues.TotalVisibleMemorySize - MemoryValues.FreePhysicalMemory) / MemoryValues.TotalVisibleMemorySize) * 100; //calculates the percentage of memory used in the system.
-                Console.WriteLine("Memory percentage used is :" + percent + " %");
+                RamUsagePercentage = ((MemoryValues.TotalVisibleMemorySize - MemoryValues.FreePhysicalMemory) / MemoryValues.TotalVisibleMemorySize) * 100; //calculates the percentage of memory used in the system.
+                Console.WriteLine("Memory percentage used is :" + RamUsagePercentage + " %");
             }
         }
     }
