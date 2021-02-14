@@ -6,6 +6,7 @@ namespace Cpu_Linux
     /// </summary>
     public class CpuInfo
     {
+        double cpuUtilizationPercentage;
         /// <summary>
         /// A string that stores the name of the file that stores the CPU information.
         /// </summary>
@@ -21,6 +22,17 @@ namespace Cpu_Linux
         {
             cpuInfoLoc = "/proc/cpuinfo";
             cpuInfoLines = System.IO.File.ReadAllLines(cpuInfoLoc);
+
+            //Applying some code to get the Cpu Percentage
+            string []cpuInfoTempArray = System.IO.File.ReadAllLines("/proc/stat")[0].Split(new string[] {"  ", " "}, StringSplitOptions.None);
+            double totalTimeOfCpuTmp = 0;
+            for(int i = 1; i < cpuInfoTempArray.Length; i++)
+            {
+               totalTimeOfCpuTmp += double.Parse(cpuInfoTempArray[i]); 
+            }
+            double idle_time = double.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
+            double frac_idle_time = idle_time/totalTimeOfCpuTmp;
+            cpuUtilizationPercentage = (1.0 - frac_idle_time) * 100;
         }
 
         /// <summary>
@@ -53,5 +65,6 @@ namespace Cpu_Linux
         /// </summary>
         /// <value>Sets/Gets the elements of the array.</value>
         public string[] CpuInfoLines { get => cpuInfoLines; set => cpuInfoLines = value; }
+        public double CpuUtilizationPercentage { get => cpuUtilizationPercentage; set => cpuUtilizationPercentage = value; }
     }
 }
