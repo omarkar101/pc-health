@@ -38,7 +38,7 @@ namespace Cpu_Linux
         /// <summary>
         /// This consructor will take 2 parameters, and stores information depending on these parameters.
         /// </summary>
-        /// <param name="cpuInfoLoc">his parameter decides the file that we want to extract information from.</param>
+        /// <param name="cpuInfoLoc">This parameter decides the file that we want to extract information from.</param>
         /// <param name="cpuInfoLines">This parameter will store all the information found in that file.</param>
         public CpuInfo(string cpuInfoLoc, string[] cpuInfoLines)
         {
