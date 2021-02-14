@@ -1,6 +1,6 @@
 using System;
 
-namespace Memory
+namespace Memory_Linux
 {
     public class MemoryInfo
     {
