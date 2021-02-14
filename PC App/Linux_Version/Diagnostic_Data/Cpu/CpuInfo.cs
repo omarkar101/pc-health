@@ -1,5 +1,5 @@
 using System;
-namespace Cpu
+namespace Cpu_Linux
 {
     public class CpuInfo
     {

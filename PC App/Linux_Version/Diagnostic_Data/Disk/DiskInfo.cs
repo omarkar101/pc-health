@@ -1,5 +1,5 @@
 using System.Diagnostics;
-namespace Disk
+namespace Disk_Linux
 {
     public static class DiskInfo
     {

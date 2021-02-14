@@ -10,7 +10,7 @@ namespace Disk_Windows
 
         public PerformanceCounter DiskCounter { get => diskCounter; set => diskCounter = value; }
         public float DiskCounterPercentage { get => diskCounterPercentage; set => diskCounterPercentage = value; }
-        public long FreespaceinGB { get => freespaceinGB; set => freespaceinGB = value; }
+        public long FreeSpaceInGB { get => freespaceinGB; set => freespaceinGB = value; }
 
         private float diskCounterPercentage;
         private long freespaceinGB;
@@ -20,31 +20,27 @@ namespace Disk_Windows
             DiskCounter.CategoryName = "PhysicalDisk";
             DiskCounter.CounterName = "% Disk Time";
             DiskCounter.InstanceName = "_Total";
-            DiskCounterPercentage = 0;
+            DiskCounterPercentage = updateDiskUsage();
         }
-
-
-        public void printAvailableFreeSpace() //prints the available free space in all the disks
+        
+        public long updateFreeSpaceInGB()//updates and returns FreeSpaceInGB the available free space in all the disks
         {
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
                 if (drive.IsReady)
                 {
-                    FreespaceinGB = drive.AvailableFreeSpace / 1000000000;
-                    Console.WriteLine("available space is : " + FreespaceinGB + " GB");
+                    FreeSpaceInGB = drive.AvailableFreeSpace / 1000000000;
                 }
             }
-
-
+            return FreeSpaceInGB;
         }
 
-        public void printDiskUsage()
-        { //prints the percentage of disk read/write capability used
-
+        public float updateDiskUsage()//updates and returns DiskCounterPercentage to get the latest
+        {
             DiskCounterPercentage = DiskCounter.NextValue(); //always starts at 0
             System.Threading.Thread.Sleep(1000);
             DiskCounterPercentage = DiskCounter.NextValue();// now matches task manager value
-            Console.WriteLine("Disk usage is : " + DiskCounterPercentage + " %");
+            return DiskCounterPercentage;
         }
 
     }
