@@ -14,7 +14,7 @@ namespace Cpu_Windows
         /// <summary>
         /// Stores a float that shows the percantage of the used processing power
         /// </summary>
-        float cpuPercentage;
+        double cpuPercentage;
 
         /// <summary>
         /// Default Constructor that will tell the class to store Processor information
@@ -37,14 +37,14 @@ namespace Cpu_Windows
         /// Getter and setter for the CpuPercemtage variable
         /// </summary>
         /// <value>The percentage of the used processing power</value>
-        public float CpuPercentage { get => cpuPercentage; set => cpuPercentage = value; }
+        public double CpuPercentage { get => cpuPercentage; set => cpuPercentage = value; }
         /// <summary>
         /// Method that computes the percemtage of processing used.
         /// </summary>
         /// <returns>Returns CpuPercentage</returns>
-        public float updateCpuUsage()//returns CpuPercentage
+        public double updateCpuUsage()//returns CpuPercentage
         {
-            float firstValue = CpuCounter.NextValue();
+            double firstValue = CpuCounter.NextValue();
             System.Threading.Thread.Sleep(1000);
             // now matches task manager reading
             CpuPercentage = CpuCounter.NextValue();

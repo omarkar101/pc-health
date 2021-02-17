@@ -1,5 +1,5 @@
 ﻿using System;
-using Cpu_Linux;
+using Disk_Linux;
 
 namespace PC_App
 {
@@ -7,6 +7,8 @@ namespace PC_App
     {
         static void Main(string[] args)
         {
+            var diskInfo = new DiskInfo();
+            Console.WriteLine();
         }
     }
 }

@@ -14,17 +14,34 @@ namespace Disk_Windows
         /// </summary>
         private PerformanceCounter diskCounter;
 
+        
+        
         public PerformanceCounter DiskCounter { get => diskCounter; set => diskCounter = value; }
-        public float DiskCounterPercentage { get => diskCounterPercentage; set => diskCounterPercentage = value; }
-        public long FreeSpaceInGB { get => freespaceinGB; set => freespaceinGB = value; }
+        
+        
         /// <summary>
         /// Stores the percentage of the used disk storage
         /// </summary>
-        private float diskCounterPercentage;
+        private double diskUsagePercentage;
+
+        /// <summary>
+        /// Getter for Disk Usage Percentage
+        /// </summary>
+        /// <returns>Gets updated Disk Usage Percentage</returns>
+        public double DiskUsagePercentage { get => updateDiskUsage(); }
+        
+        
+        
         /// <summary>
         /// Stores how much disk storage is free in GB
         /// </summary>
-        private long freespaceinGB;
+        private double diskFreeSpaceInGB;
+        
+        public double DiskFreeSpaceInGB { get => diskFreeSpaceInGB; set => diskFreeSpaceInGB = value; }
+        
+
+
+
         /// <summary>
         /// Default constructor that tells the class to get the disk information
         /// </summary>
@@ -34,33 +51,39 @@ namespace Disk_Windows
             DiskCounter.CategoryName = "PhysicalDisk";
             DiskCounter.CounterName = "% Disk Time";
             DiskCounter.InstanceName = "_Total";
-            DiskCounterPercentage = updateDiskUsage();
         }
+        
+        
+        
         /// <summary>
-        /// Updates FreeSpaceInGB the available space in all the disks
+        /// Updates DiskFreeSpaceInGB the available space in all the disks
         /// </summary>
         /// <returns>Returns the available space in all disks</returns>
-        public long updateFreeSpaceInGB()
+        public double updateFreeSpaceInGB()
         {
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
                 if (drive.IsReady)
                 {
-                    FreeSpaceInGB = drive.AvailableFreeSpace / 1000000000;
+                    DiskFreeSpaceInGB = drive.AvailableFreeSpace / 1000000000.0;
                 }
             }
-            return FreeSpaceInGB;
+            return DiskFreeSpaceInGB;
         }
+        
+        
+        
+        
         /// <summary>
         /// Updates DiskounterPercentage to the current used percentage. It starts from zero then the system rests for 1 sec then updates the percentage to its true value.
         /// </summary>
         /// <returns>Returns the current percentage of the used disk storage</returns>
-        public float updateDiskUsage()//updates and returns DiskCounterPercentage to get the latest
+        public double updateDiskUsage()//updates and returns DiskUsagePercentage to get the latest
         {
-            DiskCounterPercentage = DiskCounter.NextValue();
+            diskUsagePercentage = DiskCounter.NextValue();
             System.Threading.Thread.Sleep(1000);
-            DiskCounterPercentage = DiskCounter.NextValue();// now matches task manager value
-            return DiskCounterPercentage;
+            diskUsagePercentage = DiskCounter.NextValue();// now matches task manager value
+            return diskUsagePercentage;
         }
 
     }

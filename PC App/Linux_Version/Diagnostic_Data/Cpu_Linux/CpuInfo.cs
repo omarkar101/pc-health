@@ -9,7 +9,7 @@ namespace Cpu_Linux
         /// <summary>
         /// A double that stores the Cpu Utilization Percentage
         /// </summary>
-        double cpuUtilizationPercentage;
+        double cpuPercentage;
         /// <summary>
         /// A string that stores the name of the file that stores the CPU information.
         /// </summary>
@@ -35,7 +35,7 @@ namespace Cpu_Linux
             }
             double idle_time = double.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
             double frac_idle_time = idle_time/totalTimeOfCpuTmp;
-            cpuUtilizationPercentage = (1.0 - frac_idle_time) * 100;
+            cpuPercentage = (1.0 - frac_idle_time) * 100;
         }
 
         /// <summary>
@@ -72,6 +72,6 @@ namespace Cpu_Linux
         /// Getter for the Cpu Utilization Percentage.
         /// </summary>
         /// <value>Gets the Cpu Utilization Percentage</value>
-        public double CpuUtilizationPercentage { get => cpuUtilizationPercentage; }
+        public double CpuPercentage { get => cpuPercentage; }
     }
 }
