@@ -6,6 +6,9 @@ namespace Cpu_Linux
     /// </summary>
     public class CpuInfo
     {
+        /// <summary>
+        /// A double that stores the Cpu Utilization Percentage
+        /// </summary>
         double cpuUtilizationPercentage;
         /// <summary>
         /// A string that stores the name of the file that stores the CPU information.
@@ -65,6 +68,10 @@ namespace Cpu_Linux
         /// </summary>
         /// <value>Sets/Gets the elements of the array.</value>
         public string[] CpuInfoLines { get => cpuInfoLines; set => cpuInfoLines = value; }
-        public double CpuUtilizationPercentage { get => cpuUtilizationPercentage; set => cpuUtilizationPercentage = value; }
+        /// <summary>
+        /// Getter for the Cpu Utilization Percentage.
+        /// </summary>
+        /// <value>Gets the Cpu Utilization Percentage</value>
+        public double CpuUtilizationPercentage { get => cpuUtilizationPercentage; }
     }
 }
