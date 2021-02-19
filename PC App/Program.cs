@@ -7,8 +7,6 @@ namespace PC_App
     {
         static void Main(string[] args)
         {
-            var diskInfo = new DiskInfo();
-            Console.WriteLine();
         }
     }
 }
