@@ -1,22 +1,28 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "PHrd0lsxfp61vmAxA3sg/I3QOneOQ9n6Zj08MqEY5yAN4mhkzIfSWx1sycOBa3taPLTzjD6PwVElbOWunQC3bw==",
   "success": true,
   "projectFilePath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+=======
+  "dgSpecHash": "JLxCEN5nV2ubMRhgUFdZKnfBeE8tEqNXBzs/UecE1Y7KN4vZuUe5RQkUfN1HQZuWU4EHgUns6jNoR5zdamYzlw==",
+  "success": true,
+  "projectFilePath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
+>>>>>>> 4e86ff184bcc0530e3f113ab835bf2fdef8e635b
   "expectedPackageFiles": [
-    "C:\\Users\\Student\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.1\\microsoft.netcore.platforms.5.0.1.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\microsoft.win32.systemevents\\5.0.0\\microsoft.win32.systemevents.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.codedom\\5.0.0\\system.codedom.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.configuration.configurationmanager\\5.0.0\\system.configuration.configurationmanager.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.diagnostics.performancecounter\\5.0.1\\system.diagnostics.performancecounter.5.0.1.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.management\\5.0.0\\system.management.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.security.cryptography.protecteddata\\5.0.0\\system.security.cryptography.protecteddata.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.security.permissions\\5.0.0\\system.security.permissions.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
-    "C:\\Users\\Student\\.nuget\\packages\\system.windows.extensions\\5.0.0\\system.windows.extensions.5.0.0.nupkg.sha512"
+    "/home/omarkar101/.nuget/packages/microsoft.netcore.platforms/5.0.1/microsoft.netcore.platforms.5.0.1.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.codedom/5.0.0/system.codedom.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.configuration.configurationmanager/5.0.0/system.configuration.configurationmanager.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.diagnostics.performancecounter/5.0.1/system.diagnostics.performancecounter.5.0.1.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.drawing.common/5.0.0/system.drawing.common.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.management/5.0.0/system.management.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.security.accesscontrol/5.0.0/system.security.accesscontrol.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.security.cryptography.protecteddata/5.0.0/system.security.cryptography.protecteddata.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.security.permissions/5.0.0/system.security.permissions.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.security.principal.windows/5.0.0/system.security.principal.windows.5.0.0.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/system.windows.extensions/5.0.0/system.windows.extensions.5.0.0.nupkg.sha512"
   ],
   "logs": []
 }
