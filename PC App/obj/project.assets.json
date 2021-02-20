@@ -678,11 +678,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+      "projectUniqueName": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
       "projectName": "PC App",
-      "projectPath": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+      "projectPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
       "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-      "outputPath": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\",
+      "outputPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -736,13 +736,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file c:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  }
 }

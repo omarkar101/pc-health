@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj": {}
+    "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj": {}
   },
   "projects": {
-    "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj": {
+    "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+        "projectUniqueName": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
         "projectName": "PC App",
-        "projectPath": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+        "projectPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
         "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-        "outputPath": "c:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\",
+        "outputPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config"
