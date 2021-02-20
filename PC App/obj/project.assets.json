@@ -678,19 +678,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
-      "projectUniqueName": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
-      "projectName": "PC App",
-      "projectPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
-      "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-      "outputPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\",
-=======
       "projectUniqueName": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
       "projectName": "PC App",
       "projectPath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
       "packagesPath": "/home/omarkar101/.nuget/packages/",
       "outputPath": "/home/omarkar101/Projects/pc-health/PC App/obj/",
->>>>>>> 4e86ff184bcc0530e3f113ab835bf2fdef8e635b
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/omarkar101/.nuget/NuGet/NuGet.Config"

@@ -1,14 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
-  "dgSpecHash": "PHrd0lsxfp61vmAxA3sg/I3QOneOQ9n6Zj08MqEY5yAN4mhkzIfSWx1sycOBa3taPLTzjD6PwVElbOWunQC3bw==",
-  "success": true,
-  "projectFilePath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
-=======
   "dgSpecHash": "JLxCEN5nV2ubMRhgUFdZKnfBeE8tEqNXBzs/UecE1Y7KN4vZuUe5RQkUfN1HQZuWU4EHgUns6jNoR5zdamYzlw==",
   "success": true,
   "projectFilePath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
->>>>>>> 4e86ff184bcc0530e3f113ab835bf2fdef8e635b
   "expectedPackageFiles": [
     "/home/omarkar101/.nuget/packages/microsoft.netcore.platforms/5.0.1/microsoft.netcore.platforms.5.0.1.nupkg.sha512",
     "/home/omarkar101/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
