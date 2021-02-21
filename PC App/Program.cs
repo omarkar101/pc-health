@@ -21,7 +21,6 @@ namespace PC_App
             };
 
             await General_Info_Send.Start(msg, 9000);
-
         }
     }
 }
