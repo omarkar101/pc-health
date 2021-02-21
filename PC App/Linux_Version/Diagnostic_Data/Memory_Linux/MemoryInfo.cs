@@ -34,7 +34,7 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Memory_Linux
 
             var memoryUsagePercentage = (freeMemory / totalMemory) * 100;
 
-            return memoryUsagePercentage;
+            return memoryUsagePercentage; 
         }
 
 
