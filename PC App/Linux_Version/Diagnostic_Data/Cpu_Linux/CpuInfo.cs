@@ -4,9 +4,20 @@ namespace Cpu_Linux
     /// <summary>
     ///A class responsible for CPU info of PCs using Linux OS.
     /// </summary>
-    public class CpuInfo
+    public static class CpuInfo
     {
         /// <summary>
+        /// Getter for the Cpu Utilization Percentage.
+        /// </summary>
+        /// <value>Gets the Cpu Utilization Percentage</value>
+        public static float CpuPercentage { get => UpdateCpuPercentage(); }
+
+        private static float UpdateCpuPercentage()
+        {
+            string []cpuInfoTempArray = System.IO.File.ReadAllLines("/proc/stat")[0].Split(new string[] {"  ", " "}, StringSplitOptions.None);
+            float totalTimeOfCpuTmp = 0;
+            float cpuPercentage;
+            for(int i = 1; i < cpuInfoTempArray.Length; i++)
         /// A double that stores the Cpu Utilization Percentage
         /// </summary>
         private double _cpuPercentage;
@@ -31,8 +42,13 @@ namespace Cpu_Linux
             var totalTimeOfCpuTmp = 0.0;
             for(var i = 1; i < cpuInfoTempArray.Length; i++)
             {
-               totalTimeOfCpuTmp += double.Parse(cpuInfoTempArray[i]); 
+                totalTimeOfCpuTmp += float.Parse(cpuInfoTempArray[i]); 
             }
+            float idleTime = float.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
+            float fracIdleTime = idleTime/totalTimeOfCpuTmp;
+            cpuPercentage = (float)(1.0 - fracIdleTime) * 100;
+            return cpuPercentage;
+        }
             var idleTime = double.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
             var fracIdleTime = idleTime/totalTimeOfCpuTmp;
             _cpuPercentage = (1.0 - fracIdleTime) * 100;
