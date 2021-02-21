@@ -9,33 +9,33 @@ namespace Cpu_Linux
         /// <summary>
         /// A double that stores the Cpu Utilization Percentage
         /// </summary>
-        double cpuPercentage;
+        private double _cpuPercentage;
         /// <summary>
         /// A string that stores the name of the file that stores the CPU information.
         /// </summary>
-        string cpuInfoLoc;
+        private string _cpuInfoLoc;
         /// <summary>
         /// This string array will store the CPU information.
         /// </summary>
-        string[] cpuInfoLines;
+        private string[] _cpuInfoLines;
         /// <summary>
         /// This constructor will extract the information from the default CPU information file and store them in variables.
         /// </summary>
         public CpuInfo()
         {
-            cpuInfoLoc = "/proc/cpuinfo";
-            cpuInfoLines = System.IO.File.ReadAllLines(cpuInfoLoc);
+            _cpuInfoLoc = "/proc/cpuinfo";
+            _cpuInfoLines = System.IO.File.ReadAllLines(_cpuInfoLoc);
 
             //Applying some code to get the Cpu Percentage
-            string []cpuInfoTempArray = System.IO.File.ReadAllLines("/proc/stat")[0].Split(new string[] {"  ", " "}, StringSplitOptions.None);
-            double totalTimeOfCpuTmp = 0;
-            for(int i = 1; i < cpuInfoTempArray.Length; i++)
+            var cpuInfoTempArray = System.IO.File.ReadAllLines("/proc/stat")[0].Split(new string[] {"  ", " "}, StringSplitOptions.None);
+            var totalTimeOfCpuTmp = 0.0;
+            for(var i = 1; i < cpuInfoTempArray.Length; i++)
             {
                totalTimeOfCpuTmp += double.Parse(cpuInfoTempArray[i]); 
             }
-            double idle_time = double.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
-            double frac_idle_time = idle_time/totalTimeOfCpuTmp;
-            cpuPercentage = (1.0 - frac_idle_time) * 100;
+            var idleTime = double.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
+            var fracIdleTime = idleTime/totalTimeOfCpuTmp;
+            _cpuPercentage = (1.0 - fracIdleTime) * 100;
         }
 
         /// <summary>
@@ -45,33 +45,18 @@ namespace Cpu_Linux
         /// <param name="cpuInfoLines">This parameter will store all the information found in that file.</param>
         public CpuInfo(string cpuInfoLoc, string[] cpuInfoLines)
         {
-            this.cpuInfoLoc = cpuInfoLoc;
-            this.cpuInfoLines = cpuInfoLines;
+            this._cpuInfoLoc = cpuInfoLoc;
+            this._cpuInfoLines = cpuInfoLines;
         }
         /// <summary>
-        /// This method will print to the screen all the store information.
+        /// Getter for the string array CpuInfoLines.
         /// </summary>
-        public void printCpuInfo()
-        {
-            foreach (var line in cpuInfoLines)
-            {
-                Console.WriteLine(line);
-            }
-        }
-        /// <summary>
-        /// Getter and Setter for CpuInfoLoc variable.
-        /// </summary>
-        /// <value>Will set/get the value of CpuInfoLoc</value>
-        public string CpuInfoLoc { get => cpuInfoLoc; set => cpuInfoLoc = value; }
-        /// <summary>
-        /// Getter and Setter for the string array CpuInfoLines.
-        /// </summary>
-        /// <value>Sets/Gets the elements of the array.</value>
-        public string[] CpuInfoLines { get => cpuInfoLines; set => cpuInfoLines = value; }
+        /// <value>Gets the elements of the array.</value>
+        public string[] CpuInfoLines { get => _cpuInfoLines; }
         /// <summary>
         /// Getter for the Cpu Utilization Percentage.
         /// </summary>
         /// <value>Gets the Cpu Utilization Percentage</value>
-        public double CpuPercentage { get => cpuPercentage; }
+        public double CpuPercentage => _cpuPercentage;
     }
 }
