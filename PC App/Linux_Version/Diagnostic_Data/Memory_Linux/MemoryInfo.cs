@@ -1,47 +1,42 @@
 using System;
+using System.ComponentModel;
 
-namespace Memory_Linux
+namespace PC_App.Linux_Version.Diagnostic_Data.Memory_Linux
 {
     /// <summary>
     /// A class that is responsible for memmory informaiton on PCs using Linux OS
     /// </summary>
-    public class MemoryInfo
+    public static class MemoryInfo
     {
-        /// <summary>
-        /// A string that stores memmory file location
-        /// </summary>
-        private string memoryLoc;
-        /// <summary>
-        /// String array that stores memmory information
-        /// </summary>
-        private string[] memoryInfoLines;
-        /// <summary>
-        /// Default constructor that stores the default location of the memmory information file
-        /// </summary>
-        public MemoryInfo()
+        public static float MemoryUsagePercentage
         {
-            memoryLoc = "/proc/meminfo";
-            memoryInfoLines = System.IO.File.ReadAllLines(memoryLoc);
+            get => UpdateMemoryUsage();
         }
-        /// <summary>
-        /// A method to print memmory information on the screen
-        /// </summary>
-        public void printMemoryInfo()
+
+        private static float UpdateMemoryUsage()
         {
-            foreach(var line in memoryInfoLines)
+            var memoryLines = System.IO.File.ReadAllLines("/proc/meminfo");
+            var totalMemory = 0.0f;
+            var freeMemory = 0.0f;
+            foreach (var line in memoryLines)
             {
-                Console.WriteLine(line);
+                var lineArray = System.Text.RegularExpressions.Regex.Split(line, @"\s+");
+                
+                if (lineArray[0].Equals("MemTotal:"))
+                {
+                    totalMemory = float.Parse(lineArray[1]);
+                }
+                if (lineArray[0].Equals("MemFree:") || lineArray[0].Equals("MemAvailable:"))
+                {
+                    freeMemory += float.Parse(lineArray[1]);
+                }
             }
+
+            var memoryUsagePercentage = (freeMemory / totalMemory) * 100;
+
+            return memoryUsagePercentage;
         }
-        /// <summary>
-        /// Getter/Setter for the file location
-        /// </summary>
-        /// <value>gets/sets file location</value>
-        public string MemoryInfoLoc { get => memoryLoc; set => memoryLoc = value; }
-        /// <summary>
-        /// Getter/Setter to the info inside the located file
-        /// </summary>
-        /// <value></value>
-        public string[] MemoryInfoLines { get => memoryInfoLines; set => memoryInfoLines = value; }
+
+
     }
 }
