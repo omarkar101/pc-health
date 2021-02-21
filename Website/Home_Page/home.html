@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="homestylesheet.css">
+    <title>Document</title>
+</head>
+<script>
+    let datalst = [
+        {
+            username: 'user1', health: 'healthy', OS: 'windows', CPU: '50%',
+            RAM: '10%', disk: '40%', network: '0%', contact: 'user1@gmail.com \n 07700 900xxx'
+        },
+        {
+            username: '...', health: '', OS: '', CPU: '',
+            RAM: '', disk: '', network: '', contact: ''
+        },
+        {
+            username: '...', health: '', OS: '', CPU: '',
+            RAM: '', disk: '', network: '', contact: ''
+        },
+        {
+            username: '...', health: '', OS: '', CPU: '',
+            RAM: '', disk: '', network: '', contact: ''
+        },
+        {
+            username: '...', health: '', OS: '', CPU: '',
+            RAM: '', disk: '', network: '', contact: ''
+        },
+        {
+            username: '...', health: '', OS: '', CPU: '',
+            RAM: '', disk: '', network: '', contact: ''
+        },
+        {
+            username: '...', health: '', OS: '', CPU: '',
+            RAM: '', disk: '', network: '', contact: ''
+        }];
+
+    window.onload = () => {
+        addToTable(datalst);
+    };
+
+    function addToTable(datalst) {
+        const tablebody = document.getElementById('tableData');
+        let datastr = '';
+        for (let x of datalst) {
+            datastr += `<tr><td>${x.username}</td><td>${x.health}</td><td>${x.OS}</td><td>${x.CPU}</td><td>${x.RAM}</td><td>${x.disk}</td><td>${x.network}</td><td>${x.contact}</td></tr>`;
+        }
+        console.log(datastr)
+        tablebody.innerHTML = datastr;
+    }
+</script>
+
+<body>
+    <div class="filter">
+        <table>
+            <thead>
+                <tr>
+                    <th>username</th>
+                    <th>PC Health status</th>
+                    <th>OS</th>
+                    <th>CPU usage</th>
+                    <th>RAM</th>
+                    <th>disk</th>
+                    <th>network</th>
+                    <th>contact info</th>
+                </tr>
+            </thead>
+            <tbody id="tableData">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
