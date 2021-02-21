@@ -72,7 +72,7 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Disk_Linux
             process.StandardOutput.ReadLine();
             string result = process.StandardOutput.ReadLine();
             process.WaitForExit();
-            return result;
+            return result; 
         }
     }
 }
