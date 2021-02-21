@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Cpu_Linux;
 using PC_App.General_Info;
 using PC_App.Linux_Version.Diagnostic_Data.Disk_Linux;
 using PC_App.Linux_Version.Diagnostic_Data.Memory_Linux;
-using System.Net.NetworkInformation;
-using Disk_Linux;
 
 namespace PC_App
 {
