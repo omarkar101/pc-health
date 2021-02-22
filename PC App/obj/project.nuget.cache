@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+vgLB1wRUMBWFNQj/aUrv36DbPfPAuYqGx4oRqNTc4dw1sJUXoSnp0MFiyYxLckCj5iJIW/bjfIhE/2A2ItaHw==",
+  "dgSpecHash": "JLxCEN5nV2ubMRhgUFdZKnfBeE8tEqNXBzs/UecE1Y7KN4vZuUe5RQkUfN1HQZuWU4EHgUns6jNoR5zdamYzlw==",
   "success": true,
-  "projectFilePath": "/home/omarkar101/MEGAsync/self-learning/C#/Rider/pc-health/PC App/PC App.csproj",
+  "projectFilePath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
   "expectedPackageFiles": [
     "/home/omarkar101/.nuget/packages/microsoft.netcore.platforms/5.0.1/microsoft.netcore.platforms.5.0.1.nupkg.sha512",
     "/home/omarkar101/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",

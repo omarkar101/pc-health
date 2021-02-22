@@ -678,11 +678,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/omarkar101/MEGAsync/self-learning/C#/Rider/pc-health/PC App/PC App.csproj",
+      "projectUniqueName": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
       "projectName": "PC App",
-      "projectPath": "/home/omarkar101/MEGAsync/self-learning/C#/Rider/pc-health/PC App/PC App.csproj",
+      "projectPath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
       "packagesPath": "/home/omarkar101/.nuget/packages/",
-      "outputPath": "/home/omarkar101/MEGAsync/self-learning/C#/Rider/pc-health/PC App/obj/",
+      "outputPath": "/home/omarkar101/Projects/pc-health/PC App/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/omarkar101/.nuget/NuGet/NuGet.Config"

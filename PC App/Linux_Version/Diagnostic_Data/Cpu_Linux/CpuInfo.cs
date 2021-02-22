@@ -14,7 +14,7 @@ namespace Cpu_Linux
 
         private static float UpdateCpuPercentage()
         {
-            string []cpuInfoTempArray = System.IO.File.ReadAllLines("/proc/stat")[0].Split(new string[] {"  ", " "}, StringSplitOptions.None);
+            string []cpuInfoTempArray = System.Text.RegularExpressions.Regex.Split(System.IO.File.ReadAllLines("/proc/stat")[0], @"\s+");
             float totalTimeOfCpuTmp = 0;
             float cpuPercentage;
             for(int i = 1; i < cpuInfoTempArray.Length; i++)
