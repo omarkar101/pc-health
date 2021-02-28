@@ -1,4 +1,5 @@
 using System;
+
 namespace Cpu_Linux
 {
     /// <summary>
@@ -14,15 +15,15 @@ namespace Cpu_Linux
 
         private static float UpdateCpuPercentage()
         {
-            string []cpuInfoTempArray = System.Text.RegularExpressions.Regex.Split(System.IO.File.ReadAllLines("/proc/stat")[0], @"\s+");
+            string[] cpuInfoTempArray = System.Text.RegularExpressions.Regex.Split(System.IO.File.ReadAllLines("/proc/stat")[0], @"\s+");
             float totalTimeOfCpuTmp = 0;
             float cpuPercentage;
-            for(int i = 1; i < cpuInfoTempArray.Length; i++)
+            for (int i = 1; i < cpuInfoTempArray.Length; i++)
             {
-                totalTimeOfCpuTmp += float.Parse(cpuInfoTempArray[i]); 
+                totalTimeOfCpuTmp += float.Parse(cpuInfoTempArray[i]);
             }
             float idleTime = float.Parse(cpuInfoTempArray[4]); //this is the idle Cpu time
-            float fracIdleTime = idleTime/totalTimeOfCpuTmp;
+            float fracIdleTime = idleTime / totalTimeOfCpuTmp;
             cpuPercentage = (float)(1.0 - fracIdleTime) * 100;
             return cpuPercentage;
         }

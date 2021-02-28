@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace PC_App.Linux_Version.Diagnostic_Data.Disk_Linux
+namespace Disk_Linux
 {
     
     /// <summary>
