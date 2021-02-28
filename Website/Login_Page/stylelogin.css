@@ -5,38 +5,43 @@ body, html {
     padding: 0;
     display:table;
 }
+
 body{
-    font-family:Arial, Helvetica, sans-serif;;
-    background: url(../Images/image.jpeg);
-    /* background: rgb(33, 136, 105); */
+    font-family:Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(#0c1522e3, #102a52e3, #3676d6e3);
+    backdrop-filter: blur(5px);
     background-size: cover;
     display:table-cell;
     vertical-align:middle;
 }
+
 a{
     color:rgb(0, 0, 0);
 }
+
 .center{
     margin:0  auto;
     width: 50%;
     padding: 10px;
     text-align: center;
 }
+
 .box{
     background-color: rgba(0, 0, 0, 0.6);
     text-align:center;
     width: 350px;
-    /* border-radius: 15px; */
     padding: 30px;
     display:table;
     margin:auto;
 }
+
 .box h1{
     color: white;
     text-transform: uppercase;
 }
+
 .box input[type="text"], .box input[type="password"]{
-    border: 3px solid rgb(16, 228, 164);
+    border: 3px solid rgb(68, 156, 156);
     background:none;
     display:block;
     margin:20px auto;
@@ -45,17 +50,21 @@ a{
     width: 200px;
     outline: none;
     color: white;
-    /* border-radius: 25px; */
+    border-radius: 24px;
 }
 
 .box input[type="submit"]{
     font-weight: bold;
     color: rgba(255, 255, 255, 0.781);
     border: 3px solid rgba(0, 0, 0, 0);
-    /* border-radius: 25px; */
     text-align: center;
     background-color: rgba(0, 0, 0, 0.548);
     display:block;
     margin:20px auto;
     padding: 15px 35px;
+    border-radius: 24px;
+}
+
+.box input[type="submit"]:hover{
+    border-color: rgba(68, 156, 156);
 }
