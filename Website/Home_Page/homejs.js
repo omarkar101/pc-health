@@ -16,7 +16,7 @@ let url = 'https://5e919175bd47.ngrok.io/api/Base/DiagnosticData';
 var xhReq = new XMLHttpRequest();
 xhReq.open("GET", url, false);
 xhReq.send(null);
-var datalst= JSON.parse(xhReq.responseText);
+var datalst= [JSON.parse(xhReq.responseText)];
 console.log(datalst)
 
 // let datalst = [
@@ -84,9 +84,8 @@ window.onload = () => {
 function addToTable(datalst) {
     const tablebody = document.getElementById('tableData');
     let datastr = '';
-    datastr += `<tr  onclick = "showHideRow('hidden_row${num}')"><td>user${num}</td><td>null</td><td>null</td><td>NULL</td><td>${datalst.CpuUsage}%</td><td>${parseFloat(datalst.MemoryUsage).toFixed(2)}</td><td>${datalst.TotalFreeDiskSpace}GB</td><td>No</td></tr>
-    <tr style="display:none; background-color: #9dcfccda;"  id="hidden_row${num}"><td colspan="8"> PC user${num} has ${datalst.TotalFreeDiskSpace} GB free disk space and used around ${parseFloat(datalst.MemoryUsage).toFixed(2)}% of memory.</tr>`;
-    num++
+    datastr += `<tr  onclick = "showHideRow('hidden_row${num}')"><td>user${num}</td><td>null</td><td>null</td><td>NULL</td><td>${datalst[0].CpuUsage}%</td><td>${parseFloat(datalst[0].MemoryUsage).toFixed(2)}%</td><td>${datalst[0].TotalFreeDiskSpace}GB</td><td>${datalst[0].AvgNetworkBytesSent}</td><td>${datalst[0].AvgNetworkBytesReceived}</td><td>N/A</td></tr>
+    <tr style="display:none; background-color: #9dcfccda;"  id="hidden_row${num}"><td colspan="10"> PC user${num} has ${datalst[0].TotalFreeDiskSpace} GB free disk space and used around ${parseFloat(datalst[0].MemoryUsage).toFixed(2)}% of memory.</tr>`;
 tablebody.innerHTML = datastr;
 }
 
