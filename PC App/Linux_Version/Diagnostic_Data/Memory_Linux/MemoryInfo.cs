@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel;
 
-namespace PC_App.Linux_Version.Diagnostic_Data.Memory_Linux
+namespace Memory_Linux
 {
     /// <summary>
     /// A class that is responsible for memmory informaiton on PCs using Linux OS

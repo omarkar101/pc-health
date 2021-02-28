@@ -6,66 +6,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="homestylesheet.css">
-    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Home</title>
 </head>
-<script>
-    let datalst = [
-        {
-            username: 'user1', health: 'healthy', OS: 'windows', CPU: '50%',
-            RAM: '10%', disk: '40%', network: '0%', contact: 'user1@gmail.com \n 07700 900xxx'
-        },
-        {
-            username: '...', health: '', OS: '', CPU: '',
-            RAM: '', disk: '', network: '', contact: ''
-        },
-        {
-            username: '...', health: '', OS: '', CPU: '',
-            RAM: '', disk: '', network: '', contact: ''
-        },
-        {
-            username: '...', health: '', OS: '', CPU: '',
-            RAM: '', disk: '', network: '', contact: ''
-        },
-        {
-            username: '...', health: '', OS: '', CPU: '',
-            RAM: '', disk: '', network: '', contact: ''
-        },
-        {
-            username: '...', health: '', OS: '', CPU: '',
-            RAM: '', disk: '', network: '', contact: ''
-        },
-        {
-            username: '...', health: '', OS: '', CPU: '',
-            RAM: '', disk: '', network: '', contact: ''
-        }];
 
-    window.onload = () => {
-        addToTable(datalst);
-    };
+<script src="homejs.js">
 
-    function addToTable(datalst) {
-        const tablebody = document.getElementById('tableData');
-        let datastr = '';
-        for (let x of datalst) {
-            datastr += `<tr><td>${x.username}</td><td>${x.health}</td><td>${x.OS}</td><td>${x.CPU}</td><td>${x.RAM}</td><td>${x.disk}</td><td>${x.network}</td><td>${x.contact}</td></tr>`;
-        }
-        console.log(datastr)
-        tablebody.innerHTML = datastr;
-    }
 </script>
 
 <body>
-    <div class="filter">
-        <table>
+    <div class="title hline-bottom">
+        <h2> PC HEALTH</h2>
+        <button onclick="document.getElementById('settings').style.display='block'">Settings</button>
+    </div>
+
+    <div id="settings" class="settings_box">
+
+        <form class="settings_box_design">
+            <div class="imgcontainer">
+                <span onclick="document.getElementById('settings').style.display='none'" class="close"
+                    title="Close Modal">&times;
+                </span>
+            </div>
+
+            <div class="container">
+                <p> Please select the PC features that you would like to view: </p>
+                <br />
+                <form action="home.html" method="POST">
+
+                    <input type="checkbox" name="username"> Username <br />
+                    <!-- <label for="username_checkbox"> Username</label><br> -->
+                    <input type="checkbox" id="pc_checkbox" name="PC" value="PC"> PC status (on/ off)<br />
+                    <!-- <label for="pc_checkbox"> PC status (on/ off)</label><br> -->
+                    <input type="checkbox" id="pc_health_status_checkbox" name="pc health status"
+                        value="PC Health Status">
+                    <label for="pc_health_statu_checkbox"> PC Health Status</label><br>
+                    <input type="checkbox" id="os_checkbox" name="os" value="os">
+                    <label for="os_checkbox"> OS</label><br>
+                    <input type="checkbox" id="cpu_checkbox" name="cpu" value="cpu">
+                    <label for="cpu_checkbox"> CPU </label><br>
+                    <input type="checkbox" id="ram_health_status_checkbox" name="ram health status"
+                        value="ram Health Status">
+                    <label for="ram_checkbox"> RAM</label><br>
+                    <input type="checkbox" id="disk_checkbox" name="disk" value="disk">
+                    <label for="disk_checkbox">Disk</label><br>
+                    <input type="checkbox" id="contact_info_checkbox" name="contact_info" value="contact_info">
+                    <label for="contact_info_checkbox"> Contact Info</label><br>
+                    <br />
+                </form>
+                <button type="button" onclick="showColumns()" class="applybutton">Apply Changes</button>
+                <button type="button" onclick="document.getElementById('settings').style.display='none'"
+                    class="cancelbutton">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="search-bar-container">
+        <input id="search-input" name="search-input" class="search-bar-design" type="text"
+            placeholder="Search for a specific username here ... ">
+    </div>
+
+    <div class="table-box">
+        <table id="main_table">
             <thead>
                 <tr>
-                    <th>username</th>
-                    <th>PC Health status</th>
+                    <th onclick="sortByColumn('username')">username</th>
+                    <th onclick="sortByColumn('pc')">PC status</th>
+                    <th onclick="sortByColumn('health')">PC Health status</th>
                     <th>OS</th>
-                    <th>CPU usage</th>
-                    <th>RAM</th>
-                    <th>disk</th>
-                    <th>network</th>
+                    <th onclick="sortByColumn('CPU')">CPU</th>
+                    <th onclick="sortByColumn('RAM')">RAM</th>
+                    <th onclick="sortByColumn('disk')">disk</th>
                     <th>contact info</th>
                 </tr>
             </thead>
