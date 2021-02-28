@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj": {}
+    "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj": {}
   },
   "projects": {
-    "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj": {
+    "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+        "projectUniqueName": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
         "projectName": "PC App",
-        "projectPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\PC App.csproj",
+        "projectPath": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
         "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-        "outputPath": "C:\\253 Workspace\\PC-health\\pc-health\\PC App\\obj\\",
+        "outputPath": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,6 +40,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.jQuery.Unobtrusive.Ajax": {
+              "target": "Package",
+              "version": "[3.2.6, )"
+            },
             "System.Diagnostics.PerformanceCounter": {
               "target": "Package",
               "version": "[5.0.1, )"
@@ -45,6 +51,10 @@
             "System.Management": {
               "target": "Package",
               "version": "[5.0.0, )"
+            },
+            "jQuery": {
+              "target": "Package",
+              "version": "[3.5.1, )"
             }
           },
           "imports": [
