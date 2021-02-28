@@ -11,15 +11,10 @@ namespace PC_App
     {
         private static async Task Main(string[] args)
         {
-            var msg = new DiagnosticInfo
-            {
-                _cpuUsage = CpuInfo.CpuPercentage,
-                _diskUsage = DiskInfo.DiskUsagePercentage,
-                _memoryUsage = MemoryInfo.MemoryUsagePercentage,
-                _networkUsage = 212,
-                _totalFreeDiskSpace = DiskInfo.DiskFreeSpacePercentage
-            };
-            await General_Info_Send.Start(msg, 9000);
+            // var msg = new DiagnosticInfo
+            // {
+            // };
+            // await General_Info_Send.Start(msg, 9000);
         }
         
     }
