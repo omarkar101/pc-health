@@ -6,16 +6,16 @@ namespace Disk_Windows
     public static class DiskInfo
     {
        public static float DiskCounterPercentage { get => updateDiskUsage() ; }
-        public static long FreeSpaceInGB { get => updateFreeSpaceInGB() ; }
+        public static float FreeSpaceInGB { get => updateFreeSpaceInGB() ; }
         
-        private static long updateFreeSpaceInGB()//updates and returns FreeSpaceInGB the available free space in all the disks
+        private static float updateFreeSpaceInGB()//updates and returns FreeSpaceInGB the available free space in all the disks
         {
-            long freeSpaceInGB = 0;
+            float freeSpaceInGB = 0;
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
                 if (drive.IsReady)
                 {
-                    freeSpaceInGB = drive.AvailableFreeSpace / 1000000000;
+                    freeSpaceInGB = ((float)drive.AvailableFreeSpace) / 1000000000;
                 }
             }
             return freeSpaceInGB;
