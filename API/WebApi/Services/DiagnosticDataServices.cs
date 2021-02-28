@@ -20,19 +20,19 @@ namespace WebApi.Services
     {
         public string GetDiagnosticData() {
             
-            bool linux_0_Windows_1;
+            bool linux_false_Windows_true;
 
-            if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) linux_0_Windows_1 = false;
-            else linux_0_Windows_1 = true;
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) linux_false_Windows_true = false;
+            else linux_false_Windows_true = true;
             
             Diagnostic_Data diagnostic_Data = new Diagnostic_Data()
             {
-                CpuUsage = Cpu_Linux.CpuInfo.CpuPercentage,
-                AvgNetworkBytesReceived = Network_Linux.NetworkInfo.AvgNetworkBytesReceived,
-                AvgNetworkBytesSent = Network_Linux.NetworkInfo.AvgNetworkBytesSent,
-                DiskUsage = Disk_Linux.DiskInfo.DiskUsagePercentage,
-                MemoryUsage = Memory_Linux.MemoryInfo.MemoryUsagePercentage,
-                TotalFreeDiskSpace = Disk_Linux.DiskInfo.DiskSize
+                CpuUsage = (linux_false_Windows_true ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
+                AvgNetworkBytesReceived = (linux_false_Windows_true ? Network_Windows.NetworkInfo.DataReceived : Network_Linux.NetworkInfo.AvgNetworkBytesReceived),
+                AvgNetworkBytesSent = (linux_false_Windows_true ? Network_Windows.NetworkInfo.DataSent : Network_Linux.NetworkInfo.AvgNetworkBytesSent),
+                DiskUsage = (linux_false_Windows_true ? Disk_Windows.DiskInfo.DiskCounterPercentage : Disk_Linux.DiskInfo.DiskUsagePercentage),
+                MemoryUsage = (linux_false_Windows_true ? Memory_Windows.MemoryInfo.RamUsagePercentage : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
+                TotalFreeDiskSpace = (linux_false_Windows_true ? Disk_Windows.DiskInfo.FreeSpaceInGB : Disk_Linux.DiskInfo.DiskFreeSpaceGB)
             };
             string DiagnosticDataInJsonFormat = JsonSerializer.Serialize(diagnostic_Data);
             return DiagnosticDataInJsonFormat;

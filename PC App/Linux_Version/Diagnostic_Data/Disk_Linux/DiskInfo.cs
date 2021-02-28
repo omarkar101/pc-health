@@ -25,19 +25,19 @@ namespace Disk_Linux
         /// Getter for the free disk space
         /// </summary>
         /// <value>Gets Free</value>
-        public static float DiskFreeSpacePercentage { get => updateDisk().FreeSizePercentage; }
+        public static float DiskFreeSpaceGB { get => updateDisk().FreeSizeGB; }
 
         /// <summary>
         /// Updates the Disk Usage Percentage to the latest
         /// </summary>
         /// <returns>the updated disk usage percentage</returns>
-        private static (float FullSize, float UsedSizePercentage, float FreeSizePercentage) updateDisk()
+        private static (float FullSize, float UsedSizePercentage, float FreeSizeGB) updateDisk()
         {
             string[] diskInfo = System.Text.RegularExpressions.Regex.Split(GetDiskInfo(), @"\s+");
 
             var fullSize = float.Parse(diskInfo[1].Substring(0, diskInfo[1].Length-1));
             var UsedSize = float.Parse(diskInfo[2].Substring(0, diskInfo[2].Length-1));
-            return (fullSize, (UsedSize/fullSize)*100, ((fullSize - UsedSize)/fullSize)*100);
+            return (fullSize, (UsedSize/fullSize)*100, (fullSize - UsedSize));
         }
 
         /// <summary>
