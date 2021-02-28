@@ -2,30 +2,22 @@ using System;
 using System.Diagnostics;
 namespace Cpu_Windows
 {
-    public class CpuInfo
+    public static class CpuInfo
     {
-        PerformanceCounter cpuCounter;//creates a Performance Counter object that indicates how much processing power is used
-        float cpuPercentage;
+        
+        public static float CpuPercentage { get => updateCpuUsage(); }
 
-        public CpuInfo()
+        private static float updateCpuUsage()//returns CpuPercentage
         {
-            cpuCounter = new PerformanceCounter();
-            CpuCounter.CategoryName = "Processor";
-            CpuCounter.InstanceName = "_Total";
-            CpuCounter.CounterName = "% Processor Time";
-            CpuPercentage = updateCpuUsage();
-        }
-
-        public PerformanceCounter CpuCounter { get => cpuCounter; set => cpuCounter = value; }
-        public float CpuPercentage { get => cpuPercentage; set => cpuPercentage = value; }
-
-        public float updateCpuUsage()//returns CpuPercentage
-        {
-            float firstValue = CpuCounter.NextValue();
+            PerformanceCounter cpuCounter = new PerformanceCounter();//creates a Performance Counter object that indicates how much processing power is used
+            cpuCounter.CategoryName = "Processor";
+            cpuCounter.CounterName = "% Processor Time";
+            cpuCounter.InstanceName = "_Total";
+            float firstValue = cpuCounter.NextValue();
             System.Threading.Thread.Sleep(1000);
             // now matches task manager reading
-            CpuPercentage = CpuCounter.NextValue();
-            return CpuPercentage;
+            float currentValue = cpuCounter.NextValue();
+            return currentValue;
         }
     }
 }
