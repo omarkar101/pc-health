@@ -4,14 +4,14 @@ using Cpu_Linux;
 using PC_App.General_Info;
 using PC_App.Linux_Version.Diagnostic_Data.Disk_Linux;
 using PC_App.Linux_Version.Diagnostic_Data.Memory_Linux;
-
+using Cpu_Windows;
 namespace PC_App
 {
     internal static class Program
     {
         private static async Task Main(string[] args)
         {
-            var msg = new DiagnosticInfo
+            /*var msg = new DiagnosticInfo
             {
                 _cpuUsage = CpuInfo.CpuPercentage,
                 _diskUsage = DiskInfo.DiskUsagePercentage,
@@ -19,7 +19,12 @@ namespace PC_App
                 _networkUsage = 212,
                 _totalFreeDiskSpace = DiskInfo.DiskFreeSpacePercentage
             };
-            await General_Info_Send.Start(msg, 9000);
+            await General_Info_Send.Start(msg, 9000);*/
+            var x = Network_Windows.NetworkInfo.DataSent;
+            var y = Network_Windows.NetworkInfo.DataReceived;
+
+            Console.WriteLine(x);
+            Console.WriteLine(y);
         }
         
     }
