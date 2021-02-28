@@ -26,7 +26,7 @@ let datalst = [
         RAM: 100, disk: 20, contact: 'user4@gmail.com'
     },
     {
-        username: 'user1', pc: 'on', health: 'healthy', OS: 'windows', CPU: 50,
+        username: 'user5', pc: 'on', health: 'Critical', OS: 'windows', CPU: 50,
         RAM: 10, disk: 37, contact: 'user1@gmail.com'
     },
     {
@@ -55,7 +55,7 @@ function addToTable(datalst) {
     let datastr = '';
     for (let x of datalst) {
         datastr += `<tr  onclick = "showHideRow('hidden_row${num}')"><td>${x.username}</td><td>${x.pc}</td><td>${x.health}</td><td>${x.OS}</td><td>${x.CPU}%</td><td>${x.RAM}</td><td>${x.disk}</td><td>${x.contact}</td></tr>
-        <tr style="display:none; background-color: #9dcfccda;"  id="hidden_row${num}"><td colspan="8"> PC ${x.username} works on ${x.OS} operating system.</tr>`;
+        <tr style="display:none; background-color: #9dcfccda;"  id="hidden_row${num}"><td colspan="8"> PC ${x.username} works on ${x.OS} operating system. The PC is ${x.health} condition.</tr>`;
         num++
     }
     tablebody.innerHTML = datastr;
@@ -113,7 +113,7 @@ function SortByString(sort, colname) {
 function showColumns() {
     $("input:checkbox").attr("checked", false).click(function () {
         var showcolumn = "." + $(this).attr("name");
-        $(schowcolumn).toggle();
+        $(showcolumn).toggle();
     });
     document.getElementById('settings').style.display = "none";
 }
