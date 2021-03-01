@@ -2,7 +2,7 @@ let sortDirection = false;
 var num = 1
 
 
-let url = 'https://5e919175bd47.ngrok.io/api/Base/DiagnosticData';
+let url = 'https://7471abd8dd79.ngrok.io/api/Base/DiagnosticData';
 
 
 // function getData(url, cb) {

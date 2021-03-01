@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "JLxCEN5nV2ubMRhgUFdZKnfBeE8tEqNXBzs/UecE1Y7KN4vZuUe5RQkUfN1HQZuWU4EHgUns6jNoR5zdamYzlw==",
+  "dgSpecHash": "7LZ7O+oCvfQjsaSPaGNYDzS0c8cK3JeY9+R5j/YuruTqF718sX+Uh9mjbC1b36iyYrFJ6SB7qQ5vSQJRdQ6uQw==",
   "success": true,
   "projectFilePath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
   "expectedPackageFiles": [
+    "/home/omarkar101/.nuget/packages/jquery/3.5.1/jquery.3.5.1.nupkg.sha512",
+    "/home/omarkar101/.nuget/packages/microsoft.jquery.unobtrusive.ajax/3.2.6/microsoft.jquery.unobtrusive.ajax.3.2.6.nupkg.sha512",
     "/home/omarkar101/.nuget/packages/microsoft.netcore.platforms/5.0.1/microsoft.netcore.platforms.5.0.1.nupkg.sha512",
     "/home/omarkar101/.nuget/packages/microsoft.win32.registry/5.0.0/microsoft.win32.registry.5.0.0.nupkg.sha512",
     "/home/omarkar101/.nuget/packages/microsoft.win32.systemevents/5.0.0/microsoft.win32.systemevents.5.0.0.nupkg.sha512",
