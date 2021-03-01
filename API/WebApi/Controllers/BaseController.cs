@@ -11,7 +11,6 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BaseController : ControllerBase
     {
         private readonly DiagnosticDataServices _diagnosticDataService;
