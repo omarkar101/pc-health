@@ -2,7 +2,7 @@ let sortDirection = false;
 var num = 1
 
 
-let url = 'https://pchealth.azurewebsites.net/api/Base/DiagnosticData';
+let url = 'http://c4fb867277c2.ngrok.io/api/Base/DiagnosticData';
 
 
 // function getData(url, cb) {
