@@ -36,7 +36,7 @@ namespace Network_Windows
                 dataReceivedCounter.InstanceName = model;
                 float firstdatasent = dataSentCounter.NextValue(); //sets datasent to datasentCounter's value
                 float firstdatareceived = dataReceivedCounter.NextValue(); //sets data received to dataReceived's value
-                System.Threading.Thread.Sleep(100);
+                System.Threading.Thread.Sleep(500);
                 datareceived = dataReceivedCounter.NextValue();
                 datasent = dataSentCounter.NextValue();
                 bandwidth = bandwidthCounter.NextValue();
