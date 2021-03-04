@@ -19,7 +19,7 @@ namespace Services
                 CpuUsage = (linux_false_Windows_true ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
                 AvgNetworkBytesReceived = (linux_false_Windows_true ? Network_Windows.NetworkInfo.DataReceived : Network_Linux.NetworkInfo.AvgNetworkBytesReceived),
                 AvgNetworkBytesSent = (linux_false_Windows_true ? Network_Windows.NetworkInfo.DataSent : Network_Linux.NetworkInfo.AvgNetworkBytesSent),
-                DiskUsage = (linux_false_Windows_true ? Disk_Windows.DiskInfo.DiskCounterPercentage : Disk_Linux.DiskInfo.DiskUsagePercentage),
+                DiskTotalSpace = (linux_false_Windows_true ? Disk_Windows.DiskInfo.DiskCounterPercentage : Disk_Linux.DiskInfo.DiskSize),
                 MemoryUsage = (linux_false_Windows_true ? Memory_Windows.MemoryInfo.RamUsagePercentage : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
                 TotalFreeDiskSpace = (linux_false_Windows_true ? Disk_Windows.DiskInfo.FreeSpaceInGB : Disk_Linux.DiskInfo.DiskFreeSpaceGB),
                 PC_ID = new DeviceIdBuilder()

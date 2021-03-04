@@ -6,7 +6,7 @@ namespace Models{
 
         public float TotalFreeDiskSpace{get;set;}
 
-        public float DiskUsage{get;set;}
+        public float DiskTotalSpace{get;set;}
 
         public double MemoryUsage{get;set;}
 
