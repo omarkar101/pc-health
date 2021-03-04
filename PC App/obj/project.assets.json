@@ -1902,19 +1902,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Student\\.nuget\\packages\\": {}
+    "/home/omarkar101/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\253 Workspace\\pc-health\\PC App\\PC App.csproj",
+      "projectUniqueName": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
       "projectName": "PC App",
-      "projectPath": "C:\\253 Workspace\\pc-health\\PC App\\PC App.csproj",
-      "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-      "outputPath": "C:\\253 Workspace\\pc-health\\PC App\\obj\\",
+      "projectPath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
+      "packagesPath": "/home/omarkar101/.nuget/packages/",
+      "outputPath": "/home/omarkar101/Projects/pc-health/PC App/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/omarkar101/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -1974,7 +1974,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.103/RuntimeIdentifierGraph.json"
       }
     }
   }
