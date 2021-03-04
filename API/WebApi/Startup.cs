@@ -28,7 +28,7 @@ namespace WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddTransient<DiagnosticDataServices>();
+            // services.AddTransient<DiagnosticDataServices>();
             services.AddCors(options => options.AddDefaultPolicy(
                 builder => builder.AllowAnyOrigin()
             ));

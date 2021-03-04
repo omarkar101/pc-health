@@ -13,6 +13,9 @@ namespace WebApi.Models {
         public double AvgNetworkBytesSent {get; set;}
 
         public double AvgNetworkBytesReceived {get; set;}
-
+        
+        public string PC_ID { get; set; }
+        
+        public string OS { get; set; }
     }
 }
