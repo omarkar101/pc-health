@@ -15,6 +15,7 @@ namespace PC_App
                 PostServices.PostDiagnosticData("https://pchealth.azurewebsites.net/api/Base/GetDiagnosticDataFromPc");
                 Thread.Sleep(10000);
             }
+
         }
     }
 }

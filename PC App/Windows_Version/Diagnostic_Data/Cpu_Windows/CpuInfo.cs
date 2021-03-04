@@ -14,7 +14,7 @@ namespace Cpu_Windows
             cpuCounter.CounterName = "% Processor Time";
             cpuCounter.InstanceName = "_Total";
             float firstValue = cpuCounter.NextValue();
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(10);
             // now matches task manager reading
             float currentValue = cpuCounter.NextValue();
             return currentValue;

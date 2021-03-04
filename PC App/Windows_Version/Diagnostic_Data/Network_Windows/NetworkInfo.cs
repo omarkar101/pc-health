@@ -36,18 +36,19 @@ namespace Network_Windows
                 dataReceivedCounter.InstanceName = model;
                 float firstdatasent = dataSentCounter.NextValue(); //sets datasent to datasentCounter's value
                 float firstdatareceived = dataReceivedCounter.NextValue(); //sets data received to dataReceived's value
-                System.Threading.Thread.Sleep(1000);
+                System.Threading.Thread.Sleep(10);
                 datareceived = dataReceivedCounter.NextValue();
                 datasent = dataSentCounter.NextValue();
                 bandwidth = bandwidthCounter.NextValue();
                 if (bandwidth != 0 & (datareceived != 0 | datasent != 0))
                 {
                     NetworkTrafficPercentage = (8 * (datasent + datareceived)) / bandwidth * 100; // calculates the percentage of network traffic
+                    result[0] = NetworkTrafficPercentage;
+                    result[1] = datasent;
+                    result[2] = datareceived;
                 }
             }
-            result[0] = NetworkTrafficPercentage;
-            result[1] = datasent;
-            result[2] = datareceived;
+            
             return result;
         }
     }
