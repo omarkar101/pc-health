@@ -1,6 +1,6 @@
-namespace PC_App.General_Info{
+namespace Models{
 
-    public class DiagnosticInfo
+    public class Diagnostic_Data
     {
         public float CpuUsage{get;set;}
 
@@ -13,5 +13,10 @@ namespace PC_App.General_Info{
         public double AvgNetworkBytesSent {get; set;}
 
         public double AvgNetworkBytesReceived {get; set;}
+        
+        public string PC_ID { get; set; }
+        
+        public string OS { get; set; }
+
     }
 }

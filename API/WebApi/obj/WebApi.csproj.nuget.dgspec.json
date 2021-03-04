@@ -25,11 +25,7 @@
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
-            "projectReferences": {
-              "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj": {
-                "projectPath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj"
-              }
-            }
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -65,76 +61,6 @@
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
             },
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.103/RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
-        "projectName": "PC App",
-        "projectPath": "/home/omarkar101/Projects/pc-health/PC App/PC App.csproj",
-        "packagesPath": "/home/omarkar101/.nuget/packages/",
-        "outputPath": "/home/omarkar101/Projects/pc-health/PC App/obj/",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/home/omarkar101/.nuget/NuGet/NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net5.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
-          "dependencies": {
-            "Microsoft.jQuery.Unobtrusive.Ajax": {
-              "target": "Package",
-              "version": "[3.2.6, )"
-            },
-            "System.Diagnostics.PerformanceCounter": {
-              "target": "Package",
-              "version": "[5.0.1, )"
-            },
-            "System.Management": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            },
-            "jQuery": {
-              "target": "Package",
-              "version": "[3.5.1, )"
-            }
-          },
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }

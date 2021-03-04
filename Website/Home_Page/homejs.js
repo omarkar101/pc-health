@@ -2,7 +2,7 @@ let sortDirection = false;
 var num = 1
 
 
-let url = 'http://c4fb867277c2.ngrok.io/api/Base/DiagnosticData';
+let url = 'https://7471abd8dd79.ngrok.io/api/Base/DiagnosticData';
 
 
 // function getData(url, cb) {
@@ -16,7 +16,7 @@ let url = 'http://c4fb867277c2.ngrok.io/api/Base/DiagnosticData';
 var xhReq = new XMLHttpRequest();
 xhReq.open("GET", url, false);
 xhReq.send(null);
-var datalst = [JSON.parse(xhReq.responseText)];
+var datalst= [JSON.parse(xhReq.responseText)];
 console.log(datalst)
 
 // let datalst = [
@@ -86,7 +86,7 @@ function addToTable(datalst) {
     let datastr = '';
     datastr += `<tr  onclick = "showHideRow('hidden_row${num}')"><td>user${num}</td><td>null</td><td>null</td><td>NULL</td><td>${datalst[0].CpuUsage}%</td><td>${parseFloat(datalst[0].MemoryUsage).toFixed(2)}%</td><td>${datalst[0].TotalFreeDiskSpace}GB</td><td>${datalst[0].AvgNetworkBytesSent}</td><td>${datalst[0].AvgNetworkBytesReceived}</td><td>N/A</td></tr>
     <tr style="display:none; background-color: #9dcfccda;"  id="hidden_row${num}"><td colspan="10"> PC user${num} has ${datalst[0].TotalFreeDiskSpace} GB free disk space and used around ${parseFloat(datalst[0].MemoryUsage).toFixed(2)}% of memory.</tr>`;
-    tablebody.innerHTML = datastr;
+tablebody.innerHTML = datastr;
 }
 
 
@@ -148,7 +148,7 @@ function showColumns() {
     });
     document.getElementById('settings').style.display = "none";
 }
-var i = 0
+
 $(document).ready(function () {
     $('#search-input').keyup(function () {
         search_table($(this).val());
@@ -157,15 +157,9 @@ $(document).ready(function () {
         $('#tableData tr').each(function () {
             var found = 'false';
             $(this).each(function () {
-                if (i % 2 == 0)
-                    if ($(this).find("td:first").text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-                        found = 'true';
-                    }
-                else
-                    if ($(this).find("td:first").text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
-                        found = 'false';
-                    }
-                i++;
+                if ($(this).find("td:first").text().toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+                    found = 'true';
+                }
             });
             if (found == 'true') {
                 $(this).show();
