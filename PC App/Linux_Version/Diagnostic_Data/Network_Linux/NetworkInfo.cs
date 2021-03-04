@@ -24,14 +24,19 @@ namespace Network_Linux
             var interfaces = NetworkInterface.GetAllNetworkInterfaces();
             var bytesSentCounter = 0.0;
             var bytesReceivedCounter = 0.0;
+            var cnt_NonZero_interfaces = 0;
             foreach(var ni in interfaces)
             {
-                bytesReceivedCounter += ni.GetIPv4Statistics().BytesReceived;
-                bytesSentCounter += ni.GetIPv4Statistics().BytesSent;
+                var bytesReceived = ni.GetIPv4Statistics().BytesReceived;
+                var bytesSent = ni.GetIPv4Statistics().BytesSent;
+                bytesReceivedCounter += bytesReceived;
+                bytesSentCounter += bytesSent;
+
+                if (bytesReceived != 0 && bytesSent != 0) cnt_NonZero_interfaces++;
             }
             
-            var _avgNetworkBytesReceived = bytesReceivedCounter / (interfaces.Length - 1);
-            var _avgNetworkBytesSent = bytesSentCounter / (interfaces.Length - 1);
+            var _avgNetworkBytesReceived = bytesReceivedCounter / (cnt_NonZero_interfaces);
+            var _avgNetworkBytesSent = bytesSentCounter / (cnt_NonZero_interfaces);
             return (_avgNetworkBytesSent, _avgNetworkBytesReceived);
         }
         
