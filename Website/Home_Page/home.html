@@ -35,9 +35,7 @@
                 <form action="home.html" method="POST">
 
                     <input type="checkbox" name="username"> Username <br />
-                    <!-- <label for="username_checkbox"> Username</label><br> -->
                     <input type="checkbox" id="pc_checkbox" name="PC" value="PC"> PC status (on/ off)<br />
-                    <!-- <label for="pc_checkbox"> PC status (on/ off)</label><br> -->
                     <input type="checkbox" id="pc_health_status_checkbox" name="pc health status"
                         value="PC Health Status">
                     <label for="pc_health_statu_checkbox"> PC Health Status</label><br>
@@ -51,7 +49,7 @@
                     <input type="checkbox" id="disk_checkbox" name="disk" value="disk">
                     <label for="disk_checkbox">Disk</label><br>
                     <input type="checkbox" id="network_checkbox" name="networkbytes" value="networkbytes">
-                    <label for ="network_checkbox">Network</label><br>
+                    <label for="network_checkbox">Network</label><br>
                     <input type="checkbox" id="contact_info_checkbox" name="contact_info" value="contact_info">
                     <label for="contact_info_checkbox"> Contact Info</label><br>
                     <br />
@@ -72,16 +70,14 @@
         <table id="main_table">
             <thead>
                 <tr>
-                    <th onclick="sortByColumn('username')">username</th>
-                    <th onclick="sortByColumn('pc')">PC status</th>
-                    <th onclick="sortByColumn('health')">PC Health status</th>
-                    <th>OS</th>
-                    <th onclick="sortByColumn('CPU')">CPU</th>
-                    <th onclick="sortByColumn('RAM')">RAM</th>
-                    <th onclick="sortByColumn('disk')">disk</th>
-                    <th onclick="sortByColumn('networkbytes')">Avg. Network Bytes Sent</th>
-                    <th onclick="sortByColumn('')">Avg. Network Bytes recieved</th>
-                    <th>contact info</th>
+                    <th onclick="sortByColumn('PC_ID')">Username</th>
+                    <th onclick="sortByColumn('OS')">OS</th>
+                    <th onclick="sortByColumn('CpuUsage')">CPU Usage</th>
+                    <th onclick="sortByColumn('TotalFreeDiskSpace')">Free Disk Space</th>
+                    <th onclick="sortByColumn('MemoryUsage')">Memory Usage</th>
+                    <th onclick="sortByColumn('AvgNetworkBytesSent')">Average Network-Bytes Sent</th>
+                    <th onclick="sortByColumn('AvgNetworkBytesReceived')">Average Network-Bytes Received</th>
+                    <th onclick="sortByColumn('PC_ID')">Contact Info</th>
                 </tr>
             </thead>
             <tbody id="tableData">
