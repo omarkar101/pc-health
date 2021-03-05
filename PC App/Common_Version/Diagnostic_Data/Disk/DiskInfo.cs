@@ -1,11 +1,10 @@
-using System;
-using System.Diagnostics;
 using System.IO;
-namespace Disk_Windows
+
+namespace PC_App.Common_Version.Diagnostic_Data.Disk
 {
     public static class DiskInfo
     {
-       public static float DiskCounterPercentage { get => UpdateDiskInfo().TotalFreeSpaceInGB ; }
+        public static float DiskCounterPercentage { get => UpdateDiskInfo().TotalFreeSpaceInGB ; }
         public static float FreeSpaceInGB { get => UpdateDiskInfo().freeSpaceInGB ; }
         
         private static (float freeSpaceInGB, float TotalFreeSpaceInGB) UpdateDiskInfo()//updates and returns FreeSpaceInGB the available free space in all the disks
@@ -22,9 +21,5 @@ namespace Disk_Windows
             }
             return (freeSpaceInGB, TotalFreeSpaceInGB);
         }
-        
-         
-       
-
     }
 }

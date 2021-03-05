@@ -4,7 +4,9 @@ namespace Cpu_Windows
 {
     public static class CpuInfo
     {
-        
+        /// <summary>
+        /// Getter for the updated Cpu Percentage
+        /// </summary>
         public static float CpuPercentage { get => updateCpuUsage(); }
 
         private static float updateCpuUsage()//returns CpuPercentage
