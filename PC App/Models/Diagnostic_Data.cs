@@ -1,5 +1,7 @@
 namespace Models{
-
+    /// <summary>
+    /// Model Class for the Diagnostic Data
+    /// </summary>
     public class Diagnostic_Data
     {
         public float CpuUsage{get;set;}

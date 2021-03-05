@@ -2,9 +2,14 @@ using System.Runtime.InteropServices;
 using System.Text.Json;
 using DeviceId;
 using Models;
+using PC_App.Common_Version.Diagnostic_Data.Disk;
+using PC_App.Common_Version.Diagnostic_Data.Network;
 
 namespace Services
 {
+    /// <summary>
+    /// A service that gets the Diagnostic Data according to the Operating System
+    /// </summary>
     public static class DiagnosticDataServices
     {
         public static string GetDiagnosticData() {
@@ -17,11 +22,11 @@ namespace Services
             Diagnostic_Data diagnostic_Data = new Diagnostic_Data()
             {
                 CpuUsage = (linux_false_Windows_true ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
-                AvgNetworkBytesReceived = (linux_false_Windows_true ? Network_Windows.NetworkInfo.DataReceived : Network_Linux.NetworkInfo.AvgNetworkBytesReceived),
-                AvgNetworkBytesSent = (linux_false_Windows_true ? Network_Windows.NetworkInfo.DataSent : Network_Linux.NetworkInfo.AvgNetworkBytesSent),
-                DiskTotalSpace = (linux_false_Windows_true ? Disk_Windows.DiskInfo.DiskCounterPercentage : Disk_Linux.DiskInfo.DiskSize),
+                AvgNetworkBytesReceived = NetworkInfo.AvgNetworkBytesReceived,
+                AvgNetworkBytesSent = NetworkInfo.AvgNetworkBytesSent,
+                DiskTotalSpace = DiskInfo.DiskCounterPercentage,
                 MemoryUsage = (linux_false_Windows_true ? Memory_Windows.MemoryInfo.RamUsagePercentage : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
-                TotalFreeDiskSpace = (linux_false_Windows_true ? Disk_Windows.DiskInfo.FreeSpaceInGB : Disk_Linux.DiskInfo.DiskFreeSpaceGB),
+                TotalFreeDiskSpace = DiskInfo.FreeSpaceInGB,
                 PC_ID = new DeviceIdBuilder()
                     .AddMachineName()
                     .ToString(),

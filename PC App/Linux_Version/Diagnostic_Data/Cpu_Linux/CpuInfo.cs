@@ -13,6 +13,10 @@ namespace Cpu_Linux
         /// <value>Gets the Cpu Utilization Percentage</value>
         public static float CpuPercentage { get => UpdateCpuPercentage(); }
 
+        /// <summary>
+        /// Updates Cpu Usage Percentage
+        /// </summary>
+        /// <returns>New Cpu Percentage</returns>
         private static float UpdateCpuPercentage()
         {
             string[] cpuInfoTempArray = System.Text.RegularExpressions.Regex.Split(System.IO.File.ReadAllLines("/proc/stat")[0], @"\s+");

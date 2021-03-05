@@ -8,11 +8,18 @@ namespace Memory_Linux
     /// </summary>
     public static class MemoryInfo
     {
+        /// <summary>
+        /// Getter for the updated Memory Usage Percentage 
+        /// </summary>
         public static float MemoryUsagePercentage
         {
             get => UpdateMemoryUsage();
         }
-
+        
+        /// <summary>
+        /// Updates Memory Usage Percentage
+        /// </summary>
+        /// <returns>Updated Memory Percentage</returns>
         private static float UpdateMemoryUsage()
         {
             var memoryLines = System.IO.File.ReadAllLines("/proc/meminfo");
