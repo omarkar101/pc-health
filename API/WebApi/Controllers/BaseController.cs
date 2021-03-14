@@ -23,6 +23,17 @@ namespace WebApi.Controllers
             return JsonSerializer.Serialize(lstValueCollection);
         }
 
+        [HttpGet]
+        public string GetTime()
+        {
+            var time = DateTime.UtcNow;
+            if ((time - StaticStorageServices.TimeCurrent).TotalMilliseconds >= 0)
+            {
+                StaticStorageServices.TimeCurrent = time.AddSeconds(StaticStorageServices.TimeToAdd.Time);
+            }
+            return JsonSerializer.Serialize(StaticStorageServices.TimeCurrent);
+        }
+
         [HttpPost]
         public void GetDiagnosticDataFromPc(Diagnostic_Data diagnosticData)
         {
@@ -31,6 +42,14 @@ namespace WebApi.Controllers
                 StaticStorageServices.PC_Mapper[diagnosticData.PC_ID] = diagnosticData;
             }
             else StaticStorageServices.PC_Mapper.Add(diagnosticData.PC_ID, diagnosticData);
+        }
+
+        [HttpPost]
+        public void PostTimeConfiguration(ConfigurationFromWebsiteData configuration)
+        {
+            StaticStorageServices.TimeToAdd = configuration;
+            StaticStorageServices.TimeCurrent = DateTime.UtcNow.AddSeconds(StaticStorageServices.TimeToAdd.Time);
+            // Console.WriteLine(configuration.Time);
         }
     }
 }
