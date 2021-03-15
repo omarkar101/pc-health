@@ -181,6 +181,12 @@ function App() {
                     </tr>
                 )
     });
+    let updateCycle
+useEffect(() => {
+    updateCycle = setInterval(() => setdatalst(Update), 5000) // Set a timer as a side effect
+   return () => clearInterval(updateCycle) // Here is the cleanup function: we take down the timer
+},[])
+
     return (<table class = "table table-border">
             <thead>
                 <tr>
@@ -193,19 +199,17 @@ function App() {
                     <th onclick="sortByColumn('AvgNetworkBytesReceived')">Average Network-Bytes Received</th>
                     <th onclick="sortByColumn('PC_ID')">Contact Info</th>
             </tr>
-            <button onClick={()=>setdatalst(Update())}></button>
+            {/* <button onClick={()=>setdatalst(Update())}></button> */}
             </thead>
         <tbody id="tableData">
-            {
-                datalst.map((x) =>
-                    <tr key={x.PC_ID}>
-                        <td>{x.PC_ID}</td>
-                        <td>{x.OS}</td>
-                        <td>{x.CpuUsage}</td>
-                        <td>{x.TotalFreeDiskSpace}</td>
-                    </tr>
-                )
-            }
+            {datalst.map((x) =>
+                <tr key={x.PC_ID}>
+                    <td>{x.PC_ID}</td>
+                    <td>{x.OS}</td>
+                    <td>{x.CpuUsage}</td>
+                    <td>{x.TotalFreeDiskSpace}</td>
+                </tr>
+            )}
             </tbody>
     </table>)
 }
