@@ -2,7 +2,7 @@ import React, {useEffect,useState }from 'react'
 
 
 function Update() {
-    let url = 'http://069fea200952.ngrok.io/api/Base/GetDiagnosticData';
+    let url = 'https://pchealth.azurewebsites.net/api/Base/GetDiagnosticData';
 
         var xhReq = new XMLHttpRequest();
         xhReq.open("GET", url, false);
