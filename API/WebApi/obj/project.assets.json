@@ -1549,6 +1549,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
+      },
+      "Models/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Models.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Models.dll": {}
+        }
       }
     }
   },
@@ -5526,39 +5536,59 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
+    },
+    "Models/1.0.0": {
+      "type": "project",
+      "path": "../../Models/Models.csproj",
+      "msbuildProject": "../../Models/Models.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
       "Microsoft.AspNet.WebApi.Cors >= 5.2.7",
+      "Models >= 1.0.0",
       "Swashbuckle.AspNetCore >= 5.6.3"
     ]
   },
   "packageFolders": {
-    "/home/omarkar101/.nuget/packages/": {}
+    "C:\\Users\\omark\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/omarkar101/Projects/pc-health/API/WebApi/WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\omark\\Source\\Repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "/home/omarkar101/Projects/pc-health/API/WebApi/WebApi.csproj",
-      "packagesPath": "/home/omarkar101/.nuget/packages/",
-      "outputPath": "/home/omarkar101/Projects/pc-health/API/WebApi/obj/",
+      "projectPath": "C:\\Users\\omark\\Source\\Repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj",
+      "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\omark\\Source\\Repos\\omarkar101\\pc-health\\API\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "/home/omarkar101/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\omark\\Source\\Repos\\omarkar101\\pc-health\\Models\\Models.csproj": {
+              "projectPath": "C:\\Users\\omark\\Source\\Repos\\omarkar101\\pc-health\\Models\\Models.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -5598,7 +5628,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.200/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   },

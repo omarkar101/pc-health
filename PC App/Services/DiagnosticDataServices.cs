@@ -1,9 +1,13 @@
+using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using DeviceId;
 using Models;
 using PC_App.Common_Version.Diagnostic_Data.Disk;
 using PC_App.Common_Version.Diagnostic_Data.Network;
+using PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows;
+using PC_App.Windows_Version.Diagnostic_Data.Services_Windows;
 
 namespace Services
 {
@@ -16,10 +20,9 @@ namespace Services
             
             bool linux_false_Windows_true;
 
-            if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) linux_false_Windows_true = false;
-            else linux_false_Windows_true = true;
+            linux_false_Windows_true = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             
-            Diagnostic_Data diagnostic_Data = new Diagnostic_Data()
+            var diagnostic_Data = new DiagnosticData()
             {
                 CpuUsage = (linux_false_Windows_true ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
                 AvgNetworkBytesReceived = NetworkInfo.AvgNetworkBytesReceived,
@@ -30,10 +33,14 @@ namespace Services
                 PC_ID = new DeviceIdBuilder()
                     .AddMachineName()
                     .ToString(),
-                OS = (linux_false_Windows_true ? "Windows" : "Linux")
+                OS = (linux_false_Windows_true ? "Windows" : "Linux"),
+                Services = linux_false_Windows_true ?  ServicesInfo.ServicesNamesAndStatus : new List<Tuple<string, string>>()
+                ,
+                FirewallStatus = linux_false_Windows_true ? 
+                    (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
+                    "Active" : "Inactive") : ""
             };
-            string DiagnosticDataInJsonFormat = JsonSerializer.Serialize<Diagnostic_Data>(diagnostic_Data);
-            return DiagnosticDataInJsonFormat;
+            return JsonSerializer.Serialize<DiagnosticData>(diagnostic_Data);
         }
     }
 }

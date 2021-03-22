@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Mvc;
+using Models;
 using WebApi.Services;
 using WebApi.Models;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -29,7 +30,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public void PostDiagnosticDataFromPc(Diagnostic_Data diagnosticData)
+        public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
             if (StaticStorageServices.PC_Mapper.ContainsKey(diagnosticData.PC_ID))
             {
