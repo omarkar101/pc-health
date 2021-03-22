@@ -36,9 +36,8 @@ namespace Services
                 OS = (linux_false_Windows_true ? "Windows" : "Linux"),
                 Services = linux_false_Windows_true ?  ServicesInfo.ServicesNamesAndStatus : new List<Tuple<string, string>>()
                 ,
-                FirewallStatus = linux_false_Windows_true ? 
-                    (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
-                    "Active" : "Inactive") : ""
+                FirewallStatus = (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
+                    "Active" : "Inactive")
             };
             return JsonSerializer.Serialize<DiagnosticData>(diagnostic_Data);
         }
