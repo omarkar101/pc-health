@@ -24,11 +24,15 @@ namespace PC_App.Linux_Version
                     CreateNoWindow = true,
                 }
             };
+            string result = "";
             process.Start();
-            
             //ReadLine();
-            process.StandardOutput.ReadToEnd();
-            string result = process.StandardOutput.ReadLine();
+            while (!process.StandardOutput.EndOfStream)
+            {
+                result += process.StandardOutput.ReadLine();
+            }
+            //process.StandardOutput.ReadLine();
+            //string result = process.StandardOutput.ReadLine();
             process.WaitForExit();
             return result;
         }
