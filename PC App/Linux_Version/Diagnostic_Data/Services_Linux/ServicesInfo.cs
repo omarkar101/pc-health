@@ -11,8 +11,14 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Services_Linux
         {
             var info = Helper.Bash(string.Join(" ", "service  --status-all"));
             List<string> lines = new List<string>();
-            foreach (var myString in File.ReadAllLines(info))
-                lines.Add(myString);
+            using (StringReader reader = new StringReader(info))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    lines.Add(line);
+                }
+            }
             int i = 0;
             foreach (var line in lines)
             {
