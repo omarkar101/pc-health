@@ -19,11 +19,12 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Services_Linux
                     lines.Add(line);
                 }
             }
-            int i = 0;
+
             foreach (var line in lines)
             {
-                Console.WriteLine(i + ": " + line);
+                Console.WriteLine(line[2] + ' ' + line[6]);   
             }
+
             return null;
         }
     }
