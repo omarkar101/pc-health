@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MCmu4z0mrlIWCioO6A0+gbwarsf5MEW09m3LfTLuk5Y+vYyAjMVFJco5CPL4RcaItBdTr03NgaK73SAnSFAppQ==",
+  "dgSpecHash": "kz4P/aM2Ak3U1xuGC+SPnKZ0ehDTUoU3KxhfpSDeY+b0M9aFFtvCiSsS8g6W2VclwKwXZNqwqWixy9OWulDYkA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\omark\\Source\\Repos\\omarkar101\\pc-health\\PC App\\PC App.csproj",
+  "projectFilePath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\PC App\\PC App.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\omark\\.nuget\\packages\\deviceid\\5.2.0\\deviceid.5.2.0.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\jquery\\3.5.1\\jquery.3.5.1.nupkg.sha512",
