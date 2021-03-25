@@ -14,7 +14,6 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux
         {
             var info = Helper.Bash(string.Join(" ", "sudo ufw status"));
             var infoList = info.Split(' ');
-            Console.WriteLine(12);
             return (infoList[1].Equals("inactive"));
         }
     }
