@@ -7,7 +7,8 @@ namespace PC_App
     {
         private static async Task Main(string[] args)
         {
-            GetPostServices.PostDiagnosticGetTime();
+            //GetPostServices.PostDiagnosticGetTime();
+            Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.GetServicesInfo();
         }
     }
 }
