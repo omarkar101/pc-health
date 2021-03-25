@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Services;
 
 namespace PC_App
@@ -7,8 +8,7 @@ namespace PC_App
     {
         private static async Task Main(string[] args)
         {
-            //GetPostServices.PostDiagnosticGetTime();
-            Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.GetServicesInfo();
+            GetPostServices.PostDiagnosticGetTime();
         }
     }
 }

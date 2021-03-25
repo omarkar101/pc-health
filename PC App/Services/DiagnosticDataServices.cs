@@ -6,8 +6,6 @@ using DeviceId;
 using Models;
 using PC_App.Common_Version.Diagnostic_Data.Disk;
 using PC_App.Common_Version.Diagnostic_Data.Network;
-using PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows;
-using PC_App.Windows_Version.Diagnostic_Data.Services_Windows;
 
 namespace Services
 {
@@ -34,8 +32,7 @@ namespace Services
                     .AddMachineName()
                     .ToString(),
                 OS = (linux_false_Windows_true ? "Windows" : "Linux"),
-                Services = linux_false_Windows_true ?  ServicesInfo.ServicesNamesAndStatus : new List<Tuple<string, string>>()
-                ,
+                Services = linux_false_Windows_true ? PC_App.Windows_Version.Diagnostic_Data.Services_Windows.ServicesInfo.ServicesNamesAndStatus : PC_App.Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.ServicesNamesAndStatus,
                 FirewallStatus = linux_false_Windows_true ? 
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : ""
