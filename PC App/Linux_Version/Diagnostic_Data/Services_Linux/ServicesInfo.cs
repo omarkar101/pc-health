@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace PC_App.Linux_Version.Diagnostic_Data.Services_Linux
 {
@@ -12,7 +10,14 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Services_Linux
         public static List<Tuple<string, string>> GetServicesInfo()
         {
             var info = Helper.Bash(string.Join(" ", "service  --status-all"));
-            Console.WriteLine(info);
+            List<string> lines = new List<string>();
+            foreach (var myString in File.ReadAllLines(info))
+                lines.Add(myString);
+            int i = 0;
+            foreach (var line in lines)
+            {
+                Console.WriteLine(i + ": " + line);
+            }
             return null;
         }
     }
