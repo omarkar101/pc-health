@@ -10,22 +10,20 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Services_Linux
         public static List<Tuple<string, string>> GetServicesInfo()
         {
             var info = Helper.Bash(string.Join(" ", "service  --status-all"));
-            List<string> lines = new List<string>();
+            var servicesAndStatus = new List<Tuple<string, string>>();
             using (StringReader reader = new StringReader(info))
             {
                 string line;
+                string serviceName;
+                string serviceStatus;
                 while ((line = reader.ReadLine()) != null)
                 {
-                    lines.Add(line);
+                    serviceStatus = (line[3] == '+' ? "Running" : "Stopped");
+                    serviceName = line.Substring(6);
+                    servicesAndStatus.Add(new Tuple<string, string>(serviceName, serviceStatus));
                 }
             }
-
-            foreach (var line in lines)
-            {
-                Console.WriteLine(line[3] + " " + line[8]);   
-            }
-
-            return null;
+            return servicesAndStatus;
         }
     }
 }
