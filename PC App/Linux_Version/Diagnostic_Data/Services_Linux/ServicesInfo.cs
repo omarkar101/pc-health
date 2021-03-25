@@ -22,7 +22,7 @@ namespace PC_App.Linux_Version.Diagnostic_Data.Services_Linux
 
             foreach (var line in lines)
             {
-                Console.WriteLine(line[2] + ' ' + line[6]);   
+                Console.WriteLine(line[2] + " " + line[6]);   
             }
 
             return null;
