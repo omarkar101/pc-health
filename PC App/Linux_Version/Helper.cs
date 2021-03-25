@@ -28,7 +28,7 @@ namespace PC_App.Linux_Version
             
             //ReadLine();
             process.StandardOutput.ReadToEnd();
-            string result = process.StandardOutput.ReadToEnd();
+            string result = process.StandardOutput.ReadLine();
             process.WaitForExit();
             return result;
         }
