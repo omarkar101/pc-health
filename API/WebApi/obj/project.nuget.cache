@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L6rEqb392V2vnoHrfMvjBXxJNvWErrHSt5EQA+qBoKc/CiQU/c5fCHJwprQ+IvPD857bK64/HMlkIvbf4Gwtxw==",
+  "dgSpecHash": "5D7c/09etb2doBSqT3n0mo4x0fxeY57sku957GEFHaUvhNU36JBp3nXIYO+s4KkKvFHKT4IDfn6hPFkJmRGA+w==",
   "success": true,
   "projectFilePath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
@@ -38,9 +38,11 @@
     "C:\\Users\\omark\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\mysql.data\\8.0.23\\mysql.data.8.0.23.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\mysql.entityframeworkcore\\5.0.0\\mysql.entityframeworkcore.5.0.0.nupkg.sha512",
+    "C:\\Users\\omark\\.nuget\\packages\\mysqlconnector\\1.1.0\\mysqlconnector.1.1.0.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\newtonsoft.json\\10.0.1\\newtonsoft.json.10.0.1.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\newtonsoft.json.bson\\1.0.1\\newtonsoft.json.bson.1.0.1.nupkg.sha512",
+    "C:\\Users\\omark\\.nuget\\packages\\pomelo.entityframeworkcore.mysql\\5.0.0-alpha.2\\pomelo.entityframeworkcore.mysql.5.0.0-alpha.2.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\omark\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

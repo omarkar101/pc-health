@@ -8,9 +8,9 @@ namespace WebApi.Models
 {
     public partial class PcHealthContext : DbContext
     {
-        public PcHealthContext()
-        {
-        }
+        //public PcHealthContext()
+        //{
+        //}
 
         public PcHealthContext(DbContextOptions<PcHealthContext> options)
             : base(options)
@@ -27,7 +27,7 @@ namespace WebApi.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL("server=localhost;port=5555;database=PcHealth;username=root;password=omar123");
+                optionsBuilder.UseMySQL("Server=localhost;port=5555;Database=PcHealth;username=root;password=omar123");
             }
         }
 
@@ -69,6 +69,10 @@ namespace WebApi.Models
                 entity.Property(e => e.CredentialsUsername).HasMaxLength(45);
 
                 entity.Property(e => e.CredentialsPassword)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(e => e.CredentialsSalt)
                     .IsRequired()
                     .HasMaxLength(45);
             });

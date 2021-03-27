@@ -9,6 +9,7 @@ namespace WebApi.Models
     {
         public string CredentialsUsername { get; set; }
         public string CredentialsPassword { get; set; }
+        public string CredentialsSalt { get; set; }
 
         public virtual Admin Admin { get; set; }
     }
