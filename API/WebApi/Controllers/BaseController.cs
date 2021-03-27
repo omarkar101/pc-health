@@ -22,26 +22,6 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public string InjectDiagnosticData()
-        {
-            var credential = new Credential()
-            {
-                CredentialsUsername = "omk13",
-                CredentialsPassword = "123456"
-            };
-            var admin = new Admin()
-            {
-                AdminCredentialsUsername = "omk13",
-                AdminFirstName = "Omar",
-                AdminLastName = "Karazoun"
-            };
-            db.Credentials.Add(credential);
-            db.Admins.Add(admin);
-            db.SaveChanges();
-            return "ok";
-        }
-
-        [HttpGet]
         public string GetDiagnosticData()
         {
             var PCsList = StaticStorageServices.PC_Mapper.Values;
