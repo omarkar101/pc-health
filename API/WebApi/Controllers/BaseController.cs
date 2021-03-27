@@ -11,6 +11,7 @@ namespace WebApi.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
+
         [HttpGet]
         public string GetDiagnosticData()
         {
