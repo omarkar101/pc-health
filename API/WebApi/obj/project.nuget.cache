@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "dgSpecHash": "163Bf0IaM+H4s1InwUX7dTzz2McjzPg3jEK1IPi+aD/t8Nim/to3vqmzsUm/ji/58w5vbSd1B9JAcqhcIpHs6w==",
-  "success": true,
-  "projectFilePath": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnet.cors\\5.2.7\\microsoft.aspnet.cors.5.2.7.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",

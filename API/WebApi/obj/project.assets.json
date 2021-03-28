@@ -5868,11 +5868,6 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj",
-      "projectName": "WebApi",
-      "projectPath": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj",
-      "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5889,8 +5884,6 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\Models.csproj": {
-              "projectPath": "c:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\Models.csproj"
             }
           }
         }

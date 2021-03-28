@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "dgSpecHash": "gGjcgi5/DRkIYLpwYmx07QQA+fJSSJFwX+c9mlcmPBbEim2XJwib5AwfIMBVetS2LiBWHwXO6M66LGP0FEajrw==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Student\\.nuget\\packages\\deviceid\\5.2.0\\deviceid.5.2.0.nupkg.sha512",
     "C:\\Users\\Student\\.nuget\\packages\\jquery\\3.5.1\\jquery.3.5.1.nupkg.sha512",
