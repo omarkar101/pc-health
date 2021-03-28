@@ -46,13 +46,13 @@ function Table() {
       </thead>
       <tbody>
         {datalst.map((x) => (
-          <tr key={x.PC_ID}>
+          <tr key={x.PcId}>
             <td>
-              <Link to={"/" + x.PC_ID} target="_blank">
-                {x.PC_ID}
+              <Link to={"/" + x.PcId} target="_blank">
+                {x.PcId}
               </Link>
             </td>
-            <td>{x.OS}</td>
+            <td>{x.Os}</td>
             <td>{x.CpuUsage.toFixed(2)}</td>
             <td>{x.DiskTotalSpace.toFixed(2)}</td>
             <td>{x.TotalFreeDiskSpace.toFixed(2)}</td>
@@ -61,7 +61,7 @@ function Table() {
             <td>{x.AvgNetworkBytesSent}</td>
             <td>{x.FirewallStatus}</td>
             <td>
-              <Link to={"/" + x.PC_ID} target="_blank">
+              <Link to={"/" + x.PcId} target="_blank">
                 Details
               </Link>
             </td>
