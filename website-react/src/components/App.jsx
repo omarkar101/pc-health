@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 import Table from "./Table";
 import Services from './Services'
 
@@ -10,7 +10,6 @@ function App() {
       <Route path="/" exact component={Table} />
       <Route path = '/:id' component={Services}/>
   </Router>)
-  // return (<h1>Hello</h1>)
 }
 
 export default App;
