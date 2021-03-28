@@ -47,13 +47,14 @@ function Services({match}) {
         </tr>
       </thead>
       <tbody>
-      {D[0].Services.map(s => (
+        {D.map(d => (
+          d.Services.map(service => (
             <tr>
-              <td>{s.Item1}</td>
-              <td>{s.Item2}</td>
+              <td>{service.Item1}</td>
+              <td>{service.Item2}</td>
             </tr>
-        ))
-        }
+          ))
+        ))}
       </tbody>
     </table>
   );
