@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using WebApi.InfoFromWebsite;
@@ -9,6 +10,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebApi.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class BaseController : ControllerBase
@@ -85,10 +87,7 @@ namespace WebApi.Controllers
                 _db.SaveChanges();
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         [HttpPost]
