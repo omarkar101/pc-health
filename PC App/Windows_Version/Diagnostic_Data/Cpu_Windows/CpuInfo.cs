@@ -7,9 +7,9 @@ namespace Cpu_Windows
         /// <summary>
         /// Getter for the updated Cpu Percentage
         /// </summary>
-        public static float CpuPercentage { get => updateCpuUsage(); }
+        public static float CpuPercentage { get => UpdateCpuUsage(); }
 
-        private static float updateCpuUsage()//returns CpuPercentage
+        private static float UpdateCpuUsage()//returns CpuPercentage
         {
             PerformanceCounter cpuCounter = new PerformanceCounter();//creates a Performance Counter object that indicates how much processing power is used
             cpuCounter.CategoryName = "Processor";
