@@ -8,7 +8,7 @@ function Table() {
   const FetchData = async () => {
     //Function to fetch the data from the Server
     axios
-      .get("http://pchealth.azurewebsites.net/api/Base/GetDiagnosticData")
+      .get("https://pchealth.azurewebsites.net/api/Base/GetDiagnosticData")
       .then((res) => {
         console.log(res);
         setData(res.data);
