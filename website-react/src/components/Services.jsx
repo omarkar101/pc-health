@@ -5,22 +5,25 @@ import axios from "axios";
 
 function Services({match}) {
   const [x, setData] = useState({});
-    useEffect(() => {
-        axios
-            .get(`http://pchealth.azurewebsites.net/api/Base/GetDiagnosticData/${match.params.id}`)
+  const FetchData = () => {
+    axios
+      .get(
+        `http://pchealth.azurewebsites.net/api/Base/GetDiagnosticData/${match.params.id}`
+      )
       .then((res) => {
-        console.log(res);
         setData(res.data);
       })
-          .catch((err) => console.log(err));
-      console.log(match.params.id)
-  },[]);
+      .catch((err) => console.log(err));
+  }
+    useEffect(() => {
+      FetchData()
+  },);
   return (
     <table className="table">
       <thead className="thead-dark">
-        <tr>
-          <th scope="col">Username</th>
-          <th scope = 'col'>Operating System</th>
+        <tr className = 'header'>
+          <th scope="col">Service Name</th>
+          <th scope = 'col'>Service Status</th>
         </tr>
       </thead>
       <tbody>

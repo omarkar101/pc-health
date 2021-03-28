@@ -2032,11 +2032,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\PC App\\PC App.csproj",
+      "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
       "projectName": "PC App",
-      "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\PC App\\PC App.csproj",
-      "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\PC App\\obj\\",
+      "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
+      "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2053,6 +2053,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
+            "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\Models.csproj": {
+              "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\Models.csproj"
             }
           }
         }
@@ -2110,5 +2112,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\obj\\project.nuget.cache : Value cannot be null. (Parameter 'value')"
+    }
+  ]
 }
