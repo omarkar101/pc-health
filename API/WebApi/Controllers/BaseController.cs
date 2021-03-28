@@ -13,18 +13,18 @@ namespace WebApi.Controllers
     [ApiController]
     public class BaseController : ControllerBase
     {
-        private PcHealthContext db;
+        private readonly PcHealthContext _db;
 
         public BaseController(PcHealthContext db)
         {
-            this.db = db;
+            this._db = db;
         }
 
         [HttpGet]
         public string GetDiagnosticData()
         {
-            var PCsList = StaticStorageServices.PC_Mapper.Values;
-            return JsonSerializer.Serialize(PCsList);
+            var pCsList = StaticStorageServices.PcMapper.Values;
+            return JsonSerializer.Serialize(pCsList);
         }
 
         [HttpGet]
@@ -41,11 +41,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
-            if (StaticStorageServices.PC_Mapper.ContainsKey(diagnosticData.PC_ID))
+            if (StaticStorageServices.PcMapper.ContainsKey(diagnosticData.PcId))
             {
-                StaticStorageServices.PC_Mapper[diagnosticData.PC_ID] = diagnosticData;
+                StaticStorageServices.PcMapper[diagnosticData.PcId] = diagnosticData;
             }
-            else StaticStorageServices.PC_Mapper.Add(diagnosticData.PC_ID, diagnosticData);
+            else StaticStorageServices.PcMapper.Add(diagnosticData.PcId, diagnosticData);
         }
 
         [HttpPost]
@@ -62,11 +62,11 @@ namespace WebApi.Controllers
             {
                 throw new ArgumentNullException(nameof(newAccountInfo));
             }
-            var CredentialList = db.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
-            if (CredentialList.Count == 0)
+            var credentialList = _db.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
+            if (credentialList.Count == 0)
             {
                 var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-                var NewCredential = new Credential()
+                var newCredential = new Credential()
                 {
                     CredentialsUsername = newAccountInfo.CredentialsUsername,
                     CredentialsPassword = hashPassword.passwordHash,
@@ -79,10 +79,10 @@ namespace WebApi.Controllers
                     AdminCredentialsUsername = newAccountInfo.CredentialsUsername
                 };
 
-                db.Credentials.Add(NewCredential);
-                db.Admins.Add(newAdmin);
+                _db.Credentials.Add(newCredential);
+                _db.Admins.Add(newAdmin);
 
-                db.SaveChanges();
+                _db.SaveChanges();
                 return true;
             }
             else
@@ -100,20 +100,20 @@ namespace WebApi.Controllers
             }
 
             var credentialQueryingList =
-                db.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername);
+                _db.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername);
             if (credentialQueryingList.ToList().Count == 0)
             {
                 return false;
             }
 
-            var credentials = db.Credentials;
+            var credentials = _db.Credentials;
             var passwordSalt = credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
                 .Select(c => c.CredentialsSalt).First().ToString();
             var passwordInDatabase = credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
                 .Select(c => c.CredentialsPassword).First().ToString();
 
-            var DecryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
-            if (DecryptPassword.Equals(passwordInDatabase))
+            var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
+            if (decryptPassword.Equals(passwordInDatabase))
             {
                 return true;
             }

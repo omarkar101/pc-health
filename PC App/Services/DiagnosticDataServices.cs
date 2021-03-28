@@ -16,29 +16,29 @@ namespace Services
     {
         public static string GetDiagnosticData() {
             
-            bool linux_false_Windows_true;
+            bool linuxFalseWindowsTrue;
 
-            linux_false_Windows_true = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             
-            var diagnostic_Data = new DiagnosticData()
+            var diagnosticData = new DiagnosticData()
             {
-                CpuUsage = (linux_false_Windows_true ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
+                CpuUsage = (linuxFalseWindowsTrue ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
                 AvgNetworkBytesReceived = NetworkInfo.AvgNetworkBytesReceived,
                 AvgNetworkBytesSent = NetworkInfo.AvgNetworkBytesSent,
                 DiskTotalSpace = DiskInfo.DiskCounterPercentage,
-                MemoryUsage = (linux_false_Windows_true ? Memory_Windows.MemoryInfo.RamUsagePercentage : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
-                TotalFreeDiskSpace = DiskInfo.FreeSpaceInGB,
-                PC_ID = new DeviceIdBuilder()
+                MemoryUsage = (linuxFalseWindowsTrue ? Memory_Windows.MemoryInfo.RamUsagePercentage : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
+                TotalFreeDiskSpace = DiskInfo.FreeSpaceInGb,
+                PcId = new DeviceIdBuilder()
                     .AddMachineName()
                     .ToString(),
-                OS = (linux_false_Windows_true ? "Windows" : "Linux"),
-                Services = linux_false_Windows_true ? PC_App.Windows_Version.Diagnostic_Data.Services_Windows.ServicesInfo.ServicesNamesAndStatus : PC_App.Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.ServicesNamesAndStatus,
-                FirewallStatus = linux_false_Windows_true ? 
+                Os = (linuxFalseWindowsTrue ? "Windows" : "Linux"),
+                Services = linuxFalseWindowsTrue ? PC_App.Windows_Version.Diagnostic_Data.Services_Windows.ServicesInfo.ServicesNamesAndStatus : PC_App.Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.ServicesNamesAndStatus,
+                FirewallStatus = linuxFalseWindowsTrue ? 
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : 
                     PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive"
             };
-            return JsonSerializer.Serialize<DiagnosticData>(diagnostic_Data);
+            return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
         }
     }
 }

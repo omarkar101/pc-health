@@ -26,8 +26,7 @@ namespace WebApi.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySQL("Server=localhost;port=5555;Database=PcHealth;username=root;password=omar123");
+                optionsBuilder.UseMySQL("Server=sql11.freemysqlhosting.net;port=3306;Database=sql11401547;username=sql11401547;password=k689veMGf3");
             }
         }
 
@@ -38,7 +37,7 @@ namespace WebApi.Models
                 entity.HasKey(e => e.AdminCredentialsUsername)
                     .HasName("PRIMARY");
 
-                entity.ToTable("admin");
+                entity.ToTable("Admin");
 
                 entity.Property(e => e.AdminCredentialsUsername).HasMaxLength(45);
 
@@ -61,8 +60,6 @@ namespace WebApi.Models
                 entity.HasKey(e => e.CredentialsUsername)
                     .HasName("PRIMARY");
 
-                entity.ToTable("credentials");
-
                 entity.HasIndex(e => e.CredentialsUsername, "CredentialsUsername_UNIQUE")
                     .IsUnique();
 
@@ -79,16 +76,20 @@ namespace WebApi.Models
 
             modelBuilder.Entity<Pc>(entity =>
             {
-                entity.ToTable("pc");
+                entity.ToTable("Pc");
 
                 entity.HasIndex(e => e.AdminCredentialsUsername, "AdminCredentialsUsername_idx");
 
                 entity.HasIndex(e => e.PcId, "idPc_UNIQUE")
                     .IsUnique();
 
+                entity.Property(e => e.PcId).HasColumnType("int(11)");
+
                 entity.Property(e => e.AdminCredentialsUsername)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.Property(e => e.PcFirewallStatus).HasColumnType("tinyint(4)");
 
                 entity.Property(e => e.PcOs)
                     .IsRequired()
@@ -111,11 +112,15 @@ namespace WebApi.Models
                 entity.HasKey(e => new { e.ServiceName, e.PcId })
                     .HasName("PRIMARY");
 
-                entity.ToTable("service");
+                entity.ToTable("Service");
 
                 entity.HasIndex(e => e.PcId, "PcId_idx");
 
                 entity.Property(e => e.ServiceName).HasMaxLength(45);
+
+                entity.Property(e => e.PcId).HasColumnType("int(11)");
+
+                entity.Property(e => e.ServiceStatus).HasColumnType("tinyint(4)");
 
                 entity.HasOne(d => d.Pc)
                     .WithMany(p => p.Services)

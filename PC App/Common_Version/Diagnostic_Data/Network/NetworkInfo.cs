@@ -27,7 +27,7 @@ namespace PC_App.Common_Version.Diagnostic_Data.Network
             var interfaces = NetworkInterface.GetAllNetworkInterfaces();
             var bytesSentCounter = 0.0;
             var bytesReceivedCounter = 0.0;
-            var cnt_NonZero_interfaces = 0.0;
+            var cntNonZeroInterfaces = 0.0;
             foreach(var ni in interfaces)
             {
                 var bytesReceived = ni.GetIPv4Statistics().BytesReceived;
@@ -35,12 +35,12 @@ namespace PC_App.Common_Version.Diagnostic_Data.Network
                 bytesReceivedCounter += bytesReceived;
                 bytesSentCounter += bytesSent;
 
-                if (bytesReceived != 0 && bytesSent != 0) cnt_NonZero_interfaces++;
+                if (bytesReceived != 0 && bytesSent != 0) cntNonZeroInterfaces++;
             }
             
-            var _avgNetworkBytesReceived = bytesReceivedCounter / (cnt_NonZero_interfaces);
-            var _avgNetworkBytesSent = bytesSentCounter / (cnt_NonZero_interfaces);
-            return (_avgNetworkBytesSent, _avgNetworkBytesReceived);
+            var avgNetworkBytesReceived = bytesReceivedCounter / (cntNonZeroInterfaces);
+            var avgNetworkBytesSent = bytesSentCounter / (cntNonZeroInterfaces);
+            return (avgNetworkBytesSent, avgNetworkBytesReceived);
         }
         
             

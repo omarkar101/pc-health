@@ -17,9 +17,9 @@ namespace Models
 
         public double AvgNetworkBytesReceived { get; set; }
 
-        public string PC_ID { get; set; }
+        public string PcId { get; set; }
 
-        public string OS { get; set; }
+        public string Os { get; set; }
 
         public List<Tuple<string, string>> Services { get; set; }
 

@@ -11,25 +11,25 @@ namespace PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows
         public static Boolean FirewallStatus => GetFirewallInfo();
         public static Boolean GetFirewallInfo()
         {
-            const int NET_FW_PROFILE2_DOMAIN = 1;
-            const int NET_FW_PROFILE2_PRIVATE = 2;
-            const int NET_FW_PROFILE2_PUBLIC = 4;
+            const int netFwProfile2Domain = 1;
+            const int netFwProfile2Private = 2;
+            const int netFwProfile2Public = 4;
 
             // Create the firewall type.
-            var FWManagerType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
+            var fwManagerType = Type.GetTypeFromProgID("HNetCfg.FwPolicy2");
 
             // Use the firewall type to create a firewall manager object.
-            dynamic FWManager = Activator.CreateInstance(FWManagerType);
+            dynamic fwManager = Activator.CreateInstance(fwManagerType);
 
             // Get the firewall settings.
-            bool CheckDomain =
-                FWManager.FirewallEnabled(NET_FW_PROFILE2_DOMAIN);
-            bool CheckPrivate =
-                FWManager.FirewallEnabled(NET_FW_PROFILE2_PRIVATE);
-            bool CheckPublic =
-                FWManager.FirewallEnabled(NET_FW_PROFILE2_PUBLIC);
+            bool checkDomain =
+                fwManager.FirewallEnabled(netFwProfile2Domain);
+            bool checkPrivate =
+                fwManager.FirewallEnabled(netFwProfile2Private);
+            bool checkPublic =
+                fwManager.FirewallEnabled(netFwProfile2Public);
 
-            return CheckPublic && CheckPrivate && CheckDomain;
+            return checkPublic && checkPrivate && checkDomain;
         }
     }
 }
