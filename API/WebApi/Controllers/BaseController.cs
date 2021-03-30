@@ -1,12 +1,11 @@
 using System;
 using System.Linq;
 using ApiModels;
+using Database.DatabaseModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 using Services;
-using WebApi.DataBaseModels;
-using WebApi.Models;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 
@@ -31,7 +30,7 @@ namespace WebApi.Controllers
             return JsonSerializer.Serialize(pCsList);
         }
 
-       
+
 
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
@@ -51,9 +50,12 @@ namespace WebApi.Controllers
             {
                 throw new ArgumentNullException(nameof(newAccountInfo));
             }
-            var credentialList = _db.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
+
+            var credentialList = DatabaseFunctions.GetCredentials(_db, newAccountInfo);
 
             if (credentialList.Count != 0) return false;
+
+
             var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
             var newCredential = new Credential()
             {

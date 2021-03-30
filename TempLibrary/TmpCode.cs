@@ -25,5 +25,11 @@ namespace TempLibrary
         //    StaticStorageServices.PCsConfiguration = configuration;
         //    StaticStorageServices.TimeToGetPcConfiguration = DateTime.UtcNow.AddSeconds(StaticStorageServices.PCsConfiguration.Time);
         //}
+
+
+        //services.AddCors(c => c.AddPolicy("AllowOrigin", 
+        //    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
+        //);
+        // services.AddTransient<DiagnosticDataServices>();
     }
 }

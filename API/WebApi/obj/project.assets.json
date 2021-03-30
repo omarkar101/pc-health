@@ -2111,11 +2111,29 @@
           "bin/placeholder/CommonModels.dll": {}
         }
       },
+      "Database/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "5.0.4",
+          "MySql.EntityFrameworkCore": "5.0.0",
+          "Pomelo.EntityFrameworkCore.MySql": "5.0.0-alpha.1"
+        },
+        "compile": {
+          "bin/placeholder/Database.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Database.dll": {}
+        }
+      },
       "Services/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
-          "CommonModels": "1.0.0"
+          "ApiModels": "1.0.0",
+          "CommonModels": "1.0.0",
+          "Database": "1.0.0",
+          "Microsoft.EntityFrameworkCore": "5.0.4"
         },
         "compile": {
           "bin/placeholder/Services.dll": {}
@@ -7287,6 +7305,11 @@
       "path": "../../Models/CommonModels.csproj",
       "msbuildProject": "../../Models/CommonModels.csproj"
     },
+    "Database/1.0.0": {
+      "type": "project",
+      "path": "../../Database/Database.csproj",
+      "msbuildProject": "../../Database/Database.csproj"
+    },
     "Services/1.0.0": {
       "type": "project",
       "path": "../../Services/Services.csproj",
@@ -7297,6 +7320,7 @@
     "net5.0": [
       "ApiModels >= 1.0.0",
       "CommonModels >= 1.0.0",
+      "Database >= 1.0.0",
       "Microsoft.AspNet.WebApi.Cors >= 5.2.7",
       "Microsoft.EntityFrameworkCore >= 5.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.4",
@@ -7343,6 +7367,9 @@
           "projectReferences": {
             "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj": {
               "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj"
+            },
+            "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj": {
+              "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj"
             },
             "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj": {
               "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj"

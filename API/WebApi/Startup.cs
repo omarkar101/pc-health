@@ -1,11 +1,10 @@
+using Database.DatabaseModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebApi.DataBaseModels;
-using WebApi.Models;
 
 namespace WebApi
 {
@@ -38,12 +37,6 @@ namespace WebApi
 
 
             services.AddControllers();
-
-
-            //services.AddCors(c => c.AddPolicy("AllowOrigin", 
-            //    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
-            //);
-            // services.AddTransient<DiagnosticDataServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

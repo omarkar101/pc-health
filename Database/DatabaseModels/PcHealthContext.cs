@@ -1,16 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebApi.Models;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace WebApi.DataBaseModels
+namespace Database.DatabaseModels
 {
     public partial class PcHealthContext : DbContext
     {
-        //public PcHealthContext()
-        //{
-        //}
-
         public PcHealthContext(DbContextOptions<PcHealthContext> options)
             : base(options)
         {
