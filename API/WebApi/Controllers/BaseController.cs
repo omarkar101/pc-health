@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
+using ApiModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using WebApi.InfoFromWebsite;
-using WebApi.Services;
+using Services;
+using WebApi.DataBaseModels;
 using WebApi.Models;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+
 
 namespace WebApi.Controllers
 {
@@ -29,16 +31,7 @@ namespace WebApi.Controllers
             return JsonSerializer.Serialize(pCsList);
         }
 
-        [HttpGet]
-        public string GetTime()
-        {
-            var timeNowUtc = DateTime.UtcNow;
-            if ((timeNowUtc - StaticStorageServices.TimeToGetPcConfiguration).TotalMilliseconds >= 0)
-            {
-                StaticStorageServices.TimeToGetPcConfiguration = timeNowUtc.AddSeconds(StaticStorageServices.PCsConfiguration.Time);
-            }
-            return JsonSerializer.Serialize(StaticStorageServices.TimeToGetPcConfiguration);
-        }
+       
 
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
@@ -50,12 +43,6 @@ namespace WebApi.Controllers
             else StaticStorageServices.PcMapper.Add(diagnosticData.PcId, diagnosticData);
         }
 
-        [HttpPost]
-        public void PostTimeConfiguration(ConfigurationFromWebsiteData configuration)
-        {
-            StaticStorageServices.PCsConfiguration = configuration;
-            StaticStorageServices.TimeToGetPcConfiguration = DateTime.UtcNow.AddSeconds(StaticStorageServices.PCsConfiguration.Time);
-        }
 
         [HttpPost]
         public bool PostCreateNewAdmin(NewAccountInfo newAccountInfo)

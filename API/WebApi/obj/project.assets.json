@@ -2088,22 +2088,35 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "Models/1.0.0": {
+      "ApiModels/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/ApiModels.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ApiModels.dll": {}
+        }
+      },
+      "CommonModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
           "System.ServiceProcess.ServiceController": "5.0.0"
         },
         "compile": {
-          "bin/placeholder/Models.dll": {}
+          "bin/placeholder/CommonModels.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Models.dll": {}
+          "bin/placeholder/CommonModels.dll": {}
         }
       },
       "Services/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "CommonModels": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Services.dll": {}
         },
@@ -7264,10 +7277,15 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "Models/1.0.0": {
+    "ApiModels/1.0.0": {
       "type": "project",
-      "path": "../../Models/Models.csproj",
-      "msbuildProject": "../../Models/Models.csproj"
+      "path": "../../ApiModels/ApiModels.csproj",
+      "msbuildProject": "../../ApiModels/ApiModels.csproj"
+    },
+    "CommonModels/1.0.0": {
+      "type": "project",
+      "path": "../../Models/CommonModels.csproj",
+      "msbuildProject": "../../Models/CommonModels.csproj"
     },
     "Services/1.0.0": {
       "type": "project",
@@ -7277,10 +7295,11 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
+      "ApiModels >= 1.0.0",
+      "CommonModels >= 1.0.0",
       "Microsoft.AspNet.WebApi.Cors >= 5.2.7",
       "Microsoft.EntityFrameworkCore >= 5.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 5.0.4",
-      "Models >= 1.0.0",
       "MySql.EntityFrameworkCore >= 5.0.0",
       "Pomelo.EntityFrameworkCore.MySql >= 5.0.0-alpha.2",
       "Services >= 1.0.0",
@@ -7322,8 +7341,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\Models.csproj": {
-              "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\Models.csproj"
+            "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj": {
+              "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj"
+            },
+            "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj": {
+              "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj"
             },
             "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj": {
               "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj"

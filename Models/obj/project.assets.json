@@ -354,9 +354,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\Models.csproj",
-      "projectName": "Models",
-      "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\Models.csproj",
+      "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj",
+      "projectName": "CommonModels",
+      "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj",
       "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\obj\\",
       "projectStyle": "PackageReference",
