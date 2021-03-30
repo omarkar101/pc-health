@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Models;
@@ -10,6 +11,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebApi.Controllers
 {
+    [Authorize]
     [EnableCors("MyPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -112,11 +114,7 @@ namespace WebApi.Controllers
                 .Select(c => c.CredentialsPassword).First().ToString();
 
             var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
-            if (decryptPassword.Equals(passwordInDatabase))
-            {
-                return true;
-            }
-            return false;
+            return decryptPassword.Equals(passwordInDatabase);
         }
     }
 }

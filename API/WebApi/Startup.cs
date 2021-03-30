@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApi.Handlers;
 using WebApi.Models;
 
 namespace WebApi
@@ -25,8 +27,6 @@ namespace WebApi
                 options.AddPolicy(name: "MyPolicy",
                     builder =>
                     {
-                        //builder.WithOrigins("*").SetIsOriginAllowedToAllowWildcardSubdomains();
-                        //builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                         builder.WithOrigins("https://pchealth.azurewebsites.net",
                                 "http://localhost:3000")
                             .WithMethods("GET");
@@ -38,11 +38,8 @@ namespace WebApi
 
             services.AddControllers();
 
-
-            //services.AddCors(c => c.AddPolicy("AllowOrigin", 
-            //    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
-            //);
-            // services.AddTransient<DiagnosticDataServices>();
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +55,7 @@ namespace WebApi
             app.UseRouting();
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
