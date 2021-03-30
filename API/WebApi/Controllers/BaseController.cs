@@ -65,29 +65,27 @@ namespace WebApi.Controllers
                 throw new ArgumentNullException(nameof(newAccountInfo));
             }
             var credentialList = _db.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
-            if (credentialList.Count == 0)
+
+            if (credentialList.Count != 0) return false;
+            var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
+            var newCredential = new Credential()
             {
-                var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-                var newCredential = new Credential()
-                {
-                    CredentialsUsername = newAccountInfo.CredentialsUsername,
-                    CredentialsPassword = hashPassword.passwordHash,
-                    CredentialsSalt = hashPassword.salt
-                };
-                var newAdmin = new Admin()
-                {
-                    AdminFirstName = newAccountInfo.AdminFirstName,
-                    AdminLastName = newAccountInfo.AdminLastName,
-                    AdminCredentialsUsername = newAccountInfo.CredentialsUsername
-                };
+                CredentialsUsername = newAccountInfo.CredentialsUsername,
+                CredentialsPassword = hashPassword.passwordHash,
+                CredentialsSalt = hashPassword.salt
+            };
+            var newAdmin = new Admin()
+            {
+                AdminFirstName = newAccountInfo.AdminFirstName,
+                AdminLastName = newAccountInfo.AdminLastName,
+                AdminCredentialsUsername = newAccountInfo.CredentialsUsername
+            };
 
-                _db.Credentials.Add(newCredential);
-                _db.Admins.Add(newAdmin);
+            _db.Credentials.Add(newCredential);
+            _db.Admins.Add(newAdmin);
 
-                _db.SaveChanges();
-                return true;
-            }
-            return false;
+            _db.SaveChanges();
+            return true;
         }
 
         [HttpPost]
