@@ -21,7 +21,7 @@ namespace Services
                     timeGet = GetServices.GetTime("https://pchealth.azurewebsites.net/api/Base/GetTime");
                     pingDiff = (DateTime.UtcNow - ping).TotalMilliseconds;
                     time = DateTime.UtcNow;*/
-                    PostServices.PostDiagnosticData("https://pchealth.azurewebsites.net/api/Base/PostDiagnosticDataFromPc");
+                    PostServices.PostDiagnosticData("http://pchealth.somee.com/api/Base/PostDiagnosticDataFromPc");
                     Thread.Sleep(1000);
                     // if ((timeGet - time).TotalMilliseconds <= pingDiff)
                     // {

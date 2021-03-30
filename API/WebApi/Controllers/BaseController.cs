@@ -55,25 +55,26 @@ namespace WebApi.Controllers
 
             if (credentialList.Count != 0) return false;
 
+            DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
+            DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
+            //var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
+            //var newCredential = new Credential()
+            //{
+            //    CredentialsUsername = newAccountInfo.CredentialsUsername,
+            //    CredentialsPassword = hashPassword.passwordHash,
+            //    CredentialsSalt = hashPassword.salt
+            //};
+            //var newAdmin = new Admin()
+            //{
+            //    AdminFirstName = newAccountInfo.AdminFirstName,
+            //    AdminLastName = newAccountInfo.AdminLastName,
+            //    AdminCredentialsUsername = newAccountInfo.CredentialsUsername
+            //};
 
-            var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-            var newCredential = new Credential()
-            {
-                CredentialsUsername = newAccountInfo.CredentialsUsername,
-                CredentialsPassword = hashPassword.passwordHash,
-                CredentialsSalt = hashPassword.salt
-            };
-            var newAdmin = new Admin()
-            {
-                AdminFirstName = newAccountInfo.AdminFirstName,
-                AdminLastName = newAccountInfo.AdminLastName,
-                AdminCredentialsUsername = newAccountInfo.CredentialsUsername
-            };
+            //_db.Credentials.Add(newCredential);
+            //_db.Admins.Add(newAdmin);
 
-            _db.Credentials.Add(newCredential);
-            _db.Admins.Add(newAdmin);
-
-            _db.SaveChanges();
+            //_db.SaveChanges();
             return true;
         }
 
