@@ -57,24 +57,7 @@ namespace WebApi.Controllers
 
             DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
             DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
-            //var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-            //var newCredential = new Credential()
-            //{
-            //    CredentialsUsername = newAccountInfo.CredentialsUsername,
-            //    CredentialsPassword = hashPassword.passwordHash,
-            //    CredentialsSalt = hashPassword.salt
-            //};
-            //var newAdmin = new Admin()
-            //{
-            //    AdminFirstName = newAccountInfo.AdminFirstName,
-            //    AdminLastName = newAccountInfo.AdminLastName,
-            //    AdminCredentialsUsername = newAccountInfo.CredentialsUsername
-            //};
-
-            //_db.Credentials.Add(newCredential);
-            //_db.Admins.Add(newAdmin);
-
-            //_db.SaveChanges();
+            
             return true;
         }
 
@@ -86,25 +69,19 @@ namespace WebApi.Controllers
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            var credentialQueryingList =
-                _db.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername);
-            if (credentialQueryingList.ToList().Count == 0)
+            var credentialQueryingList = DatabaseFunctions.GetCredentials(_db, credential);
+
+            if (credentialQueryingList.Count == 0)
             {
                 return false;
             }
 
-            var credentials = _db.Credentials;
-            var passwordSalt = credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsSalt).First().ToString();
-            var passwordInDatabase = credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsPassword).First().ToString();
+            var passwordSalt = DatabaseFunctions.GetPasswordSalt(_db, credential);
+
+            var passwordInDatabase = DatabaseFunctions.GetPasswordFromDb(_db, credential);
 
             var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
-            if (decryptPassword.Equals(passwordInDatabase))
-            {
-                return true;
-            }
-            return false;
+            return decryptPassword.Equals(passwordInDatabase);
         }
     }
 }

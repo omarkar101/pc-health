@@ -16,6 +16,11 @@ namespace Services
             return dbContext.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
         }
 
+        public static List<Credential> GetCredentials(PcHealthContext dbContext, Credential credential)
+        {
+            return dbContext.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername).ToList();
+        }
+
         public static void CreateNewAdmin(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             var newAdmin = new Admin()
@@ -30,15 +35,29 @@ namespace Services
 
         public static void CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
-            var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
+            var (salt, passwordHash) = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
             var newCredential = new Credential()
             {
                 CredentialsUsername = newAccountInfo.CredentialsUsername,
-                CredentialsPassword = hashPassword.passwordHash,
-                CredentialsSalt = hashPassword.salt
+                CredentialsPassword = passwordHash,
+                CredentialsSalt = salt
             };
             dbContext.Credentials.Add(newCredential);
             dbContext.SaveChanges();
+        }
+
+        public static string GetPasswordSalt(PcHealthContext dbContext, Credential credential)
+        {
+            var credentials = dbContext.Credentials;
+            return credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
+                .Select(c => c.CredentialsSalt).First().ToString();
+        }
+
+        public static string GetPasswordFromDb(PcHealthContext dbContext, Credential credential)
+        {
+            var credentials = dbContext.Credentials;
+            return credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
+                .Select(c => c.CredentialsPassword).First().ToString();
         }
     }
 }
