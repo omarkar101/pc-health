@@ -12,7 +12,7 @@ namespace Database.DatabaseModels
             Services = new HashSet<Service>();
         }
 
-        public int PcId { get; set; }
+        public string PcId { get; set; }
         public string PcOs { get; set; }
         public float PcCpuUsage { get; set; }
         public float PcDiskTotalFreeSpace { get; set; }

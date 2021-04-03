@@ -9,7 +9,7 @@ namespace Database.DatabaseModels
     {
         public string ServiceName { get; set; }
         public byte ServiceStatus { get; set; }
-        public int PcId { get; set; }
+        public string PcId { get; set; }
 
         public virtual Pc Pc { get; set; }
     }

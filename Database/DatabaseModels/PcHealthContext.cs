@@ -22,7 +22,7 @@ namespace Database.DatabaseModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=beocporsznvz8f8c8kmj-mysql.services.clever-cloud.com;port=3306;Database=beocporsznvz8f8c8kmj;username=ugp7k8w07r5fsxkw;password=E3ZnPlME46yROdJijYxJ");
+                optionsBuilder.UseMySQL("Server=bsvhzy1r6yrrhqucx9o9-mysql.services.clever-cloud.com;port=3306;Database=bsvhzy1r6yrrhqucx9o9;username=uclrhckmdjsm76tx;password=pUd7Fb8karg1EjPc6hVd");
             }
         }
 
@@ -79,6 +79,8 @@ namespace Database.DatabaseModels
                 entity.HasIndex(e => e.PcId, "idPc_UNIQUE")
                     .IsUnique();
 
+                entity.Property(e => e.PcId).HasMaxLength(150);
+
                 entity.Property(e => e.AdminCredentialsUsername)
                     .IsRequired()
                     .HasMaxLength(45);
@@ -109,6 +111,8 @@ namespace Database.DatabaseModels
                 entity.HasIndex(e => e.PcId, "PcId_idx");
 
                 entity.Property(e => e.ServiceName).HasMaxLength(45);
+
+                entity.Property(e => e.PcId).HasMaxLength(150);
 
                 entity.HasOne(d => d.Pc)
                     .WithMany(p => p.Services)
