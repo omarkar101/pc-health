@@ -31,5 +31,8 @@ namespace TempLibrary
         //    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
         //);
         // services.AddTransient<DiagnosticDataServices>();
+
+        //public static ConfigurationFromWebsiteData PCsConfiguration = new ConfigurationFromWebsiteData();
+        //public static DateTime TimeToGetPcConfiguration = DateTime.UtcNow.AddSeconds(PCsConfiguration.Time);
     }
 }

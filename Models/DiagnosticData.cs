@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models
+namespace CommonModels
 {
     public class DiagnosticData
     {
@@ -24,5 +24,6 @@ namespace Models
         public List<Tuple<string, string>> Services { get; set; }
 
         public string FirewallStatus { get; set; }
+        public string AdminUsername { get; set; }
     }
 }

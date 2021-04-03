@@ -1,10 +1,10 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using ApiModels;
+using CommonModels;
 using Database.DatabaseModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Models;
 using Services;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -14,32 +14,25 @@ namespace WebApi.Controllers
     [EnableCors("MyPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class BaseController : ControllerBase
+    public class PostController : ControllerBase
     {
         private readonly PcHealthContext _db;
 
-        public BaseController(PcHealthContext db)
+        public PostController(PcHealthContext db)
         {
             this._db = db;
         }
-
-        [HttpGet]
-        public string GetDiagnosticData()
-        {
-            var pCsList = StaticStorageServices.PcMapper.Values;
-            return JsonSerializer.Serialize(pCsList);
-        }
-
 
 
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
-            if (StaticStorageServices.PcMapper.ContainsKey(diagnosticData.PcId))
+            string admin = "omk13";
+            if (StaticStorageServices.PcMapper[admin].ContainsKey(diagnosticData.PcId))
             {
-                StaticStorageServices.PcMapper[diagnosticData.PcId] = diagnosticData;
+                StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
             }
-            else StaticStorageServices.PcMapper.Add(diagnosticData.PcId, diagnosticData);
+            else StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
         }
 
 
@@ -57,7 +50,9 @@ namespace WebApi.Controllers
 
             DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
             DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
-            
+
+            StaticStorageServices.PcMapper.Add(newAccountInfo.CredentialsUsername, new Dictionary<string, DiagnosticData>());
+
             return true;
         }
 

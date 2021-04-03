@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using CommonModels;
 using DeviceId;
-using Models;
 using PC_App.Common_Version.Diagnostic_Data.Disk;
 using PC_App.Common_Version.Diagnostic_Data.Network;
 
@@ -36,7 +36,8 @@ namespace Services
                 FirewallStatus = linuxFalseWindowsTrue ? 
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : 
-                    PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive"
+                    PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
+                AdminUsername = "omk13"
             };
             return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
         }
