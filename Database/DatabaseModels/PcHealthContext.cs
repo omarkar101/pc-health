@@ -85,6 +85,10 @@ namespace Database.DatabaseModels
                     .IsRequired()
                     .HasMaxLength(45);
 
+                entity.Property(e => e.PcFirewallStatus)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
                 entity.Property(e => e.PcOs)
                     .IsRequired()
                     .HasMaxLength(45)
@@ -97,7 +101,6 @@ namespace Database.DatabaseModels
                 entity.HasOne(d => d.AdminCredentialsUsernameNavigation)
                     .WithMany(p => p.Pcs)
                     .HasForeignKey(d => d.AdminCredentialsUsername)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("AdminCredentialsUsername");
             });
 

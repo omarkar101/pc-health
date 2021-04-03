@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
@@ -27,12 +28,19 @@ namespace WebApi.Controllers
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
-            string admin = "omk13";
+            var admin = diagnosticData.AdminUsername;
             if (StaticStorageServices.PcMapper[admin].ContainsKey(diagnosticData.PcId))
             {
                 StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
+                DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData, admin);
             }
-            else StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
+            else
+            {
+                StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
+                var newPc = DatabaseFunctions.CreatePc(diagnosticData);
+                _db.Pcs.Add(newPc);
+                _db.SaveChanges();
+            }
         }
 
 

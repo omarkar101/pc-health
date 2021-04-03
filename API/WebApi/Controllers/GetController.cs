@@ -14,11 +14,11 @@ namespace WebApi.Controllers
     [ApiController]
     public class GetController : ControllerBase
     {
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public string GetDiagnosticData()
         {
-            string admin = "rony123";
+            string admin = "omk13";
             var pCsList = StaticStorageServices.PcMapper[admin].Values;
             return JsonSerializer.Serialize(pCsList);
         }

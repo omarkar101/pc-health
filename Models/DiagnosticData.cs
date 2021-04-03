@@ -25,5 +25,6 @@ namespace CommonModels
 
         public string FirewallStatus { get; set; }
         public string AdminUsername { get; set; }
+        public string PcUsername { get; set; }
     }
 }

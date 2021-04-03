@@ -17,7 +17,7 @@ namespace Database.DatabaseModels
         public float PcCpuUsage { get; set; }
         public float PcDiskTotalFreeSpace { get; set; }
         public float PcDiskTotalSpace { get; set; }
-        public byte PcFirewallStatus { get; set; }
+        public string PcFirewallStatus { get; set; }
         public double? PcMemoryUsage { get; set; }
         public double? PcNetworkAverageBytesSend { get; set; }
         public double? PcNetworkAverageBytesReceived { get; set; }

@@ -22,7 +22,7 @@ namespace Services
                     pingDiff = (DateTime.UtcNow - ping).TotalMilliseconds;
                     time = DateTime.UtcNow;*/
                     //PostServices.PostDiagnosticData("http://pchealth.somee.com/api/Base/PostDiagnosticDataFromPc");
-                    PostServices.PostDiagnosticData("https://localhost:44335/api/Base/PostDiagnosticDataFromPc");
+                    PostServices.PostDiagnosticData("https://localhost:44335/api/Post/PostDiagnosticDataFromPc");
 
                     Thread.Sleep(1000);
                     // if ((timeGet - time).TotalMilliseconds <= pingDiff)
