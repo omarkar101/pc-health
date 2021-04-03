@@ -1,12 +1,13 @@
 using System;
 using System.Linq;
+using ApiModels;
+using Database.DatabaseModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using WebApi.InfoFromWebsite;
-using WebApi.Services;
-using WebApi.Models;
+using Services;
 using JsonSerializer = System.Text.Json.JsonSerializer;
+
 
 namespace WebApi.Controllers
 {
@@ -29,16 +30,7 @@ namespace WebApi.Controllers
             return JsonSerializer.Serialize(pCsList);
         }
 
-        [HttpGet]
-        public string GetTime()
-        {
-            var timeNowUtc = DateTime.UtcNow;
-            if ((timeNowUtc - StaticStorageServices.TimeToGetPcConfiguration).TotalMilliseconds >= 0)
-            {
-                StaticStorageServices.TimeToGetPcConfiguration = timeNowUtc.AddSeconds(StaticStorageServices.PCsConfiguration.Time);
-            }
-            return JsonSerializer.Serialize(StaticStorageServices.TimeToGetPcConfiguration);
-        }
+
 
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
@@ -50,12 +42,6 @@ namespace WebApi.Controllers
             else StaticStorageServices.PcMapper.Add(diagnosticData.PcId, diagnosticData);
         }
 
-        [HttpPost]
-        public void PostTimeConfiguration(ConfigurationFromWebsiteData configuration)
-        {
-            StaticStorageServices.PCsConfiguration = configuration;
-            StaticStorageServices.TimeToGetPcConfiguration = DateTime.UtcNow.AddSeconds(StaticStorageServices.PCsConfiguration.Time);
-        }
 
         [HttpPost]
         public bool PostCreateNewAdmin(NewAccountInfo newAccountInfo)
@@ -64,30 +50,15 @@ namespace WebApi.Controllers
             {
                 throw new ArgumentNullException(nameof(newAccountInfo));
             }
-            var credentialList = _db.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
-            if (credentialList.Count == 0)
-            {
-                var hashPassword = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-                var newCredential = new Credential()
-                {
-                    CredentialsUsername = newAccountInfo.CredentialsUsername,
-                    CredentialsPassword = hashPassword.passwordHash,
-                    CredentialsSalt = hashPassword.salt
-                };
-                var newAdmin = new Admin()
-                {
-                    AdminFirstName = newAccountInfo.AdminFirstName,
-                    AdminLastName = newAccountInfo.AdminLastName,
-                    AdminCredentialsUsername = newAccountInfo.CredentialsUsername
-                };
 
-                _db.Credentials.Add(newCredential);
-                _db.Admins.Add(newAdmin);
+            var credentialList = DatabaseFunctions.GetCredentials(_db, newAccountInfo);
 
-                _db.SaveChanges();
-                return true;
-            }
-            return false;
+            if (credentialList.Count != 0) return false;
+
+            DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
+            DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
+            
+            return true;
         }
 
         [HttpPost]
@@ -98,25 +69,19 @@ namespace WebApi.Controllers
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            var credentialQueryingList =
-                _db.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername);
-            if (credentialQueryingList.ToList().Count == 0)
+            var credentialQueryingList = DatabaseFunctions.GetCredentials(_db, credential);
+
+            if (credentialQueryingList.Count == 0)
             {
                 return false;
             }
 
-            var credentials = _db.Credentials;
-            var passwordSalt = credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsSalt).First().ToString();
-            var passwordInDatabase = credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsPassword).First().ToString();
+            var passwordSalt = DatabaseFunctions.GetPasswordSalt(_db, credential);
+
+            var passwordInDatabase = DatabaseFunctions.GetPasswordFromDb(_db, credential);
 
             var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
-            if (decryptPassword.Equals(passwordInDatabase))
-            {
-                return true;
-            }
-            return false;
+            return decryptPassword.Equals(passwordInDatabase);
         }
     }
 }
