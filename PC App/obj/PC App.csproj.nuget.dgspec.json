@@ -18,10 +18,12 @@
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
+
           "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -78,6 +80,7 @@
         "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\PC App\\PC App.csproj",
         "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\PC App\\obj\\",
+
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
