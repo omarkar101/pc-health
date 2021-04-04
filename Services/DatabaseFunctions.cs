@@ -7,6 +7,7 @@ using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Org.BouncyCastle.Asn1.Misc;
 
 namespace Services
@@ -97,6 +98,37 @@ namespace Services
                 _pc.PcOs = diagnosticData.Os;
                 _pc.PcUsername = diagnosticData.PcUsername;
                 _db.SaveChanges();
+            }
+        }
+
+        public static void InitializeStaticStorage(PcHealthContext dbContext)
+        {
+            if (StaticStorageServices.PcMapper.Count != 0) return;
+            var admins = dbContext.Admins.ToList();
+            foreach (var admin in admins)
+            {
+                StaticStorageServices.PcMapper.Add(admin.AdminCredentialsUsername, new Dictionary<string, DiagnosticData>());
+            }
+            var pcs = dbContext.Pcs.ToList();
+                
+            foreach (var pc in pcs)
+            {
+                var pcDiagnosticData = new DiagnosticData()
+                {
+                    AdminUsername = pc.AdminCredentialsUsername,
+                    AvgNetworkBytesReceived = (double) pc.PcNetworkAverageBytesReceived,
+                    AvgNetworkBytesSent = (double) pc.PcNetworkAverageBytesSend,
+                    CpuUsage = pc.PcCpuUsage,
+                    DiskTotalSpace = pc.PcDiskTotalSpace,
+                    FirewallStatus = pc.PcFirewallStatus,
+                    MemoryUsage = (double)pc.PcMemoryUsage,
+                    Os = pc.PcOs,
+                    PcId = pc.PcId,
+                    PcUsername = pc.PcUsername,
+                    TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
+                    Services = new List<Tuple<string, string>>()
+                };
+                StaticStorageServices.PcMapper[pc.AdminCredentialsUsername].Add(pc.PcId, pcDiagnosticData);
             }
         }
     }

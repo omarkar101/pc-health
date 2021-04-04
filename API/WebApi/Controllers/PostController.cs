@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Services;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -18,12 +23,13 @@ namespace WebApi.Controllers
     public class PostController : ControllerBase
     {
         private readonly PcHealthContext _db;
+        private readonly JWTSettings _jwtSettings;
 
-        public PostController(PcHealthContext db)
+        public PostController(PcHealthContext db, IOptions<JWTSettings> jwtSettings)
         {
-            this._db = db;
+            _db = db;
+            _jwtSettings = jwtSettings.Value;
         }
-
 
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
@@ -66,8 +72,9 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        public bool PostLogin(Credential credential)
+        public string PostLogin(Credential credential)
         {
+            DatabaseFunctions.InitializeStaticStorage(_db);
             if (credential is null)
             {
                 throw new ArgumentNullException(nameof(credential));
@@ -77,7 +84,7 @@ namespace WebApi.Controllers
 
             if (credentialQueryingList.Count == 0)
             {
-                return false;
+                return "false";
             }
 
             var passwordSalt = DatabaseFunctions.GetPasswordSalt(_db, credential);
@@ -85,7 +92,10 @@ namespace WebApi.Controllers
             var passwordInDatabase = DatabaseFunctions.GetPasswordFromDb(_db, credential);
 
             var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
-            return decryptPassword.Equals(passwordInDatabase);
+
+            if (!decryptPassword.Equals(passwordInDatabase)) return "false";
+
+            return GenerateToken.Generate(credential.CredentialsUsername, _jwtSettings);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using ApiModels;
 using Database.DatabaseModels;
@@ -31,8 +32,7 @@ namespace WebApi
                     {
                         //builder.WithOrigins("*").SetIsOriginAllowedToAllowWildcardSubdomains();
                         //builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                        builder.WithOrigins("https://pchealth.azurewebsites.net",
-                                "http://localhost:3000")
+                        builder.WithOrigins("http://localhost:3000")
                             .WithMethods("GET");
                     });
             });
@@ -62,7 +62,8 @@ namespace WebApi
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
         }
@@ -80,6 +81,7 @@ namespace WebApi
             app.UseRouting();
             app.UseCors();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

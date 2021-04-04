@@ -2208,7 +2208,8 @@
           "ApiModels": "1.0.0",
           "CommonModels": "1.0.0",
           "Database": "1.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.4"
+          "Microsoft.EntityFrameworkCore": "5.0.4",
+          "System.IdentityModel.Tokens.Jwt": "6.7.1"
         },
         "compile": {
           "bin/placeholder/Services.dll": {}
