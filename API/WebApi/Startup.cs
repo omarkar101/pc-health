@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
+
 namespace WebApi
 {
     public class Startup
@@ -36,7 +37,7 @@ namespace WebApi
                             .WithMethods("GET");
                     });
             });
-            string mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
+            var mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContextPool<PcHealthContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
 
 
