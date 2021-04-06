@@ -1,7 +1,8 @@
 using System;
 using System.Threading;
+using Services;
 
-namespace Services
+namespace PC_App.Services
 {
     public static class GetPostServices
     {

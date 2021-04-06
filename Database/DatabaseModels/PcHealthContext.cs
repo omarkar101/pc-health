@@ -72,6 +72,9 @@ namespace Database.DatabaseModels
 
             modelBuilder.Entity<Pc>(entity =>
             {
+                entity.HasKey(e => new { e.PcId, e.AdminCredentialsUsername })
+                    .HasName("PRIMARY");
+
                 entity.ToTable("Pc");
 
                 entity.HasIndex(e => e.AdminCredentialsUsername, "AdminCredentialsUsername_idx");
@@ -81,9 +84,7 @@ namespace Database.DatabaseModels
 
                 entity.Property(e => e.PcId).HasMaxLength(150);
 
-                entity.Property(e => e.AdminCredentialsUsername)
-                    .IsRequired()
-                    .HasMaxLength(45);
+                entity.Property(e => e.AdminCredentialsUsername).HasMaxLength(45);
 
                 entity.Property(e => e.PcFirewallStatus)
                     .IsRequired()
@@ -119,6 +120,7 @@ namespace Database.DatabaseModels
 
                 entity.HasOne(d => d.Pc)
                     .WithMany(p => p.Services)
+                    .HasPrincipalKey(p => p.PcId)
                     .HasForeignKey(d => d.PcId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PcId");
