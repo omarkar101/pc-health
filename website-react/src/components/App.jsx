@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Table from "./Table";
 import Services from './Services'
 import Settings from './Settings'
-// import Test from './Test'
+import './style.css'
+
 
 
 
 function App() {
+
   const [buttonPopup, setButtonPopup] = useState(false);
 
   const [state, setState] = useState({
@@ -26,7 +28,6 @@ function App() {
       alert("time interval has to be 3 seconds or longer!")
     }
     else {
-      // setState({ interval: event.target.value })
       console.log(state)
       setState(state);
       setButtonPopup(false);
@@ -35,21 +36,23 @@ function App() {
 
   return (
     <>
-      <button onClick={() => setButtonPopup(true)}> Settings </button>
-      <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
-        <form onSubmit={handleSubmit}>
-          <label> Time Interval
+      <div className="settingsDiv">
+        <button className="SettingsButton" onClick={() => setButtonPopup(true)}> Settings </button>
+      </div>
+      <layer>
+        <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <form onSubmit={handleSubmit}>
+            <label> Time Interval
                 </label>
-          <br />
-          <input type="number" onChange={handleIntervalChange} placeholder="set time interval (in seconds)" />
-          <br />
-          <button className="save-btn" type="submit">
-            Save Changes
+            <br />
+            <input type="number" onChange={handleIntervalChange} placeholder="set time interval (in seconds)" />
+            <br />
+            <button type="submit">
+              Save Changes
             </button>
-          {/* <Table interval={state.interval}></Table> */}
-        </form>
-      </Settings>
-      {/* <Test interval={state.interval}></Test> */}
+          </form>
+        </Settings>
+      </layer>
       <Router interval={state.interval}>
         <Route path="/" exact component={Table}><Table i={state}></Table></Route>
         <Route path='/:id' component={Services} />
@@ -57,6 +60,5 @@ function App() {
     </>
   )
 }
-      // 
-      {/* <Table interval={state.interval}></Table> */}
+
 export default App;
