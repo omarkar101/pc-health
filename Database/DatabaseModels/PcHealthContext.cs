@@ -14,6 +14,7 @@ namespace Database.DatabaseModels
         }
 
         public virtual DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<AdminHasPc> AdminHasPcs { get; set; }
         public virtual DbSet<Credential> Credentials { get; set; }
         public virtual DbSet<Pc> Pcs { get; set; }
         public virtual DbSet<Service> Services { get; set; }
@@ -51,6 +52,34 @@ namespace Database.DatabaseModels
                     .HasConstraintName("fk_Admin_Credentials1");
             });
 
+            modelBuilder.Entity<AdminHasPc>(entity =>
+            {
+                entity.HasKey(e => new { e.AdminCredentialsUsername, e.PcId })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Admin_has_Pc");
+
+                entity.HasIndex(e => e.AdminCredentialsUsername, "fk_Admin_has_Pc_Admin1_idx");
+
+                entity.HasIndex(e => e.PcId, "fk_Admin_has_Pc_Pc1_idx");
+
+                entity.Property(e => e.AdminCredentialsUsername).HasMaxLength(45);
+
+                entity.Property(e => e.PcId).HasMaxLength(150);
+
+                entity.HasOne(d => d.AdminCredentialsUsernameNavigation)
+                    .WithMany(p => p.AdminHasPcs)
+                    .HasForeignKey(d => d.AdminCredentialsUsername)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Admin_has_Pc_Admin1");
+
+                entity.HasOne(d => d.Pc)
+                    .WithMany(p => p.AdminHasPcs)
+                    .HasForeignKey(d => d.PcId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Admin_has_Pc_Pc1");
+            });
+
             modelBuilder.Entity<Credential>(entity =>
             {
                 entity.HasKey(e => e.CredentialsUsername)
@@ -72,19 +101,12 @@ namespace Database.DatabaseModels
 
             modelBuilder.Entity<Pc>(entity =>
             {
-                entity.HasKey(e => new { e.PcId, e.AdminCredentialsUsername })
-                    .HasName("PRIMARY");
-
                 entity.ToTable("Pc");
-
-                entity.HasIndex(e => e.AdminCredentialsUsername, "AdminCredentialsUsername_idx");
 
                 entity.HasIndex(e => e.PcId, "idPc_UNIQUE")
                     .IsUnique();
 
                 entity.Property(e => e.PcId).HasMaxLength(150);
-
-                entity.Property(e => e.AdminCredentialsUsername).HasMaxLength(45);
 
                 entity.Property(e => e.PcFirewallStatus)
                     .IsRequired()
@@ -98,11 +120,6 @@ namespace Database.DatabaseModels
                 entity.Property(e => e.PcUsername)
                     .IsRequired()
                     .HasMaxLength(45);
-
-                entity.HasOne(d => d.AdminCredentialsUsernameNavigation)
-                    .WithMany(p => p.Pcs)
-                    .HasForeignKey(d => d.AdminCredentialsUsername)
-                    .HasConstraintName("AdminCredentialsUsername");
             });
 
             modelBuilder.Entity<Service>(entity =>
@@ -120,7 +137,6 @@ namespace Database.DatabaseModels
 
                 entity.HasOne(d => d.Pc)
                     .WithMany(p => p.Services)
-                    .HasPrincipalKey(p => p.PcId)
                     .HasForeignKey(d => d.PcId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("PcId");

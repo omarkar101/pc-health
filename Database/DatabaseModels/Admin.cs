@@ -9,7 +9,7 @@ namespace Database.DatabaseModels
     {
         public Admin()
         {
-            Pcs = new HashSet<Pc>();
+            AdminHasPcs = new HashSet<AdminHasPc>();
         }
 
         public string AdminFirstName { get; set; }
@@ -17,6 +17,6 @@ namespace Database.DatabaseModels
         public string AdminCredentialsUsername { get; set; }
 
         public virtual Credential AdminCredentialsUsernameNavigation { get; set; }
-        public virtual ICollection<Pc> Pcs { get; set; }
+        public virtual ICollection<AdminHasPc> AdminHasPcs { get; set; }
     }
 }
