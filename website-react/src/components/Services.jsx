@@ -7,7 +7,7 @@ function Services({match}) {
   const FetchData = () => {
     axios
       .get(
-        "https://pchealth.azurewebsites.net/api/Base/GetDiagnosticData"
+        "http://pchealth.somee.com/api/Base/GetDiagnosticData"
       )
       .then((res) => {
         console.log(res)
