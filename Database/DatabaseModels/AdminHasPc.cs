@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace Database.DatabaseModels
 {
-    public partial class Service
+    public partial class AdminHasPc
     {
-        public string ServiceName { get; set; }
-        public byte ServiceStatus { get; set; }
+        public string AdminCredentialsUsername { get; set; }
         public string PcId { get; set; }
 
+        public virtual Admin AdminCredentialsUsernameNavigation { get; set; }
         public virtual Pc Pc { get; set; }
     }
 }

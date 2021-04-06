@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ApiModels;
+using CommonModels;
 using Database.DatabaseModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
@@ -58,6 +56,81 @@ namespace Services
             var credentials = dbContext.Credentials;
             return credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
                 .Select(c => c.CredentialsPassword).First().ToString();
+        }
+
+        public static Pc CreatePc(DiagnosticData diagnosticData)
+        {
+            var newPc = new Pc()
+            {
+                //AdminCredentialsUsername = diagnosticData.AdminUsername,
+                PcCpuUsage = diagnosticData.CpuUsage,
+                PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace,
+                PcDiskTotalSpace = diagnosticData.DiskTotalSpace,
+                PcFirewallStatus = diagnosticData.FirewallStatus,
+                PcId = diagnosticData.PcId,
+                PcMemoryUsage = diagnosticData.MemoryUsage,
+                PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived,
+                PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent,
+                PcOs = diagnosticData.Os,
+                PcUsername = diagnosticData.PcUsername
+            };
+            return newPc;
+        }
+
+        public static void UpdatePcInDatabase(PcHealthContext _db, DiagnosticData diagnosticData)
+        {
+            var _pc = _db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefault<Pc>();
+            if (_pc != null)
+            {
+                _pc.PcCpuUsage = diagnosticData.CpuUsage;
+                _pc.PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace;
+                _pc.PcDiskTotalSpace = diagnosticData.DiskTotalSpace;
+                _pc.PcFirewallStatus = diagnosticData.FirewallStatus;
+                _pc.PcId = diagnosticData.PcId;
+                _pc.PcMemoryUsage = diagnosticData.MemoryUsage;
+                _pc.PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived;
+                _pc.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
+                _pc.PcOs = diagnosticData.Os;
+                _pc.PcUsername = diagnosticData.PcUsername;
+                _db.SaveChanges();
+            }
+        }
+        public static void InitializeStaticStorage(PcHealthContext dbContext)
+        {
+            if (StaticStorageServices.PcMapper.Count != 0) return;
+            var admins = dbContext.Admins.ToList();
+            foreach (var admin in admins)
+            {
+                StaticStorageServices.PcMapper.Add(admin.AdminCredentialsUsername, new Dictionary<string, DiagnosticData>());
+            }
+            var adminHasPc = dbContext.AdminHasPcs.ToList();
+            foreach (var adminPc in adminHasPc)
+            {
+                StaticStorageServices.PcMapper[adminPc.AdminCredentialsUsername].Add(adminPc.PcId, new DiagnosticData());
+            }
+            var pcs = dbContext.Pcs.ToList();
+            foreach (var pc in pcs)
+            {
+                var pcDiagnosticData = new DiagnosticData()
+                {
+                    AvgNetworkBytesReceived = (double) pc.PcNetworkAverageBytesReceived,
+                    AvgNetworkBytesSent = (double) pc.PcNetworkAverageBytesSend,
+                    CpuUsage = pc.PcCpuUsage,
+                    DiskTotalSpace = pc.PcDiskTotalSpace,
+                    FirewallStatus = pc.PcFirewallStatus,
+                    MemoryUsage = (double)pc.PcMemoryUsage,
+                    Os = pc.PcOs,
+                    PcId = pc.PcId,
+                    PcUsername = pc.PcUsername,
+                    TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
+                    Services = new List<Tuple<string, string>>()
+                };
+                foreach (var admin in pc.AdminHasPcs)
+                {
+                    StaticStorageServices.PcMapper[admin.AdminCredentialsUsername][pc.PcId] =  pcDiagnosticData;
+                }
+            }
+
         }
     }
 }

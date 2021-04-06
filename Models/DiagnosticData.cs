@@ -1,10 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models
+namespace CommonModels
 {
     public class DiagnosticData
     {
+        public DiagnosticData()
+        {
+            AdminUsernames = new List<string>();
+            Services = new List<Tuple<string, string>>();
+        }
         public float CpuUsage { get; set; }
 
         public float TotalFreeDiskSpace { get; set; }
@@ -24,5 +29,7 @@ namespace Models
         public List<Tuple<string, string>> Services { get; set; }
 
         public string FirewallStatus { get; set; }
+        public List<string> AdminUsernames { get; set; }
+        public string PcUsername { get; set; }
     }
 }

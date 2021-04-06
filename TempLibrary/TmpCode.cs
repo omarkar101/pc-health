@@ -31,5 +31,24 @@ namespace TempLibrary
         //    options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader())
         //);
         // services.AddTransient<DiagnosticDataServices>();
+
+        //public static ConfigurationFromWebsiteData PCsConfiguration = new ConfigurationFromWebsiteData();
+        //public static DateTime TimeToGetPcConfiguration = DateTime.UtcNow.AddSeconds(PCsConfiguration.Time);
+
+
+
+
+        // DateTime timeGet;
+        // DateTime time;
+        //
+        // DateTime ping;
+        // double pingDiff;
+
+
+        /*ping = DateTime.UtcNow;
+                    timeGet = GetServices.GetTime("https://pchealth.azurewebsites.net/api/Base/GetTime");
+                    pingDiff = (DateTime.UtcNow - ping).TotalMilliseconds;
+                    time = DateTime.UtcNow;*/
+        //PostServices.PostDiagnosticData("http://pchealth.somee.com/api/Base/PostDiagnosticDataFromPc");
     }
 }
