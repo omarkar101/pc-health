@@ -34,23 +34,56 @@ namespace WebApi.Controllers
         [HttpPost]
         public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
-            var admin = diagnosticData.AdminUsername;
-            if (StaticStorageServices.PcMapper[admin].ContainsKey(diagnosticData.PcId))
+            var admins = diagnosticData.AdminUsernames;
+            foreach (var admin in admins)
             {
-                StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
-                DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData, admin);
-            }
-            else
-            {
-                StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
-                var newPc = DatabaseFunctions.CreatePc(diagnosticData);
-                _db.Pcs.Add(newPc);
-                _db.SaveChanges();
+                if (!StaticStorageServices.PcMapper.ContainsKey(admin)) return;
+
+                //if the admin contains the pc
+                if (StaticStorageServices.PcMapper[admin].ContainsKey(diagnosticData.PcId))
+                {
+                    StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
+                    DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+                }
+                else
+                {
+                    StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
+
+                    var _pc = _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefault();
+
+                    if (_pc != null)
+                    {
+                        var adminFromDb = _db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefault();
+                        //var pcFromDb = _db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefault();
+                        var adminHasPc = new AdminHasPc()
+                        {
+                            PcId = diagnosticData.PcId,
+                            AdminCredentialsUsername = admin
+                        };
+                        adminFromDb.AdminHasPcs.Add(adminHasPc);
+                        //pcFromDb.AdminHasPcs.Add(adminHasPc);
+                        DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+                        _db.SaveChanges();
+                    }
+                    else
+                    {
+                        var newPc = DatabaseFunctions.CreatePc(diagnosticData);
+                        _db.Pcs.Add(newPc);
+                        var adminFromDb = _db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefault();
+                        var adminHasPc = new AdminHasPc()
+                        {
+                            PcId = diagnosticData.PcId,
+                            AdminCredentialsUsername = admin
+                        };
+                        adminFromDb.AdminHasPcs.Add(adminHasPc);
+                        _db.SaveChanges();
+                    }
+                }
             }
         }
 
 
-        [HttpPost]
+        [HttpPost] 
         public bool PostCreateNewAdmin(NewAccountInfo newAccountInfo)
         {
             if (newAccountInfo is null)

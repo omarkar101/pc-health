@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Org.BouncyCastle.Asn1.Misc;
 
 namespace Services
 {
@@ -67,7 +62,7 @@ namespace Services
         {
             var newPc = new Pc()
             {
-                AdminCredentialsUsername = diagnosticData.AdminUsername,
+                //AdminCredentialsUsername = diagnosticData.AdminUsername,
                 PcCpuUsage = diagnosticData.CpuUsage,
                 PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace,
                 PcDiskTotalSpace = diagnosticData.DiskTotalSpace,
@@ -82,9 +77,9 @@ namespace Services
             return newPc;
         }
 
-        public static void UpdatePcInDatabase(PcHealthContext _db, DiagnosticData diagnosticData, string admin)
+        public static void UpdatePcInDatabase(PcHealthContext _db, DiagnosticData diagnosticData)
         {
-            var _pc = _db.Pcs.Where(p => p.AdminCredentialsUsername.Equals(admin) && p.PcId.Equals(diagnosticData.PcId)).FirstOrDefault<Pc>();
+            var _pc = _db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefault<Pc>();
             if (_pc != null)
             {
                 _pc.PcCpuUsage = diagnosticData.CpuUsage;
@@ -100,7 +95,6 @@ namespace Services
                 _db.SaveChanges();
             }
         }
-
         public static void InitializeStaticStorage(PcHealthContext dbContext)
         {
             if (StaticStorageServices.PcMapper.Count != 0) return;
@@ -109,13 +103,16 @@ namespace Services
             {
                 StaticStorageServices.PcMapper.Add(admin.AdminCredentialsUsername, new Dictionary<string, DiagnosticData>());
             }
+            var adminHasPc = dbContext.AdminHasPcs.ToList();
+            foreach (var adminPc in adminHasPc)
+            {
+                StaticStorageServices.PcMapper[adminPc.AdminCredentialsUsername].Add(adminPc.PcId, new DiagnosticData());
+            }
             var pcs = dbContext.Pcs.ToList();
-                
             foreach (var pc in pcs)
             {
                 var pcDiagnosticData = new DiagnosticData()
                 {
-                    AdminUsername = pc.AdminCredentialsUsername,
                     AvgNetworkBytesReceived = (double) pc.PcNetworkAverageBytesReceived,
                     AvgNetworkBytesSent = (double) pc.PcNetworkAverageBytesSend,
                     CpuUsage = pc.PcCpuUsage,
@@ -128,8 +125,12 @@ namespace Services
                     TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
                     Services = new List<Tuple<string, string>>()
                 };
-                StaticStorageServices.PcMapper[pc.AdminCredentialsUsername].Add(pc.PcId, pcDiagnosticData);
+                foreach (var admin in pc.AdminHasPcs)
+                {
+                    StaticStorageServices.PcMapper[admin.AdminCredentialsUsername][pc.PcId] =  pcDiagnosticData;
+                }
             }
+
         }
     }
 }

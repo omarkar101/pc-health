@@ -37,7 +37,7 @@ namespace Services
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : 
                     PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
-                AdminUsername = "omk13",
+                AdminUsernames = new List<string>(){ "rony123", "omk13" },
                 PcUsername = ""
             };
             return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
