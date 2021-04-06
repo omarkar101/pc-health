@@ -9,6 +9,7 @@ namespace PC_App
     {
         private static async Task Main(string[] args)
         {
+
             GetPostServices.PostDiagnosticGetTime();
         }
     }
