@@ -17,7 +17,7 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace WebApi.Controllers
 {
-    [EnableCors("MyPolicy")]
+    //[EnableCors]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PostController : ControllerBase

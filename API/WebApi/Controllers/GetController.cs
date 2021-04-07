@@ -14,7 +14,7 @@ using Services;
 
 namespace WebApi.Controllers
 {
-    [EnableCors("MyPolicy")]
+    //[EnableCors]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class GetController : ControllerBase
