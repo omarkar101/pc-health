@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import './style.css'
 import Chart from "react-google-charts";
 
 
-
 function Table(props) {
     const [search, setSearch] = useState('');
     const [datalst, setData] = useState([]);
     const [FilteredData, setFilteredData] = useState([]);
-
     const [detailsShown, setDetailShown] = useState([]);
 
-    const FetchData = async () => {
-        //Function to fetch the data from the Server
-        axios.get("http://pchealth.somee.com/api/Base/GetDiagnosticData")
-            .then((res) => {
-                // console.log(res);
-                setData(res.data);
-            })
-            .catch((err) => console.log(err));
-    };
+//     const FetchData = async () => {
+//         //Function to fetch the data from the Server
+//         axios.get("http://pchealth.somee.com/api/Base/GetDiagnosticData")
+//             .then((res) => {
+//                 // console.log(res);
+//                 setData(res.data);
+//             })
+//             .catch((err) => console.log(err));
+//     };
+  
+  const FetchData = async () => {
+  axios.get(
+      "http://omarkar1011-001-site1.dtempurl.com/api/Get/GetDiagnosticData", {
+        headers: { "Authorization": "Bearer "+ localStorage.getItem("token")}
+      }
+    ).then((res)=>{setData(res.data)});
+  }
+
 
     const toggleShown = username => {
         const shownState = detailsShown.slice();
@@ -195,5 +202,4 @@ function Table(props) {
         </>
     );
 }
-
 export default Table;

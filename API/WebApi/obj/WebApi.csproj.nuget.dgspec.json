@@ -1,27 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj": {}
+    "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj": {
+    "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj",
+        "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj",
         "projectName": "ApiModels",
-        "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj",
-        "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\obj\\",
+        "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj",
+        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -60,28 +54,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj": {
+    "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj",
+        "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj",
         "projectName": "WebApi",
-        "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\API\\WebApi\\WebApi.csproj",
-        "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\API\\WebApi\\obj\\",
+        "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\WebApi.csproj",
+        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\API\\WebApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -94,17 +82,17 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj"
               },
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj"
               },
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj"
               },
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Services\\Services.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Services\\Services.csproj"
               }
             }
           }
@@ -168,28 +156,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj": {
+    "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj",
+        "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj",
         "projectName": "Database",
-        "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj",
-        "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\obj\\",
+        "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj",
+        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -248,28 +230,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj": {
+    "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj",
+        "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj",
         "projectName": "CommonModels",
-        "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj",
-        "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\obj\\",
+        "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj",
+        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -308,28 +284,22 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj": {
+    "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Services\\Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj",
+        "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Services\\Services.csproj",
         "projectName": "Services",
-        "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj",
-        "packagesPath": "C:\\Users\\omark\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\obj\\",
+        "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Services\\Services.csproj",
+        "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Services\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\omark\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -342,14 +312,14 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\ApiModels\\ApiModels.csproj"
               },
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Database\\Database.csproj"
               },
-              "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj": {
-                "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj"
+              "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj": {
+                "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\CommonModels.csproj"
               }
             }
           }
@@ -388,7 +358,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
         }
       }
     }
