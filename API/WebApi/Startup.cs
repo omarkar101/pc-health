@@ -32,9 +32,9 @@ namespace WebApi
                     builder =>
                     {
                         //builder.WithOrigins("*").SetIsOriginAllowedToAllowWildcardSubdomains();
-                        //builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-                        builder.WithOrigins("http://localhost:3000", "http://omarkar1011-001-site1.dtempurl.com")
-                            .WithMethods("GET", "POST").AllowAnyHeader();
+                        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                        //builder.WithOrigins("http://localhost:3000", "http://omarkar1011-001-site1.dtempurl.com")
+                        //    .WithMethods("GET", "POST").AllowAnyHeader();
                     });
             });
             var mySqlConnectionStr = Configuration.GetConnectionString("DefaultConnection");
