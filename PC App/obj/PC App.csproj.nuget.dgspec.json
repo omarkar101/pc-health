@@ -14,8 +14,10 @@
         "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\Models\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
+
           "C:\\Users\\Student\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -39,12 +41,6 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "dependencies": {
-            "System.ServiceProcess.ServiceController": {
-              "target": "Package",
-              "version": "[5.0.0, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -69,6 +65,7 @@
       "restore": {
         "projectUniqueName": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
         "projectName": "PC App",
+
         "projectPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\PC App.csproj",
         "packagesPath": "C:\\Users\\Student\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\Student\\Desktop\\New folder\\pc-health\\PC App\\obj\\",

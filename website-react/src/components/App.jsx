@@ -4,11 +4,13 @@ import Table from "./Table";
 import Services from "./Services";
 import Settings from "./Settings";
 import Login from "./Login";
-// import Test from './Test'
 import Nav from "./Nav";
 import Register from "./Register";
+import './style.css'
+
 
 function App() {
+
   const [buttonPopup, setButtonPopup] = useState(false);
   const [token, setToken] = useState();
   const [state, setState] = useState({
@@ -26,7 +28,6 @@ function App() {
     if (state.interval === "" || state.interval < 3) {
       alert("time interval has to be 3 seconds or longer!");
     } else {
-      // setState({ interval: event.target.value })
       console.log(state);
       setState(state);
       setButtonPopup(false);
@@ -35,7 +36,23 @@ function App() {
 
   return (
     <>
-      {/* <Test interval={state.interval}></Test> */}
+      <div className="settingsDiv">
+        <button className="SettingsButton" onClick={() => setButtonPopup(true)}> Settings </button>
+      </div>
+      <layer>
+        <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
+          <form onSubmit={handleSubmit}>
+            <label> Time Interval
+                </label>
+            <br />
+            <input type="number" onChange={handleIntervalChange} placeholder="set time interval (in seconds)" />
+            <br />
+            <button type="submit">
+              Save Changes
+            </button>
+          </form>
+        </Settings>
+      </layer>
       <Router interval={state.interval}>
         <Nav />
         {/* <Route path="/" exact component={Login}/> */}
