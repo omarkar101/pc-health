@@ -56,7 +56,6 @@ function App() {
             {/* <Table interval={state.interval}></Table> */}
           </form>
         </Settings>
-
         <main>
           <Route path="/" exact component={Login}>
             <Login />

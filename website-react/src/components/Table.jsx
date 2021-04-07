@@ -1,7 +1,6 @@
-import React, { useState, useEffect,SyntheticEvent } from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import { i } from './App'
 
 
 function Table(props) {
@@ -9,7 +8,7 @@ function Table(props) {
   const [datalst, setData] = useState([]);
   const [FilteredData, setFilteredData] = useState([]);
   const FetchData = async () => {
-    axios.get(
+  axios.get(
       "http://omarkar1011-001-site1.dtempurl.com/api/Get/GetDiagnosticData", {
         headers: { "Authorization": "Bearer "+ localStorage.getItem("token")}
       }
@@ -30,7 +29,6 @@ function Table(props) {
       clearInterval(UpdateCycle);
     };
   });
-
   useEffect(() => {
     setFilteredData(
       datalst.filter((username) => username.PcId.toLowerCase().includes(search.toLowerCase()))
@@ -85,6 +83,5 @@ function Table(props) {
     </>
   );
 }
-// FilteredData.length === 0 ? <div style={{ color: "red" }}> No results found </div> :
 
 export default Table;
