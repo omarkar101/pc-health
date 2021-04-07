@@ -4,13 +4,13 @@ export default function Nav() {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link to="/table" className="navbar-brand">
           Home
         </Link>
         <div>
           <ul className="navbar-nav me-auto mb-2 mb-nd-8">
             <li className="navbar-item active">
-              <Link to="/login" className="nav-link">
+              <Link to="/" className="nav-link">
                 Login
               </Link>
             </li>
