@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,SyntheticEvent } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 // import { i } from './App'
@@ -8,17 +8,35 @@ function Table(props) {
   const [search, setSearch] = useState('');
   const [datalst, setData] = useState([]);
   const [FilteredData, setFilteredData] = useState([]);
-
-  const FetchData = async () => {
+  console.log(localStorage.getItem("token"))
+  const FetchData = async (e) => {
+    // e.preventDefault();
     //Function to fetch the data from the Server
-    axios.get("http://pchealth.somee.com/api/Base/GetDiagnosticData")
-      .then((res) => {
-        // console.log(res);
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
+    const response = await fetch(
+      "http://omarkar1011-001-site1.dtempurl.com/api/Get/GetDiagnosticData",
+      {
+        headers: {
+          Accept: "application/json",
+          authorization: "Bearer " + localStorage.getItem("token"),
+        },
+        // authorization: localStorage.getItem("token"),
+      }
+    ); 
   };
-
+  // useEffect(() => {
+  //   (
+  //     async () => {
+  //       const FetchData = await fetch(
+  //         "http://pchealth.somee.com/api/Get/GetDiagnosticData",
+  //         {
+  //           // authorization: "Bearer Token",
+  //           headers: { "Content-Type": "application/json" },
+  //           // credentials: "include",
+  //         }
+  //       );
+  //     }
+  //   )()
+  // })
   useEffect(() => {
     FetchData();
   }, []);
