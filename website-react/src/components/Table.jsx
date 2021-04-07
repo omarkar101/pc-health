@@ -8,35 +8,14 @@ function Table(props) {
   const [search, setSearch] = useState('');
   const [datalst, setData] = useState([]);
   const [FilteredData, setFilteredData] = useState([]);
-  console.log(localStorage.getItem("token"))
-  const FetchData = async (e) => {
-    // e.preventDefault();
-    //Function to fetch the data from the Server
-    const response = await fetch(
-      "http://omarkar1011-001-site1.dtempurl.com/api/Get/GetDiagnosticData",
-      {
-        headers: {
-          Accept: "application/json",
-          authorization: "Bearer " + localStorage.getItem("token"),
-        },
-        // authorization: localStorage.getItem("token"),
+  const FetchData = async () => {
+    axios.get(
+      "http://omarkar1011-001-site1.dtempurl.com/api/Get/GetDiagnosticData", {
+        headers: { "Authorization": "Bearer "+ localStorage.getItem("token")}
       }
-    ); 
-  };
-  // useEffect(() => {
-  //   (
-  //     async () => {
-  //       const FetchData = await fetch(
-  //         "http://pchealth.somee.com/api/Get/GetDiagnosticData",
-  //         {
-  //           // authorization: "Bearer Token",
-  //           headers: { "Content-Type": "application/json" },
-  //           // credentials: "include",
-  //         }
-  //       );
-  //     }
-  //   )()
-  // })
+    ).then((res)=>{setData(res.data)});
+  }
+
   useEffect(() => {
     FetchData();
   }, []);

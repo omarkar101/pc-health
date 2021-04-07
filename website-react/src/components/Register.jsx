@@ -27,7 +27,6 @@ export default function Register() {
         );
         const answer = await response.json();
         console.log(AdminFirstName)
-        // console.log(answer)
         setAccount(answer)
 
         
