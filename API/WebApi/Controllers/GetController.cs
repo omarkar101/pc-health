@@ -9,10 +9,12 @@ using System.Threading.Tasks;
 using ApiModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Services;
 
 namespace WebApi.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class GetController : ControllerBase
