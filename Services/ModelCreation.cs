@@ -26,7 +26,6 @@ namespace Services
         {
             var newPc = new Pc()
             {
-                //AdminCredentialsUsername = diagnosticData.AdminUsername,
                 PcCpuUsage = diagnosticData.CpuUsage,
                 PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace,
                 PcDiskTotalSpace = diagnosticData.DiskTotalSpace,

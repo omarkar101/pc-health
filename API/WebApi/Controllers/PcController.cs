@@ -46,12 +46,8 @@ namespace WebApi.Controllers
             foreach (var admin in admins)
             {
                 if (!StaticStorageServices.PcMapper.ContainsKey(admin.Item1)) return;
-                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2))
-                {
-                    Console.WriteLine("Hello");
-                    return;
-                }
-                //if the admin contains the pc
+                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2)) return;
+                //if the admin contains the pc 
                 if (StaticStorageServices.PcMapper[admin.Item1].ContainsKey(diagnosticData.PcId))
                 {
                     StaticStorageServices.PcMapper[admin.Item1][diagnosticData.PcId] = diagnosticData;
@@ -64,7 +60,7 @@ namespace WebApi.Controllers
                 {
                     StaticStorageServices.PcMapper[admin.Item1].Add(diagnosticData.PcId, diagnosticData);
 
-                    var pc = await _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefaultAsync().ConfigureAwait(false);
+                    var pc = await _db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefaultAsync().ConfigureAwait(false);
 
                     if (pc != null)
                     {
