@@ -9,6 +9,16 @@ namespace Services
 {
     public class DatabaseFunctions
     {
+        public static void AddPcToAdmin(DiagnosticData diagnosticData, string admin, PcHealthContext _db)
+        {
+            var adminFromDb = _db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefault();
+            var adminHasPc = new AdminHasPc()
+            {
+                PcId = diagnosticData.PcId,
+                AdminCredentialsUsername = admin
+            };
+            adminFromDb.AdminHasPcs.Add(adminHasPc);
+        }
         public static List<Credential> GetCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             return dbContext.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();

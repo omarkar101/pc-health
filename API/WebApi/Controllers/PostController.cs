@@ -53,34 +53,20 @@ namespace WebApi.Controllers
 
                     if (_pc != null)
                     {
-                        var adminFromDb = _db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefault();
-                        //var pcFromDb = _db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefault();
-                        var adminHasPc = new AdminHasPc()
-                        {
-                            PcId = diagnosticData.PcId,
-                            AdminCredentialsUsername = admin
-                        };
-                        adminFromDb.AdminHasPcs.Add(adminHasPc);
-                        //pcFromDb.AdminHasPcs.Add(adminHasPc);
                         DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
-                        _db.SaveChanges();
                     }
                     else
                     {
                         var newPc = DatabaseFunctions.CreatePc(diagnosticData);
                         _db.Pcs.Add(newPc);
-                        var adminFromDb = _db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefault();
-                        var adminHasPc = new AdminHasPc()
-                        {
-                            PcId = diagnosticData.PcId,
-                            AdminCredentialsUsername = admin
-                        };
-                        adminFromDb.AdminHasPcs.Add(adminHasPc);
-                        _db.SaveChanges();
                     }
+                    DatabaseFunctions.AddPcToAdmin(diagnosticData, admin, _db);
+                    _db.SaveChanges();
                 }
             }
         }
+
+        
 
 
         [HttpPost] 
