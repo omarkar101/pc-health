@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
@@ -19,23 +20,82 @@ namespace Services
                 .FirstOrDefaultAsync().ConfigureAwait(false);
             ModelCreation.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
         }
-        
-        public static async Task InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
-        {
-            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData)).ConfigureAwait(false);
 
-            for (var i = 1; i < 60; i++)
+
+        public static Task DoAsync(int i, DiagnosticData diagnosticData, PcHealthContext db)
+        {
+            db.LastMinutes.Add(new LastMinute()
             {
-                await db.LastMinutes.AddAsync(new LastMinute()
+                Second = i,
+                PcId = diagnosticData.PcId,
+                PcNetworkAverageBytesSend = 0,
+                PcCpuUsage = 0,
+                PcMemoryUsage = 0,
+                PcNetworkAverageBytesReceived = 0
+            });
+            return Task.CompletedTask;
+        }
+
+
+        public static void InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
+        {
+            db.LastMinutes.Add(ModelCreation.CreateOrUpdateLastMinute(diagnosticData));
+
+            //var series = Enumerable.Range(1, 3).ToList();
+
+            //var tasks = new List<Task>();
+
+
+            //foreach (var i in series)
+
+                //await foreach (int item in (10, 3))
+            for (int i = 1; i <= 2; i++)
+            {
+                var j = i;
+                db.LastMinutes.Add(new LastMinute()
                 {
-                    Second = i,
+                    Second = j,
                     PcId = diagnosticData.PcId,
                     PcNetworkAverageBytesSend = 0,
                     PcCpuUsage = 0,
                     PcMemoryUsage = 0,
                     PcNetworkAverageBytesReceived = 0
                 });
+                //tasks.Add(Task.Run(async () =>
+                //{
+                //    await db.LastMinutes.AddAsync(new LastMinute()
+                //    {
+                //        Second = j,
+                //        PcId = diagnosticData.PcId,
+                //        PcNetworkAverageBytesSend = 0,
+                //        PcCpuUsage = 0,
+                //        PcMemoryUsage = 0,
+                //        PcNetworkAverageBytesReceived = 0
+                //    });
+                //}));
             }
+
+            //await Task.WhenAll(tasks.ToArray()).ConfigureAwait(false);
+            //await db.SaveChangesAsync();
+            //Task.WaitAll();
+            //var z = Enumerable.Range(1, 59).ToList();
+            //Parallel.ForEach(z, async i => await DoAsync(i, diagnosticData, db));
+
+
+            //Task.WaitAll();
+            //for (var i = 1; i < 60; i++)
+            //{
+            //    await db.LastMinutes.AddAsync(new LastMinute()
+            //    {
+            //        Second = i,
+            //        PcId = diagnosticData.PcId,
+            //        PcNetworkAverageBytesSend = 0,
+            //        PcCpuUsage = 0,
+            //        PcMemoryUsage = 0,
+            //        PcNetworkAverageBytesReceived = 0
+            //    }).ConfigureAwait(false);
+            //}
+            //Task.WaitAll();
         }
 
         public static async Task AddPcToAdmin(DiagnosticData diagnosticData, string admin, PcHealthContext db)
