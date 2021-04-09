@@ -13,7 +13,7 @@ namespace PC_App.Services
                 try
                 {
                     PostServices.PostDiagnosticData("https://localhost:44335/api/Post/PostDiagnosticDataFromPc");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(500);
                 }
                 catch (Exception e)
                 {

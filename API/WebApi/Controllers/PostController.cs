@@ -44,6 +44,12 @@ namespace WebApi.Controllers
                 {
                     StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
                     DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+
+                    var lastMinutePc = _db.LastMinutes.Where(lm =>
+                            lm.PcId.Equals(diagnosticData.PcId) && lm.Second == diagnosticData.CurrentSecond)
+                        .FirstOrDefault();
+                    DatabaseFunctions.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
+                    _db.SaveChanges();
                 }
                 else
                 {
@@ -54,26 +60,26 @@ namespace WebApi.Controllers
                     if (_pc != null)
                     {
                         DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+                        var lastMinutePc = _db.LastMinutes.Where(lm =>
+                                lm.PcId.Equals(diagnosticData.PcId) && lm.Second == diagnosticData.CurrentSecond)
+                            .FirstOrDefault();
+                        DatabaseFunctions.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
                     }
                     else
                     {
                         var newPc = DatabaseFunctions.CreatePc(diagnosticData);
-                        _db.LastMinutes.Add(new LastMinute()
-                        {
-                            PcId = diagnosticData.PcId,
-                            Second = 0,
-                            PcCpuUsage = diagnosticData.CpuUsage,
-                            PcMemoryUsage = diagnosticData.MemoryUsage,
-                            PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived,
-                            PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent
-                        });
+                        _db.LastMinutes.Add(DatabaseFunctions.CreateOrUpdateLastMinute(diagnosticData));
 
                         for (var i = 1; i < 60; i++)
                         {
                             _db.LastMinutes.Add(new LastMinute()
                             {
                                 Second = i,
-                                PcId = diagnosticData.PcId
+                                PcId = diagnosticData.PcId,
+                                PcNetworkAverageBytesSend = 0,
+                                PcCpuUsage = 0,
+                                PcMemoryUsage = 0,
+                                PcNetworkAverageBytesReceived = 0
                             });
                         }
                         _db.Pcs.Add(newPc);

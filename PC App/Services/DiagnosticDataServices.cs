@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -7,7 +6,7 @@ using DeviceId;
 using PC_App.Common_Version.Diagnostic_Data.Disk;
 using PC_App.Common_Version.Diagnostic_Data.Network;
 
-namespace Services
+namespace PC_App.Services
 {
     /// <summary>
     /// A service that gets the Diagnostic Data according to the Operating System

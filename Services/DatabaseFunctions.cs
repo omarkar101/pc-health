@@ -9,6 +9,18 @@ namespace Services
 {
     public class DatabaseFunctions
     {
+        public static LastMinute CreateOrUpdateLastMinute(DiagnosticData diagnosticData, LastMinute lastMinute = null)
+        {
+            lastMinute ??= new LastMinute();
+            lastMinute.PcId = diagnosticData.PcId;
+            lastMinute.Second = diagnosticData.CurrentSecond;
+            lastMinute.PcCpuUsage = diagnosticData.CpuUsage;
+            lastMinute.PcMemoryUsage = diagnosticData.MemoryUsage;
+            lastMinute.PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived;
+            lastMinute.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
+            return lastMinute;
+        }
+
         public static void AddPcToAdmin(DiagnosticData diagnosticData, string admin, PcHealthContext _db)
         {
             var adminFromDb = _db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefault();
