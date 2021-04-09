@@ -38,22 +38,10 @@ namespace WebApi.Controllers
 
             if (credentialList.Count != 0) return false;
 
-            await DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
+            await DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo); 
             await DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
 
             StaticStorageServices.PcMapper.Add(newAccountInfo.CredentialsUsername, new Dictionary<string, DiagnosticData>());
-            
-            var rng = new RNGCryptoServiceProvider();
-            var buff = new byte[5];
-            rng.GetBytes(buff);
-            var pcCredentialsPassword = Convert.ToBase64String(buff);
-
-            var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(newAccountInfo.CredentialsUsername))
-                .FirstOrDefaultAsync();
-            credential.PcCredentialPassword = pcCredentialsPassword;
-            // Send pcCredentialsPassword by email
-
-            StaticStorageServices.AdminMapper.Add(newAccountInfo.CredentialsUsername, pcCredentialsPassword);
 
             return true;
         }

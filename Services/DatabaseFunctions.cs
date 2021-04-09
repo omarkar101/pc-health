@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
@@ -72,13 +73,19 @@ namespace Services
         public static async Task CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             var (salt, passwordHash) = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
+            var rng = new RNGCryptoServiceProvider();
+            var buff = new byte[5];
+            rng.GetBytes(buff);
+            var pcCredentialsPassword = Convert.ToBase64String(buff);
             var newCredential = new Credential()
             {
                 CredentialsUsername = newAccountInfo.CredentialsUsername,
                 CredentialsPassword = passwordHash,
-                CredentialsSalt = salt
+                CredentialsSalt = salt,
+                PcCredentialPassword = pcCredentialsPassword
             };
             await dbContext.Credentials.AddAsync(newCredential);
+            StaticStorageServices.AdminMapper.Add(newAccountInfo.CredentialsUsername, pcCredentialsPassword);
             await dbContext.SaveChangesAsync();
         }
 
