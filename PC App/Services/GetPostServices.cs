@@ -15,6 +15,7 @@ namespace PC_App.Services
                 {
                     await PostServices.PostDiagnosticData("https://localhost:44335/Pc/PostDiagnosticDataFromPc");
                     Thread.Sleep(500);
+                    Console.WriteLine("YES");
                 }
                 catch (Exception e)
                 {

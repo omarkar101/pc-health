@@ -66,12 +66,14 @@ namespace WebApi.Controllers
                     {
                         await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData).ConfigureAwait(false);
                         await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db).ConfigureAwait(false);
+                        await _db.SaveChangesAsync().ConfigureAwait(false);
                     }
                     else
                     {
                         var newPc = ModelCreation.CreatePc(diagnosticData);
-                        await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db).ConfigureAwait(false);
                         await _db.Pcs.AddAsync(newPc).ConfigureAwait(false);
+                        await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db).ConfigureAwait(false);
+                        await _db.SaveChangesAsync().ConfigureAwait(false);
                     }
                     await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin.Item1, _db).ConfigureAwait(false);
                     await _db.SaveChangesAsync().ConfigureAwait(false);

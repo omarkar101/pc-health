@@ -21,7 +21,7 @@ namespace PC_App.Services
 
             try
             {
-                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json");
+                pcConfigurationJsonString = File.ReadAllText(@"C:\Users\omark\source\repos\omarkar101\pc-health\PC App\Configurations.json");
             }
             catch (Exception e)
             {
@@ -53,7 +53,7 @@ namespace PC_App.Services
                 CurrentSecond = (Counter = (Counter + 1)%60),
                 PcConfiguration = pcConfigurations
             };
-
+            //Console.WriteLine(JsonSerializer.Serialize(diagnosticData));
             return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
         }
     }
