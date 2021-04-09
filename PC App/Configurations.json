@@ -1,6 +1,6 @@
 {
 	"PcUsername" : "Omar's Pc",
 	"Admins" : [
-		{"Username": "omk13", "Password" : "1234124"}
+		{"Item1": "omk13", "Item2" : "1234124"}
 	]
 }

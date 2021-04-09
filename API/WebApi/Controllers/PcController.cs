@@ -40,15 +40,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
-            var admins = diagnosticData.AdminUsernames;
+            var admins = diagnosticData.PcConfiguration.Admins;
             foreach (var admin in admins)
             {
-                if (!StaticStorageServices.PcMapper.ContainsKey(admin)) return;
-
+                if (!StaticStorageServices.PcMapper.ContainsKey(admin.Item1)) return;
+                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2)) return;
                 //if the admin contains the pc
-                if (StaticStorageServices.PcMapper[admin].ContainsKey(diagnosticData.PcId))
+                if (StaticStorageServices.PcMapper[admin.Item1].ContainsKey(diagnosticData.PcId))
                 {
-                    StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
+                    StaticStorageServices.PcMapper[admin.Item1][diagnosticData.PcId] = diagnosticData;
                     await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
 
                     await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db);
@@ -56,7 +56,7 @@ namespace WebApi.Controllers
                 }
                 else
                 {
-                    StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
+                    StaticStorageServices.PcMapper[admin.Item1].Add(diagnosticData.PcId, diagnosticData);
 
                     var pc = await _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefaultAsync();
 
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
                         await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db);
                         await _db.Pcs.AddAsync(newPc);
                     }
-                    await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin, _db);
+                    await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin.Item1, _db);
                     await _db.SaveChangesAsync();
                 }
             }

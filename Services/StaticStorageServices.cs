@@ -9,5 +9,7 @@ namespace Services
                                 //admin, 
         public static Dictionary<string, Dictionary<string, DiagnosticData>> PcMapper =
             new Dictionary<string, Dictionary<string, DiagnosticData>>();
+
+        public static Dictionary<string, string> AdminMapper = new Dictionary<string, string>();
     }
 }

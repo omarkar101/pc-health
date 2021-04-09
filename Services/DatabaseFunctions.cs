@@ -114,17 +114,18 @@ namespace Services
                 pc.PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived;
                 pc.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
                 pc.PcOs = diagnosticData.Os;
-                pc.PcUsername = diagnosticData.PcUsername;
+                pc.PcUsername = diagnosticData.PcConfiguration.PcUsername;
                 await db.SaveChangesAsync();
             }
         }
         public static async Task InitializeStaticStorage(PcHealthContext dbContext)
         {
             if (StaticStorageServices.PcMapper.Count != 0) return;
-            var admins = await dbContext.Admins.ToListAsync();
+            var admins = await dbContext.Credentials.ToListAsync();
             foreach (var admin in admins)
             {
-                StaticStorageServices.PcMapper.Add(admin.AdminCredentialsUsername, new Dictionary<string, DiagnosticData>());
+                StaticStorageServices.PcMapper.Add(admin.CredentialsUsername, new Dictionary<string, DiagnosticData>());
+                StaticStorageServices.AdminMapper.Add(admin.CredentialsUsername, admin.PcCredentialPassword);
             }
             var adminHasPc = await dbContext.AdminHasPcs.ToListAsync();
             foreach (var adminPc in adminHasPc)
@@ -144,7 +145,7 @@ namespace Services
                     MemoryUsage = (double)pc.PcMemoryUsage,
                     Os = pc.PcOs,
                     PcId = pc.PcId,
-                    PcUsername = pc.PcUsername,
+                    PcConfiguration = new PcConfiguration(),
                     TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
                     Services = new List<Tuple<string, string>>()
                 };

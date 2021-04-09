@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using CommonModels;
@@ -14,11 +16,22 @@ namespace PC_App.Services
     public static class DiagnosticDataServices
     {
         private static int Counter { get; set; } = 0;
-        public static string GetDiagnosticData() {
-            
-            bool linuxFalseWindowsTrue;
+        public static string GetDiagnosticData()
+        {
+            var pcConfigurationJsonString = "{\"PcUsername\" : \"\", \"Admins\" : []}";
+            try
+            {
+                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
 
-            linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            var pcConfigurations = JsonSerializer.Deserialize<PcConfiguration>(pcConfigurationJsonString);
+
+
+            var linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             
             var diagnosticData = new DiagnosticData()
             {
@@ -37,10 +50,10 @@ namespace PC_App.Services
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : 
                     PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
-                AdminUsernames = new List<string>(){ "rony123", "omk13","mmm130" },
-                PcUsername = "",
-                CurrentSecond = (Counter = (Counter + 1)%60)
+                CurrentSecond = (Counter = (Counter + 1)%60),
+                PcConfiguration = pcConfigurations
             };
+
             return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
         }
     }

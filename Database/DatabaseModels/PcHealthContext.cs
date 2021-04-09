@@ -98,6 +98,10 @@ namespace Database.DatabaseModels
                 entity.Property(e => e.CredentialsSalt)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.Property(e => e.PcCredentialPassword)
+                    .IsRequired()
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<LastMinute>(entity =>
