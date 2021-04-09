@@ -1,29 +1,40 @@
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Services;
-
 
 namespace WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     [ApiController]
-    public class PostController : ControllerBase
+    public class PcController : ControllerBase
     {
         private readonly PcHealthContext _db;
-        private readonly JWTSettings _jwtSettings;
 
-        public PostController(PcHealthContext db, IOptions<JWTSettings> jwtSettings)
+        public PcController(PcHealthContext db)
         {
             _db = db;
-            _jwtSettings = jwtSettings.Value;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<string> DiagnosticData()
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
+            var tokenUsername = JsonSerializer.Deserialize<TokenUsername>(payloadJson);
+            if (tokenUsername == null) return null;
+            var admin = tokenUsername.unique_name;
+            var pCsList = StaticStorageServices.PcMapper[admin].Values;
+            return JsonSerializer.Serialize(pCsList);
         }
 
         [HttpPost]
@@ -64,54 +75,6 @@ namespace WebApi.Controllers
                     await _db.SaveChangesAsync();
                 }
             }
-        }
-
-        
-
-
-        [HttpPost] 
-        public async Task<bool> PostCreateNewAdmin(NewAccountInfo newAccountInfo)
-        {
-            if (newAccountInfo is null)
-            {
-                return false;
-            }
-            var credentialList = await DatabaseFunctions.GetCredentials(_db, newAccountInfo);
-
-            if (credentialList.Count != 0) return false;
-
-            await DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
-            await DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
-
-            StaticStorageServices.PcMapper.Add(newAccountInfo.CredentialsUsername, new Dictionary<string, DiagnosticData>());
-
-            return true;
-        }
-
-
-        [HttpPost]
-        public async Task<string> PostLogin(Credential credential)
-        {
-            await DatabaseFunctions.InitializeStaticStorage(_db);
-            if (credential is null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
-
-            var credentialQueryingList = await DatabaseFunctions.GetCredentials(_db, credential);
-
-            if (credentialQueryingList.Count == 0)
-            {
-                return "false";
-            }
-
-            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential);
-
-            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential);
-
-            var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
-
-            return !decryptPassword.Equals(passwordInDatabase) ? "false" : GenerateToken.Generate(credential.CredentialsUsername, _jwtSettings);
         }
     }
 }
