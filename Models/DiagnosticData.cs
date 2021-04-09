@@ -31,5 +31,6 @@ namespace CommonModels
         public string FirewallStatus { get; set; }
         public List<string> AdminUsernames { get; set; }
         public string PcUsername { get; set; }
+        public int CurrentSecond { get; set; } = 0;
     }
 }

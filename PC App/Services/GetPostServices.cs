@@ -12,7 +12,7 @@ namespace PC_App.Services
             {
                 try
                 {
-                    PostServices.PostDiagnosticData("http://omarkar1011-001-site1.dtempurl.com/api/Post/PostDiagnosticDataFromPc");
+                    PostServices.PostDiagnosticData("https://localhost:44335/api/Post/PostDiagnosticDataFromPc");
                     Thread.Sleep(1000);
                 }
                 catch (Exception e)

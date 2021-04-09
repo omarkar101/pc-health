@@ -58,6 +58,24 @@ namespace WebApi.Controllers
                     else
                     {
                         var newPc = DatabaseFunctions.CreatePc(diagnosticData);
+                        _db.LastMinutes.Add(new LastMinute()
+                        {
+                            PcId = diagnosticData.PcId,
+                            Second = 0,
+                            PcCpuUsage = diagnosticData.CpuUsage,
+                            PcMemoryUsage = diagnosticData.MemoryUsage,
+                            PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived,
+                            PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent
+                        });
+
+                        for (var i = 1; i < 60; i++)
+                        {
+                            _db.LastMinutes.Add(new LastMinute()
+                            {
+                                Second = i,
+                                PcId = diagnosticData.PcId
+                            });
+                        }
                         _db.Pcs.Add(newPc);
                     }
                     DatabaseFunctions.AddPcToAdmin(diagnosticData, admin, _db);

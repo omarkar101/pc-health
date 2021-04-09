@@ -14,6 +14,7 @@ namespace Services
     /// </summary>
     public static class DiagnosticDataServices
     {
+        private static int Counter { get; set; } = 0;
         public static string GetDiagnosticData() {
             
             bool linuxFalseWindowsTrue;
@@ -38,7 +39,8 @@ namespace Services
                     "Active" : "Inactive") : 
                     PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
                 AdminUsernames = new List<string>(){ "rony123", "omk13","mmm130" },
-                PcUsername = ""
+                PcUsername = "",
+                CurrentSecond = (Counter = (Counter + 1)%60)
             };
             return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
         }
