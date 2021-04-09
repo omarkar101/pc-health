@@ -1,13 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Services;
 
@@ -34,12 +30,12 @@ namespace WebApi.Controllers
             {
                 return false;
             }
-            var credentialList = await DatabaseFunctions.GetCredentials(_db, newAccountInfo);
+            var credentialList = await DatabaseFunctions.GetCredentials(_db, newAccountInfo).ConfigureAwait(false);
 
             if (credentialList.Count != 0) return false;
 
-            await DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo); 
-            await DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
+            await DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo).ConfigureAwait(false); 
+            await DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo).ConfigureAwait(false);
 
             StaticStorageServices.PcMapper.Add(newAccountInfo.CredentialsUsername, new Dictionary<string, DiagnosticData>());
 
@@ -50,22 +46,22 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<string> Login(Credential credential)
         {
-            await DatabaseFunctions.InitializeStaticStorage(_db);
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             if (credential is null)
             {
                 return "false";
             }
 
-            var credentialQueryingList = await DatabaseFunctions.GetCredentials(_db, credential);
+            var credentialQueryingList = await DatabaseFunctions.GetCredentials(_db, credential).ConfigureAwait(false);
 
             if (credentialQueryingList.Count == 0)
             {
                 return "false";
             }
 
-            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential);
+            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential).ConfigureAwait(false);
 
-            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential);
+            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential).ConfigureAwait(false);
 
             var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
 

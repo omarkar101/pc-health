@@ -19,7 +19,7 @@ namespace PC_App.Services
             {
                 await streamWriter.WriteAsync(diagnosticData);
             }
-            var httpResponse = (HttpWebResponse)(await httpWebRequest.GetResponseAsync());
+            var httpResponse = (HttpWebResponse)(httpWebRequest.GetResponse());
         }
     }
 }

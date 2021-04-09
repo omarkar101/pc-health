@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text.Json;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Services;
+
 
 namespace WebApi.Controllers
 {
@@ -28,7 +30,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<string> DiagnosticData()
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
+            var token = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false);
             var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
             var tokenUsername = JsonSerializer.Deserialize<TokenUsername>(payloadJson);
             if (tokenUsername == null) return null;
@@ -44,35 +46,39 @@ namespace WebApi.Controllers
             foreach (var admin in admins)
             {
                 if (!StaticStorageServices.PcMapper.ContainsKey(admin.Item1)) return;
-                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2)) return;
+                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2))
+                {
+                    Console.WriteLine("Hello");
+                    return;
+                }
                 //if the admin contains the pc
                 if (StaticStorageServices.PcMapper[admin.Item1].ContainsKey(diagnosticData.PcId))
                 {
                     StaticStorageServices.PcMapper[admin.Item1][diagnosticData.PcId] = diagnosticData;
-                    await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+                    await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData).ConfigureAwait(false);
 
-                    await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db);
-                    await _db.SaveChangesAsync();
+                    await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db).ConfigureAwait(false);
+                    await _db.SaveChangesAsync().ConfigureAwait(false);
                 }
                 else
                 {
                     StaticStorageServices.PcMapper[admin.Item1].Add(diagnosticData.PcId, diagnosticData);
 
-                    var pc = await _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefaultAsync();
+                    var pc = await _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefaultAsync().ConfigureAwait(false);
 
                     if (pc != null)
                     {
-                        await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
-                        await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db);
+                        await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData).ConfigureAwait(false);
+                        await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db).ConfigureAwait(false);
                     }
                     else
                     {
                         var newPc = ModelCreation.CreatePc(diagnosticData);
-                        await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db);
-                        await _db.Pcs.AddAsync(newPc);
+                        await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db).ConfigureAwait(false);
+                        await _db.Pcs.AddAsync(newPc).ConfigureAwait(false);
                     }
-                    await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin.Item1, _db);
-                    await _db.SaveChangesAsync();
+                    await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin.Item1, _db).ConfigureAwait(false);
+                    await _db.SaveChangesAsync().ConfigureAwait(false);
                 }
             }
         }

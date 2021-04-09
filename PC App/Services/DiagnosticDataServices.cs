@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.Json;
@@ -19,6 +18,7 @@ namespace PC_App.Services
         public static string GetDiagnosticData()
         {
             var pcConfigurationJsonString = "{\"PcUsername\" : \"\", \"Admins\" : []}";
+
             try
             {
                 pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json");

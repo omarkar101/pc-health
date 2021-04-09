@@ -16,13 +16,13 @@ namespace Services
         {
             var lastMinutePc = await db.LastMinutes.Where(lm =>
                     lm.PcId.Equals(diagnosticData.PcId) && lm.Second == diagnosticData.CurrentSecond)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync().ConfigureAwait(false);
             ModelCreation.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
         }
         
         public static async Task InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
         {
-            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData));
+            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData)).ConfigureAwait(false);
 
             for (var i = 1; i < 60; i++)
             {
@@ -40,7 +40,7 @@ namespace Services
 
         public static async Task AddPcToAdmin(DiagnosticData diagnosticData, string admin, PcHealthContext db)
         {
-            var adminFromDb = await db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefaultAsync();
+            var adminFromDb = await db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefaultAsync().ConfigureAwait(false);
             var adminHasPc = new AdminHasPc()
             {
                 PcId = diagnosticData.PcId,
@@ -50,12 +50,12 @@ namespace Services
         }
         public static async Task<List<Credential>> GetCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
-            return await dbContext.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToListAsync();
+            return await dbContext.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToListAsync().ConfigureAwait(false);
         }
 
         public static async Task<List<Credential>> GetCredentials(PcHealthContext dbContext, Credential credential)
         {
-            return await dbContext.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername).ToListAsync();
+            return await dbContext.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername).ToListAsync().ConfigureAwait(false);
         }
 
         public static async Task CreateNewAdmin(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
@@ -66,8 +66,8 @@ namespace Services
                 AdminLastName = newAccountInfo.AdminLastName,
                 AdminCredentialsUsername = newAccountInfo.CredentialsUsername
             };
-            await dbContext.Admins.AddAsync(newAdmin);
-            await dbContext.SaveChangesAsync();
+            await dbContext.Admins.AddAsync(newAdmin).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public static async Task CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
@@ -84,16 +84,16 @@ namespace Services
                 CredentialsSalt = salt,
                 PcCredentialPassword = pcCredentialsPassword
             };
-            await dbContext.Credentials.AddAsync(newCredential);
+            await dbContext.Credentials.AddAsync(newCredential).ConfigureAwait(false);
             StaticStorageServices.AdminMapper.Add(newAccountInfo.CredentialsUsername, pcCredentialsPassword);
-            await dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public static async Task<string> GetPasswordSalt(PcHealthContext dbContext, Credential credential)
         {
             var credentials = dbContext.Credentials;
             var neededCred = await credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsSalt).FirstAsync();
+                .Select(c => c.CredentialsSalt).FirstAsync().ConfigureAwait(false);
             return neededCred;
         }
 
@@ -101,7 +101,7 @@ namespace Services
         {
             var credentials = dbContext.Credentials;
             var neededCred = await credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsPassword).FirstAsync();
+                .Select(c => c.CredentialsPassword).FirstAsync().ConfigureAwait(false);
             return neededCred;
         }
 
@@ -109,7 +109,7 @@ namespace Services
 
         public static async Task UpdatePcInDatabase(PcHealthContext db, DiagnosticData diagnosticData)
         {
-            var pc = await db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefaultAsync();
+            var pc = await db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefaultAsync().ConfigureAwait(false);
             if (pc != null)
             {
                 pc.PcCpuUsage = diagnosticData.CpuUsage;
@@ -128,18 +128,19 @@ namespace Services
         public static async Task InitializeStaticStorage(PcHealthContext dbContext)
         {
             if (StaticStorageServices.PcMapper.Count != 0) return;
-            var admins = await dbContext.Credentials.ToListAsync();
+            var admins = await dbContext.Credentials.ToListAsync().ConfigureAwait(false);
             foreach (var admin in admins)
             {
                 StaticStorageServices.PcMapper.Add(admin.CredentialsUsername, new Dictionary<string, DiagnosticData>());
                 StaticStorageServices.AdminMapper.Add(admin.CredentialsUsername, admin.PcCredentialPassword);
             }
-            var adminHasPc = await dbContext.AdminHasPcs.ToListAsync();
+
+            var adminHasPc = await dbContext.AdminHasPcs.ToListAsync().ConfigureAwait(false);
             foreach (var adminPc in adminHasPc)
             {
                 StaticStorageServices.PcMapper[adminPc.AdminCredentialsUsername].Add(adminPc.PcId, new DiagnosticData());
             }
-            var pcs = await dbContext.Pcs.ToListAsync();
+            var pcs = await dbContext.Pcs.ToListAsync().ConfigureAwait(false);
             foreach (var pc in pcs)
             {
                 var pcDiagnosticData = new DiagnosticData()
