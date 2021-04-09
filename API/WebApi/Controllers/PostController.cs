@@ -1,23 +1,18 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
+using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Services;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 
 namespace WebApi.Controllers
 {
-    //[EnableCors]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PostController : ControllerBase
@@ -32,7 +27,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public void PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
+        public async Task PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
             var admins = diagnosticData.AdminUsernames;
             foreach (var admin in admins)
@@ -43,49 +38,30 @@ namespace WebApi.Controllers
                 if (StaticStorageServices.PcMapper[admin].ContainsKey(diagnosticData.PcId))
                 {
                     StaticStorageServices.PcMapper[admin][diagnosticData.PcId] = diagnosticData;
-                    DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+                    await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
 
-                    var lastMinutePc = _db.LastMinutes.Where(lm =>
-                            lm.PcId.Equals(diagnosticData.PcId) && lm.Second == diagnosticData.CurrentSecond)
-                        .FirstOrDefault();
-                    DatabaseFunctions.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
-                    _db.SaveChanges();
+                    await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db);
+                    await _db.SaveChangesAsync();
                 }
                 else
                 {
                     StaticStorageServices.PcMapper[admin].Add(diagnosticData.PcId, diagnosticData);
 
-                    var _pc = _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefault();
+                    var pc = await _db.Pcs.Where(p => p.PcId == diagnosticData.PcId).FirstOrDefaultAsync();
 
-                    if (_pc != null)
+                    if (pc != null)
                     {
-                        DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
-                        var lastMinutePc = _db.LastMinutes.Where(lm =>
-                                lm.PcId.Equals(diagnosticData.PcId) && lm.Second == diagnosticData.CurrentSecond)
-                            .FirstOrDefault();
-                        DatabaseFunctions.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
+                        await DatabaseFunctions.UpdatePcInDatabase(_db, diagnosticData);
+                        await DatabaseFunctions.UpdatePcLastCurrentSecond(diagnosticData, _db);
                     }
                     else
                     {
-                        var newPc = DatabaseFunctions.CreatePc(diagnosticData);
-                        _db.LastMinutes.Add(DatabaseFunctions.CreateOrUpdateLastMinute(diagnosticData));
-
-                        for (var i = 1; i < 60; i++)
-                        {
-                            _db.LastMinutes.Add(new LastMinute()
-                            {
-                                Second = i,
-                                PcId = diagnosticData.PcId,
-                                PcNetworkAverageBytesSend = 0,
-                                PcCpuUsage = 0,
-                                PcMemoryUsage = 0,
-                                PcNetworkAverageBytesReceived = 0
-                            });
-                        }
-                        _db.Pcs.Add(newPc);
+                        var newPc = ModelCreation.CreatePc(diagnosticData);
+                        await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db);
+                        await _db.Pcs.AddAsync(newPc);
                     }
-                    DatabaseFunctions.AddPcToAdmin(diagnosticData, admin, _db);
-                    _db.SaveChanges();
+                    await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin, _db);
+                    await _db.SaveChangesAsync();
                 }
             }
         }
@@ -94,19 +70,18 @@ namespace WebApi.Controllers
 
 
         [HttpPost] 
-        public bool PostCreateNewAdmin(NewAccountInfo newAccountInfo)
+        public async Task<bool> PostCreateNewAdmin(NewAccountInfo newAccountInfo)
         {
             if (newAccountInfo is null)
             {
-                throw new ArgumentNullException(nameof(newAccountInfo));
+                return false;
             }
-
-            var credentialList = DatabaseFunctions.GetCredentials(_db, newAccountInfo);
+            var credentialList = await DatabaseFunctions.GetCredentials(_db, newAccountInfo);
 
             if (credentialList.Count != 0) return false;
 
-            DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
-            DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
+            await DatabaseFunctions.CreateNewCredentials(_db, newAccountInfo);
+            await DatabaseFunctions.CreateNewAdmin(_db, newAccountInfo);
 
             StaticStorageServices.PcMapper.Add(newAccountInfo.CredentialsUsername, new Dictionary<string, DiagnosticData>());
 
@@ -115,30 +90,28 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        public string PostLogin(Credential credential)
+        public async Task<string> PostLogin(Credential credential)
         {
-            DatabaseFunctions.InitializeStaticStorage(_db);
+            await DatabaseFunctions.InitializeStaticStorage(_db);
             if (credential is null)
             {
                 throw new ArgumentNullException(nameof(credential));
             }
 
-            var credentialQueryingList = DatabaseFunctions.GetCredentials(_db, credential);
+            var credentialQueryingList = await DatabaseFunctions.GetCredentials(_db, credential);
 
             if (credentialQueryingList.Count == 0)
             {
                 return "false";
             }
 
-            var passwordSalt = DatabaseFunctions.GetPasswordSalt(_db, credential);
+            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential);
 
-            var passwordInDatabase = DatabaseFunctions.GetPasswordFromDb(_db, credential);
+            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential);
 
             var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
 
-            if (!decryptPassword.Equals(passwordInDatabase)) return "false";
-
-            return GenerateToken.Generate(credential.CredentialsUsername, _jwtSettings);
+            return !decryptPassword.Equals(passwordInDatabase) ? "false" : GenerateToken.Generate(credential.CredentialsUsername, _jwtSettings);
         }
     }
 }
