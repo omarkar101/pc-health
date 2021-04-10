@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using CommonModels;
 using DeviceId;
 using PC_App.Common_Version.Diagnostic_Data.Disk;
@@ -21,7 +23,7 @@ namespace PC_App.Services
 
             try
             {
-                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json");
+                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json", Encoding.UTF8);
             }
             catch (Exception e)
             {
@@ -53,7 +55,8 @@ namespace PC_App.Services
                 CurrentSecond = (Counter = (Counter +1)%60),
                 PcConfiguration = pcConfigurations
             };
-            return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
+            //Console.WriteLine(JsonSerializer.Serialize(diagnosticData));
+            return JsonSerializer.Serialize(diagnosticData);
         }
     }
 }
