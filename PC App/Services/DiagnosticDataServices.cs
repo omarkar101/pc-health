@@ -1,24 +1,39 @@
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using CommonModels;
 using DeviceId;
 using PC_App.Common_Version.Diagnostic_Data.Disk;
 using PC_App.Common_Version.Diagnostic_Data.Network;
 
-namespace Services
+namespace PC_App.Services
 {
     /// <summary>
     /// A service that gets the Diagnostic Data according to the Operating System
     /// </summary>
     public static class DiagnosticDataServices
     {
-        public static string GetDiagnosticData() {
-            
-            bool linuxFalseWindowsTrue;
+        private static int Counter { get; set; } = -1;
+        public static string GetDiagnosticData()
+        {
+            var pcConfigurationJsonString = "{\"PcUsername\" : \"\", \"Admins\" : []}";
 
-            linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            try
+            {
+                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json", Encoding.UTF8);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            var pcConfigurations = JsonSerializer.Deserialize<PcConfiguration>(pcConfigurationJsonString);
+
+
+            var linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
             
             var diagnosticData = new DiagnosticData()
             {
@@ -37,10 +52,11 @@ namespace Services
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : 
                     PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
-                AdminUsernames = new List<string>(){ "rony123", "omk13","mmm130" },
-                PcUsername = ""
+                CurrentSecond = (Counter = (Counter +1)%60),
+                PcConfiguration = pcConfigurations
             };
-            return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
+            //Console.WriteLine(JsonSerializer.Serialize(diagnosticData));
+            return JsonSerializer.Serialize(diagnosticData);
         }
     }
 }

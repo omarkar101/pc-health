@@ -1,25 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services
 {
-    public class DatabaseFunctions
+    public static class DatabaseFunctions
     {
-        public static List<Credential> GetCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
+        public static async Task UpdatePcLastCurrentSecond(DiagnosticData diagnosticData, PcHealthContext db)
         {
-            return dbContext.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToList();
+            var lastMinutePc = await db.LastMinutes.Where(lm =>
+                    lm.PcId.Equals(diagnosticData.PcId) && lm.Second == diagnosticData.CurrentSecond)
+                .FirstOrDefaultAsync().ConfigureAwait(false);
+            ModelCreation.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
+        }
+        public static async Task InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
+        {
+            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData)).ConfigureAwait(false);
+            for (var i = 1; i < 60; i++)
+            {
+             
+                await db.LastMinutes.AddAsync(new LastMinute()
+                {
+                    Second = i,
+                    PcId = diagnosticData.PcId,
+                    PcNetworkAverageBytesSend = 0,
+                    PcCpuUsage = 0,
+                    PcMemoryUsage = 0,
+                    PcNetworkAverageBytesReceived = 0
+                }).ConfigureAwait(false);
+            }
+        
+        }
+ 
+        public static async Task AddPcToAdmin(DiagnosticData diagnosticData, string admin, PcHealthContext db)
+        {
+            var adminFromDb = await db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefaultAsync().ConfigureAwait(false);
+            var adminHasPc = new AdminHasPc()
+            {
+                PcId = diagnosticData.PcId,
+                AdminCredentialsUsername = admin
+            };
+            adminFromDb.AdminHasPcs.Add(adminHasPc);
+        }
+        public static async Task<List<Credential>> GetCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
+        {
+            return await dbContext.Credentials.Where(c => c.CredentialsUsername == newAccountInfo.CredentialsUsername).ToListAsync().ConfigureAwait(false);
         }
 
-        public static List<Credential> GetCredentials(PcHealthContext dbContext, Credential credential)
+        public static async Task<List<Credential>> GetCredentials(PcHealthContext dbContext, Credential credential)
         {
-            return dbContext.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername).ToList();
+            return await dbContext.Credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername).ToListAsync().ConfigureAwait(false);
         }
 
-        public static void CreateNewAdmin(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
+        public static async Task CreateNewAdmin(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             var newAdmin = new Admin()
             {
@@ -27,88 +67,81 @@ namespace Services
                 AdminLastName = newAccountInfo.AdminLastName,
                 AdminCredentialsUsername = newAccountInfo.CredentialsUsername
             };
-            dbContext.Admins.Add(newAdmin);
-            dbContext.SaveChanges();
+            await dbContext.Admins.AddAsync(newAdmin).ConfigureAwait(false);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public static void CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
+        public static async Task CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             var (salt, passwordHash) = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
+            var rng = new RNGCryptoServiceProvider();
+            var buff = new byte[5];
+            rng.GetBytes(buff);
+            var pcCredentialsPassword = Convert.ToBase64String(buff);
             var newCredential = new Credential()
             {
                 CredentialsUsername = newAccountInfo.CredentialsUsername,
                 CredentialsPassword = passwordHash,
-                CredentialsSalt = salt
+                CredentialsSalt = salt,
+                PcCredentialPassword = pcCredentialsPassword
             };
-            dbContext.Credentials.Add(newCredential);
-            dbContext.SaveChanges();
+            await dbContext.Credentials.AddAsync(newCredential).ConfigureAwait(false);
+            StaticStorageServices.AdminMapper.Add(newAccountInfo.CredentialsUsername, pcCredentialsPassword);
+            await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public static string GetPasswordSalt(PcHealthContext dbContext, Credential credential)
+        public static async Task<string> GetPasswordSalt(PcHealthContext dbContext, Credential credential)
         {
             var credentials = dbContext.Credentials;
-            return credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsSalt).First().ToString();
+            var neededCred = await credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
+                .Select(c => c.CredentialsSalt).FirstAsync().ConfigureAwait(false);
+            return neededCred;
         }
 
-        public static string GetPasswordFromDb(PcHealthContext dbContext, Credential credential)
+        public static async Task<string> GetPasswordFromDb(PcHealthContext dbContext, Credential credential)
         {
             var credentials = dbContext.Credentials;
-            return credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
-                .Select(c => c.CredentialsPassword).First().ToString();
+            var neededCred = await credentials.Where(c => c.CredentialsUsername == credential.CredentialsUsername)
+                .Select(c => c.CredentialsPassword).FirstAsync().ConfigureAwait(false);
+            return neededCred;
         }
 
-        public static Pc CreatePc(DiagnosticData diagnosticData)
-        {
-            var newPc = new Pc()
-            {
-                //AdminCredentialsUsername = diagnosticData.AdminUsername,
-                PcCpuUsage = diagnosticData.CpuUsage,
-                PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace,
-                PcDiskTotalSpace = diagnosticData.DiskTotalSpace,
-                PcFirewallStatus = diagnosticData.FirewallStatus,
-                PcId = diagnosticData.PcId,
-                PcMemoryUsage = diagnosticData.MemoryUsage,
-                PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived,
-                PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent,
-                PcOs = diagnosticData.Os,
-                PcUsername = diagnosticData.PcUsername
-            };
-            return newPc;
-        }
+        
 
-        public static void UpdatePcInDatabase(PcHealthContext _db, DiagnosticData diagnosticData)
+        public static async Task UpdatePcInDatabase(PcHealthContext db, DiagnosticData diagnosticData)
         {
-            var _pc = _db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefault<Pc>();
-            if (_pc != null)
+            var pc = await db.Pcs.Where(p => p.PcId.Equals(diagnosticData.PcId)).FirstOrDefaultAsync().ConfigureAwait(false);
+            if (pc != null)
             {
-                _pc.PcCpuUsage = diagnosticData.CpuUsage;
-                _pc.PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace;
-                _pc.PcDiskTotalSpace = diagnosticData.DiskTotalSpace;
-                _pc.PcFirewallStatus = diagnosticData.FirewallStatus;
-                _pc.PcId = diagnosticData.PcId;
-                _pc.PcMemoryUsage = diagnosticData.MemoryUsage;
-                _pc.PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived;
-                _pc.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
-                _pc.PcOs = diagnosticData.Os;
-                _pc.PcUsername = diagnosticData.PcUsername;
-                _db.SaveChanges();
+                pc.PcCpuUsage = diagnosticData.CpuUsage;
+                pc.PcDiskTotalFreeSpace = diagnosticData.TotalFreeDiskSpace;
+                pc.PcDiskTotalSpace = diagnosticData.DiskTotalSpace;
+                pc.PcFirewallStatus = diagnosticData.FirewallStatus;
+                pc.PcId = diagnosticData.PcId;
+                pc.PcMemoryUsage = diagnosticData.MemoryUsage;
+                pc.PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived;
+                pc.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
+                pc.PcOs = diagnosticData.Os;
+                pc.PcUsername = diagnosticData.PcConfiguration.PcUsername;
+                await db.SaveChangesAsync();
             }
         }
-        public static void InitializeStaticStorage(PcHealthContext dbContext)
+        public static async Task InitializeStaticStorage(PcHealthContext dbContext)
         {
             if (StaticStorageServices.PcMapper.Count != 0) return;
-            var admins = dbContext.Admins.ToList();
+            var admins = await dbContext.Credentials.ToListAsync().ConfigureAwait(false);
             foreach (var admin in admins)
             {
-                StaticStorageServices.PcMapper.Add(admin.AdminCredentialsUsername, new Dictionary<string, DiagnosticData>());
+                StaticStorageServices.PcMapper.Add(admin.CredentialsUsername, new Dictionary<string, DiagnosticData>());
+                StaticStorageServices.AdminMapper.Add(admin.CredentialsUsername, admin.PcCredentialPassword);
             }
-            var adminHasPc = dbContext.AdminHasPcs.ToList();
+
+            var adminHasPc = await dbContext.AdminHasPcs.ToListAsync().ConfigureAwait(false);
             foreach (var adminPc in adminHasPc)
             {
                 StaticStorageServices.PcMapper[adminPc.AdminCredentialsUsername].Add(adminPc.PcId, new DiagnosticData());
             }
-            var pcs = dbContext.Pcs.ToList();
+            var pcs = await dbContext.Pcs.ToListAsync().ConfigureAwait(false);
             foreach (var pc in pcs)
             {
                 var pcDiagnosticData = new DiagnosticData()
@@ -121,7 +154,7 @@ namespace Services
                     MemoryUsage = (double)pc.PcMemoryUsage,
                     Os = pc.PcOs,
                     PcId = pc.PcId,
-                    PcUsername = pc.PcUsername,
+                    PcConfiguration = new PcConfiguration(),
                     TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
                     Services = new List<Tuple<string, string>>()
                 };

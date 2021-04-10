@@ -7,7 +7,6 @@ namespace CommonModels
     {
         public DiagnosticData()
         {
-            AdminUsernames = new List<string>();
             Services = new List<Tuple<string, string>>();
         }
         public float CpuUsage { get; set; }
@@ -29,7 +28,7 @@ namespace CommonModels
         public List<Tuple<string, string>> Services { get; set; }
 
         public string FirewallStatus { get; set; }
-        public List<string> AdminUsernames { get; set; }
-        public string PcUsername { get; set; }
+        public PcConfiguration PcConfiguration { get; set; }
+        public int CurrentSecond { get; set; } = 0;
     }
 }

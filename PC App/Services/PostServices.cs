@@ -1,25 +1,25 @@
-using System;
 using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 
-namespace Services
+namespace PC_App.Services
 {
     public static class PostServices
     {
-        public static void PostDiagnosticData(string url)
+        public static async Task PostDiagnosticData(string url)
         {
-            string diagnosticData = DiagnosticDataServices.GetDiagnosticData();
+            var diagnosticData = DiagnosticDataServices.GetDiagnosticData();
             
             ServicePointManager.ServerCertificateValidationCallback = delegate { return true; }; 
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            await using (var streamWriter = new StreamWriter(await httpWebRequest.GetRequestStreamAsync()))
             {
-                streamWriter.Write(diagnosticData);
+                await streamWriter.WriteAsync(diagnosticData);
             }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            var httpResponse = (HttpWebResponse)(httpWebRequest.GetResponse());
         }
     }
 }

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PC_App.Services;
-using Services;
 
 namespace PC_App
 {
@@ -9,8 +7,7 @@ namespace PC_App
     {
         private static async Task Main(string[] args)
         {
-
-            GetPostServices.PostDiagnosticGetTime();
+            await GetPostServices.PostDiagnosticGetTime();
         }
     }
 }

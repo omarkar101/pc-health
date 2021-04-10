@@ -16,6 +16,7 @@ namespace Database.DatabaseModels
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<AdminHasPc> AdminHasPcs { get; set; }
         public virtual DbSet<Credential> Credentials { get; set; }
+        public virtual DbSet<LastMinute> LastMinutes { get; set; }
         public virtual DbSet<Pc> Pcs { get; set; }
         public virtual DbSet<Service> Services { get; set; }
 
@@ -97,6 +98,20 @@ namespace Database.DatabaseModels
                 entity.Property(e => e.CredentialsSalt)
                     .IsRequired()
                     .HasMaxLength(45);
+
+                entity.Property(e => e.PcCredentialPassword)
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            modelBuilder.Entity<LastMinute>(entity =>
+            {
+                entity.HasKey(e => new { e.PcId, e.Second })
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Last_Minute");
+
+                entity.Property(e => e.PcId).HasMaxLength(150);
             });
 
             modelBuilder.Entity<Pc>(entity =>
