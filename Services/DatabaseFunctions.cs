@@ -40,6 +40,7 @@ namespace Services
         public static void InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
         {
             db.LastMinutes.Add(ModelCreation.CreateOrUpdateLastMinute(diagnosticData));
+            Console.WriteLine(diagnosticData.CurrentSecond);
 
             //var series = Enumerable.Range(1, 3).ToList();
 
@@ -48,56 +49,24 @@ namespace Services
 
             //foreach (var i in series)
 
-                //await foreach (int item in (10, 3))
-            for (int i = 1; i <= 2; i++)
+            //await foreach (int item in (10, 3))
+           
+            for (int i = 1; i < 60; i++)
             {
-                var j = i;
+             
                 db.LastMinutes.Add(new LastMinute()
                 {
-                    Second = j,
+                    Second = i,
                     PcId = diagnosticData.PcId,
                     PcNetworkAverageBytesSend = 0,
                     PcCpuUsage = 0,
                     PcMemoryUsage = 0,
                     PcNetworkAverageBytesReceived = 0
                 });
-                //tasks.Add(Task.Run(async () =>
-                //{
-                //    await db.LastMinutes.AddAsync(new LastMinute()
-                //    {
-                //        Second = j,
-                //        PcId = diagnosticData.PcId,
-                //        PcNetworkAverageBytesSend = 0,
-                //        PcCpuUsage = 0,
-                //        PcMemoryUsage = 0,
-                //        PcNetworkAverageBytesReceived = 0
-                //    });
-                //}));
             }
-
-            //await Task.WhenAll(tasks.ToArray()).ConfigureAwait(false);
-            //await db.SaveChangesAsync();
-            //Task.WaitAll();
-            //var z = Enumerable.Range(1, 59).ToList();
-            //Parallel.ForEach(z, async i => await DoAsync(i, diagnosticData, db));
-
-
-            //Task.WaitAll();
-            //for (var i = 1; i < 60; i++)
-            //{
-            //    await db.LastMinutes.AddAsync(new LastMinute()
-            //    {
-            //        Second = i,
-            //        PcId = diagnosticData.PcId,
-            //        PcNetworkAverageBytesSend = 0,
-            //        PcCpuUsage = 0,
-            //        PcMemoryUsage = 0,
-            //        PcNetworkAverageBytesReceived = 0
-            //    }).ConfigureAwait(false);
-            //}
-            //Task.WaitAll();
+        
         }
-
+ 
         public static async Task AddPcToAdmin(DiagnosticData diagnosticData, string admin, PcHealthContext db)
         {
             var adminFromDb = await db.Admins.Where(a => a.AdminCredentialsUsername.Equals(admin)).FirstOrDefaultAsync().ConfigureAwait(false);

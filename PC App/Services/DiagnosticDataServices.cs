@@ -14,7 +14,7 @@ namespace PC_App.Services
     /// </summary>
     public static class DiagnosticDataServices
     {
-        private static int Counter { get; set; } = 0;
+        private static int Counter { get; set; } = -1;
         public static string GetDiagnosticData()
         {
             var pcConfigurationJsonString = "{\"PcUsername\" : \"\", \"Admins\" : []}";
@@ -50,10 +50,9 @@ namespace PC_App.Services
                     (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
                     "Active" : "Inactive") : 
                     PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
-                CurrentSecond = (Counter = (Counter + 1)%60),
+                CurrentSecond = (Counter = (Counter +1)%60),
                 PcConfiguration = pcConfigurations
             };
-
             return JsonSerializer.Serialize<DiagnosticData>(diagnosticData);
         }
     }
