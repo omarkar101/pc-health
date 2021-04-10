@@ -7,21 +7,25 @@ import Login from "./Login";
 import Nav from "./Nav";
 import Register from "./Register";
 import './style.css'
+import ProtectedRoute from "./ProtectedRoute";
 
 
 function App() {
-
   const [buttonPopup, setButtonPopup] = useState(false);
   const [token, setToken] = useState();
   const [state, setState] = useState({
     interval: 3,
   });
+  
+  // const [isAuth,setAuth] = useState((localStorage.getItem('token') === 'false' || localStorage.getItem('token') === null) ? false :true)
+  // if (localStorage.getItem('token') === 'false' || localStorage.getItem('token') === null) { setAuth(false) }
+  // else{setAuth(true)}
 
-  const handleIntervalChange = (event) => {
-    state.interval = event.target.value;
-    setState(state);
-    // setState({ interval: event.target.value })
-  };
+    const handleIntervalChange = (event) => {
+      state.interval = event.target.value;
+      setState(state);
+      // setState({ interval: event.target.value })
+    };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,10 +40,17 @@ function App() {
 
   return (
     <>
-      <div className="settingsDiv">
+      <Router interval={state.interval}>
+        <Nav setToken={setToken}/>
+        {/* <Route path="/" exact component={Login}/> */}
+        <main>
+          <Route path="/" exact component={Login}>
+            <Login setToken={setToken} />
+          </Route>
+          <div className="settingsDiv">
         <button className="SettingsButton" onClick={() => setButtonPopup(true)}> Settings </button>
-      </div>
-      <layer>
+        </div>
+         <layer>
         <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
           <form onSubmit={handleSubmit}>
             <label> Time Interval
@@ -53,34 +64,10 @@ function App() {
           </form>
         </Settings>
       </layer>
-      <Router interval={state.interval}>
-        <Nav />
-        {/* <Route path="/" exact component={Login}/> */}
-        <button onClick={() => setButtonPopup(true)}> Settings </button>
-        <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <form onSubmit={handleSubmit}>
-            <label> Time Interval</label>
-            <br />
-            <input
-              type="number"
-              onChange={handleIntervalChange}
-              placeholder="set time interval (in seconds)"
-            />
-            <br />
-            <button className="save-btn" type="submit">
-              Save Changes
-            </button>
-            {/* <Table interval={state.interval}></Table> */}
-          </form>
-        </Settings>
-        <main>
-          <Route path="/" exact component={Login}>
-            <Login />
-          </Route>
-          <Route path="/table" exact component={Table}>
+          <ProtectedRoute path="/table" component={Table}>
             <Table i={state}></Table>
-          </Route>
-          {/* <Route path="/:id" component={Services} /> */}
+          </ProtectedRoute>
+          {/* <Route path="/table/:id" component={Services} /> */}
           <Route path="/register" component={Register} />
         </main>
       </Router>

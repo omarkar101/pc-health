@@ -6,11 +6,9 @@ function Services({match}) {
   const [D, setData] = useState([]);
   const FetchData = () => {
     axios
-      .get(
-        "http://pchealth.somee.com/api/Base/GetDiagnosticData"
-      )
+      .get("http://omarkar1011-001-site1.dtempurl.com/Pc/DiagnosticData")
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setData(res.data.filter((d) => d.PcId === match.params.id));
       })
       .catch((err) => console.log(err));
