@@ -1,7 +1,10 @@
-import React, { useState,SyntheticEvent, useEffect} from "react";
+import React, { useState } from "react";
 import "./Login.css";
 import { Redirect } from "react-router";
-function Login() {
+
+
+
+function Login(prop: { setToken:(token)=>void}) {
     const [CredentialsUsername, setUname] = useState("");
     const [CredentialsPassword, setPassword] = useState("");
     const [redirect, setRedirect] = useState("");
@@ -23,12 +26,10 @@ function Login() {
             }),
           }
         );
-        const token = await response.text();
-        localStorage.setItem("token", token)
-        console.log(CredentialsUsername)
-        console.log(CredentialsPassword);
-        console.log(token);
-        setRedirect(token);
+      const token = await response.text();
+      localStorage.setItem("token", token)
+      prop.setToken(token)
+      setRedirect(token);
         // console.log(token)
         // const ans = await response
         //  setRedirect(ans);
@@ -37,7 +38,16 @@ function Login() {
     // useEffect(() => {
     //     submit();
     // });
-    //if (redirect != "false") { return <Redirect to="/" /> }
+  if (redirect !== "false" && redirect !== "") { return <div><Redirect to="/table" /></div> }
+  
+  // else if (redirect==="false"){return (
+  //   <div>
+  //     <Redirect to="/" />
+  //     <p>The username/password you entered are incorrect</p>
+  //   </div>
+  // );}
+
+
     return (
         <form onSubmit={submit}>
             <h1 className="h3 mb-3 fw-normal">Please Login</h1>

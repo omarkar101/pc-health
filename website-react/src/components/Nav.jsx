@@ -1,25 +1,49 @@
 import React from "react";
 import { Link } from "react-router-dom";
-export default function Nav() {
+
+
+
+
+export default function Nav(prop:{setToken:(token)=>void}) {
+
+  const logout = () => {
+    localStorage.removeItem("token")
+    prop.setToken('')
+  }
+  let menu;
+  if (localStorage.getItem("token") === "false" || localStorage.getItem("token") === null) {
+    menu = (
+      <ul className="navbar-nav me-auto mb-2 mb-nd-8">
+        <li className="navbar-item active">
+          <Link to="/" className="nav-link">
+            Login
+          </Link>
+        </li>
+        <li className="navbar-item active">
+          <Link to="/register" className="nav-link">
+            Register
+          </Link>
+        </li>
+      </ul>
+    );
+  } else {
+    menu = (
+      <ul className="navbar-nav me-auto mb-2 mb-nd-8">
+      <li className="navbar-item active">
+        <Link to="/" className="nav-link" onClick={logout}>
+          Logout
+        </Link>
+      </li>
+    </ul>)
+  }
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div className="container-fluid">
-        <Link to="/table" className="navbar-brand">
+        <div className="navbar-brand">
           Home
-        </Link>
+        </div>
         <div>
-          <ul className="navbar-nav me-auto mb-2 mb-nd-8">
-            <li className="navbar-item active">
-              <Link to="/" className="nav-link">
-                Login
-              </Link>
-            </li>
-            <li className="navbar-item active">
-              <Link to="/register" className="nav-link">
-                Register
-              </Link>
-            </li>
-          </ul>
+          {menu}
         </div>
       </div>
     </nav>

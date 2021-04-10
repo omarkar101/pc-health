@@ -7,21 +7,25 @@ import Login from "./Login";
 import Nav from "./Nav";
 import Register from "./Register";
 import './style.css'
+import ProtectedRoute from "./ProtectedRoute";
 
 
 function App() {
-
   const [buttonPopup, setButtonPopup] = useState(false);
   const [token, setToken] = useState();
   const [state, setState] = useState({
     interval: 3,
   });
+  
+  // const [isAuth,setAuth] = useState((localStorage.getItem('token') === 'false' || localStorage.getItem('token') === null) ? false :true)
+  // if (localStorage.getItem('token') === 'false' || localStorage.getItem('token') === null) { setAuth(false) }
+  // else{setAuth(true)}
 
-  const handleIntervalChange = (event) => {
-    state.interval = event.target.value;
-    setState(state);
-    // setState({ interval: event.target.value })
-  };
+    const handleIntervalChange = (event) => {
+      state.interval = event.target.value;
+      setState(state);
+      // setState({ interval: event.target.value })
+    };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,11 +41,11 @@ function App() {
   return (
     <>
       <Router interval={state.interval}>
-        <Nav />
+        <Nav setToken={setToken}/>
         {/* <Route path="/" exact component={Login}/> */}
         <main>
           <Route path="/" exact component={Login}>
-            <Login />
+            <Login setToken={setToken} />
           </Route>
           <div className="settingsDiv">
         <button className="SettingsButton" onClick={() => setButtonPopup(true)}> Settings </button>
@@ -60,10 +64,10 @@ function App() {
           </form>
         </Settings>
       </layer>
-          <Route path="/table" exact component={Table}>
+          <ProtectedRoute path="/table" component={Table}>
             <Table i={state}></Table>
-          </Route>
-          {/* <Route path="/:id" component={Services} /> */}
+          </ProtectedRoute>
+          {/* <Route path="/table/:id" component={Services} /> */}
           <Route path="/register" component={Register} />
         </main>
       </Router>
