@@ -36,10 +36,19 @@ function App() {
 
   return (
     <>
-      <div className="settingsDiv">
+      
+      
+      <Router interval={state.interval}>
+        <Nav />
+        {/* <Route path="/" exact component={Login}/> */}
+        <main>
+          <Route path="/" exact component={Login}>
+            <Login />
+          </Route>
+          <div className="settingsDiv">
         <button className="SettingsButton" onClick={() => setButtonPopup(true)}> Settings </button>
-      </div>
-      <layer>
+        </div>
+         <layer>
         <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
           <form onSubmit={handleSubmit}>
             <label> Time Interval
@@ -53,30 +62,6 @@ function App() {
           </form>
         </Settings>
       </layer>
-      <Router interval={state.interval}>
-        <Nav />
-        {/* <Route path="/" exact component={Login}/> */}
-        <button onClick={() => setButtonPopup(true)}> Settings </button>
-        <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
-          <form onSubmit={handleSubmit}>
-            <label> Time Interval</label>
-            <br />
-            <input
-              type="number"
-              onChange={handleIntervalChange}
-              placeholder="set time interval (in seconds)"
-            />
-            <br />
-            <button className="save-btn" type="submit">
-              Save Changes
-            </button>
-            {/* <Table interval={state.interval}></Table> */}
-          </form>
-        </Settings>
-        <main>
-          <Route path="/" exact component={Login}>
-            <Login />
-          </Route>
           <Route path="/table" exact component={Table}>
             <Table i={state}></Table>
           </Route>
