@@ -37,10 +37,9 @@ namespace Services
         }
 
 
-        public static void InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
+        public static async Task InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
         {
-            db.LastMinutes.Add(ModelCreation.CreateOrUpdateLastMinute(diagnosticData));
-            Console.WriteLine(diagnosticData.CurrentSecond);
+            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData));
 
             //var series = Enumerable.Range(1, 3).ToList();
 
@@ -54,7 +53,7 @@ namespace Services
             for (int i = 1; i < 60; i++)
             {
              
-                db.LastMinutes.Add(new LastMinute()
+                await db.LastMinutes.AddAsync(new LastMinute()
                 {
                     Second = i,
                     PcId = diagnosticData.PcId,
