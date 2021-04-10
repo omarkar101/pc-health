@@ -28,7 +28,7 @@ namespace WebApi.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<string> DiagnosticData()
+        public async Task<string> DiagnosticData() 
         {
             var token = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false);
             var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
@@ -75,9 +75,8 @@ namespace WebApi.Controllers
                     {
                         var newPc = ModelCreation.CreatePc(diagnosticData);
                         //Task.WaitAll();
-                        DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db);
+                        await DatabaseFunctions.InitializePcLastMinute(diagnosticData, _db).ConfigureAwait(false);
                         await _db.Pcs.AddAsync(newPc).ConfigureAwait(false);
-                        Console.WriteLine("Hell;o");
                     }
                     await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin.Item1, _db).ConfigureAwait(false);
                     await _db.SaveChangesAsync().ConfigureAwait(false);

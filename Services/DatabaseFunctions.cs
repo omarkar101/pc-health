@@ -20,37 +20,10 @@ namespace Services
                 .FirstOrDefaultAsync().ConfigureAwait(false);
             ModelCreation.CreateOrUpdateLastMinute(diagnosticData, lastMinutePc);
         }
-
-
-        public static Task DoAsync(int i, DiagnosticData diagnosticData, PcHealthContext db)
-        {
-            db.LastMinutes.Add(new LastMinute()
-            {
-                Second = i,
-                PcId = diagnosticData.PcId,
-                PcNetworkAverageBytesSend = 0,
-                PcCpuUsage = 0,
-                PcMemoryUsage = 0,
-                PcNetworkAverageBytesReceived = 0
-            });
-            return Task.CompletedTask;
-        }
-
-
         public static async Task InitializePcLastMinute(DiagnosticData diagnosticData, PcHealthContext db)
         {
-            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData));
-
-            //var series = Enumerable.Range(1, 3).ToList();
-
-            //var tasks = new List<Task>();
-
-
-            //foreach (var i in series)
-
-            //await foreach (int item in (10, 3))
-           
-            for (int i = 1; i < 60; i++)
+            await db.LastMinutes.AddAsync(ModelCreation.CreateOrUpdateLastMinute(diagnosticData)).ConfigureAwait(false);
+            for (var i = 1; i < 60; i++)
             {
              
                 await db.LastMinutes.AddAsync(new LastMinute()
@@ -61,7 +34,7 @@ namespace Services
                     PcCpuUsage = 0,
                     PcMemoryUsage = 0,
                     PcNetworkAverageBytesReceived = 0
-                });
+                }).ConfigureAwait(false);
             }
         
         }
