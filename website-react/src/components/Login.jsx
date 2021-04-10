@@ -11,7 +11,7 @@ function Login() {
     const submit = async (e) => {
         e.preventDefault();
         const response = await fetch(
-          "http://omarkar1011-001-site1.dtempurl.com/api/Post/PostLogin",
+          "http://omarkar1011-001-site1.dtempurl.com/Admin/Login",
           {
             method: "POST",
             // authorization: "Bearer Token",

@@ -12,7 +12,7 @@ export default function Register() {
     const submit = async (e) => {
         e.preventDefault();
         const response = await fetch(
-          "http://omarkar1011-001-site1.dtempurl.com/api/Post/PostCreateNewAdmin",
+          "http://omarkar1011-001-site1.dtempurl.com/Admin/Create",
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
