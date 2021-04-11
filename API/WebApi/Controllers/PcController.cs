@@ -48,6 +48,7 @@ namespace WebApi.Controllers
             {
                 if (!StaticStorageServices.PcMapper.ContainsKey(admin.Item1)) return "false";
 
+                //Check Pc Admin Password
                 if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2)) return "false";
 
                 //if the admin contains the pc

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -23,6 +24,28 @@ namespace Services
             var jsonString = reader.ReadToEnd();
             var emailVerifier = JsonSerializer.Deserialize<EmailVerifier>(jsonString);
             return emailVerifier != null && emailVerifier.smtp_check;
+        }
+        public static void SendEmail(string email, string body)
+        {
+            try
+            {
+                var message = new MailMessage();
+                var smtp = new SmtpClient();
+                message.From = new MailAddress("team.mirai101@gmail.com");
+                message.To.Add(new MailAddress(email));
+                message.Subject = "Pc Health";
+                message.IsBodyHtml = true; //to make message body as html  
+                message.Body = body;
+                smtp.Port = 587;
+                smtp.Host = "smtp.gmail.com"; //for gmail host  
+                smtp.EnableSsl = true;
+                smtp.Credentials = new NetworkCredential("team.mirai101@gmail.com", "TeaMirai101");
+                smtp.Send(message);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 

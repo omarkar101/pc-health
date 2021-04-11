@@ -11,6 +11,7 @@ namespace Database.DatabaseModels
         public string CredentialsPassword { get; set; }
         public string CredentialsSalt { get; set; }
         public string PcCredentialPassword { get; set; }
+        public string CredentialChangePasswordId { get; set; }
 
         public virtual Admin Admin { get; set; }
     }
