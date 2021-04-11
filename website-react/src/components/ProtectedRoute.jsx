@@ -1,5 +1,5 @@
-import React,{useEffect} from 'react'
-import { Route, Redirect, useHistory } from 'react-router-dom'
+import React from 'react'
+import { Route, Redirect} from 'react-router-dom'
 
 // function ProtectedRoute({ isAuth: isAuth, component: Component, logout: logout, ...rest }) {
 //     return (

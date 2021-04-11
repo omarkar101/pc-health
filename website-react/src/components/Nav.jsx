@@ -11,7 +11,11 @@ export default function Nav(prop:{setToken:(token)=>void}) {
     prop.setToken('')
   }
   let menu;
-  if (localStorage.getItem("token") === "false" || localStorage.getItem("token") === null) {
+  if (
+    localStorage.getItem("token") === "false" ||
+    localStorage.getItem("token") === null ||
+    !window.location.pathname==="/table"
+  ) {
     menu = (
       <ul className="navbar-nav me-auto mb-2 mb-nd-8">
         <li className="navbar-item active">
@@ -29,12 +33,13 @@ export default function Nav(prop:{setToken:(token)=>void}) {
   } else {
     menu = (
       <ul className="navbar-nav me-auto mb-2 mb-nd-8">
-      <li className="navbar-item active">
-        <Link to="/" className="nav-link" onClick={logout}>
-          Logout
-        </Link>
-      </li>
-    </ul>)
+        <li className="navbar-item active">
+          <Link to="/" className="nav-link" onClick={logout}>
+            Logout
+          </Link>
+        </li>
+      </ul>
+    );
   }
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">

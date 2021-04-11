@@ -40,8 +40,6 @@ function Table(props,) {
     useEffect(() => {
         const UpdateCycle = setInterval(() => {
             FetchData();
-            // console.log(props.interval);
-            console.log(props.i.interval)
         }, (props.i.interval * 1000));
         return () => {
             clearInterval(UpdateCycle);
@@ -66,7 +64,7 @@ function Table(props,) {
           }}
         />
 
-        <div class="table-container">
+        <div className="table-container">
           <table>
             <thead>
               <tr>
@@ -133,7 +131,7 @@ function Table(props,) {
                                 // rootProps={{ 'data-testid': '2' }}
                               />
                             </div>
-                            <div class="second">
+                            <div className="second">
                               <Chart
                                 width={"350px"}
                                 height={"150px"}
@@ -154,7 +152,7 @@ function Table(props,) {
                                 // rootProps={{ 'data-testid': '1' }}
                               />
                             </div>
-                            <div class="third">
+                            <div className="third">
                               <Chart
                                 width={"350px"}
                                 height={"150px"}
