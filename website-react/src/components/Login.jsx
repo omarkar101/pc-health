@@ -30,24 +30,32 @@ function Login(prop: { setToken:(token)=>void}) {
       localStorage.setItem("token", token)
       prop.setToken(token)
       setRedirect(token);
-        // console.log(token)
-        // const ans = await response
-        //  setRedirect(ans);
-        
     }
-    // useEffect(() => {
-    //     submit();
-    // });
   if (redirect !== "false" && redirect !== "") { return <div><Redirect to="/table" /></div> }
-  
-  // else if (redirect==="false"){return (
-  //   <div>
-  //     <Redirect to="/" />
-  //     <p>The username/password you entered are incorrect</p>
-  //   </div>
-  // );}
-
-
+  if (redirect === 'false') {
+    return (
+      <div>
+        <form onSubmit={submit}>
+          <h1 className="h3 mb-3 fw-normal">Please Login</h1>
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Username"
+            required
+            onChange={(e) => setUname(e.target.value)}
+          ></input>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Password"
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button className="w-100 btn btn-lg btn-primary" type="submit">
+            Log in
+      </button>
+        </form>
+        <p>The username/password you entered are incorrect</p></div>);}
     return (
         <form onSubmit={submit}>
             <h1 className="h3 mb-3 fw-normal">Please Login</h1>

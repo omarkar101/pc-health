@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Table from "./Table";
-import Services from "./Services";
+// import Services from "./Services";
 import Settings from "./Settings";
 import Login from "./Login";
 import Nav from "./Nav";
@@ -16,7 +16,6 @@ function App() {
   const [state, setState] = useState({
     interval: 3,
   });
-  
   // const [isAuth,setAuth] = useState((localStorage.getItem('token') === 'false' || localStorage.getItem('token') === null) ? false :true)
   // if (localStorage.getItem('token') === 'false' || localStorage.getItem('token') === null) { setAuth(false) }
   // else{setAuth(true)}
@@ -32,7 +31,6 @@ function App() {
     if (state.interval === "" || state.interval < 3) {
       alert("time interval has to be 3 seconds or longer!");
     } else {
-      console.log(state);
       setState(state);
       setButtonPopup(false);
     }
@@ -74,8 +72,8 @@ function App() {
     </>
   );
 }
-//
-{
-  /* <Table interval={state.interval}></Table> */
-}
+
+// {
+//    <Table interval={state.interval}></Table> 
+// }
 export default App;
