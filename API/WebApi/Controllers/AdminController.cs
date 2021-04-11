@@ -149,6 +149,32 @@ namespace WebApi.Controllers
             return true;
         }
 
+        [HttpPost]
+        public async Task<bool> ResetPcCredentialPassword(Credential credential)
+        {
+            var credentialFromDb = await _db.Credentials
+                .Where(c => c.CredentialsUsername.Equals(credential.CredentialsUsername)).FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+            if (credentialFromDb == null) return false;
+
+            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential).ConfigureAwait(false);
+
+            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential).ConfigureAwait(false);
+
+            var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
+
+            if (!decryptPassword.Equals(passwordInDatabase)) return false;
+
+            credentialFromDb.PcCredentialPassword = ModelCreation.GenerateRandomString();
+
+            StaticStorageServices.AdminMapper[credential.CredentialsUsername] = credentialFromDb.PcCredentialPassword;
+
+            EmailServices.SendEmail(credential.CredentialsUsername, $"New Pc Credential Password: {credentialFromDb.PcCredentialPassword}");
+
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
     }
 
 }

@@ -1,14 +1,9 @@
 {
-	"PcUsername" : "Mahdi's Pc",
+	"PcUsername" : "Omar's Pc",
 	"Admins" : [
-		{
-			"Item1": "rony123",
-			"Item2": "MX9gZVY="
-		},
-		{
-			"Item1": "mmm130",
-			"Item2": "12345"
-		}
-
-	]
+    {
+      "Item1": "allawrg@gmail.com",
+      "Item2": "RpQaWmM="
+    }
+  ]
 }
