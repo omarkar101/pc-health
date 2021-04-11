@@ -74,10 +74,7 @@ namespace Services
         public static async Task<string> CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             var (salt, passwordHash) = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-            var rng = new RNGCryptoServiceProvider();
-            var buff = new byte[5];
-            rng.GetBytes(buff);
-            var pcCredentialsPassword = Convert.ToBase64String(buff);
+            var pcCredentialsPassword = ModelCreation.GenerateRandomString();
             var newCredential = new Credential()
             {
                 CredentialsUsername = newAccountInfo.CredentialsUsername,

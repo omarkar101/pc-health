@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Security;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
@@ -99,15 +101,54 @@ namespace WebApi.Controllers
                 _db);
             return true;
         }
-        
-        
-        //[HttpPost]                                          // query string
-        //public async Task<bool> ForgetPasswordUsername(string credentialUsername)
-        //{
-        //    var credentialFromDb = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
-        //        .FirstOrDefaultAsync();
-        //    if (credentialFromDb == null) return false;
-        //}
+
+        // 1st step
+        [HttpPost]                                          // query string
+        public async Task<bool> ForgetPasswordUsername(string credentialUsername)
+        {
+            var credentialFromDb = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
+                .FirstOrDefaultAsync().ConfigureAwait(false);
+            if (credentialFromDb == null) return false;
+
+            var credentialUniqueId = ModelCreation.GenerateRandomString();
+
+            // generate credentialUniqueId
+            credentialFromDb.CredentialChangePasswordId = credentialUniqueId;
+            await _db.SaveChangesAsync();
+
+            // send it by email
+            EmailServices.SendEmail(credentialUsername, $"Verification Code: {credentialUniqueId}");
+
+            return true;
+        }
+        //2nd step
+        [HttpPost]
+        public async Task<bool> ForgetPasswordUniqueIdCheck(string credentialUsername, string code)
+        {
+            var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+            return credential != null && credential.CredentialChangePasswordId.Equals(code);
+        }
+        // 3rd step
+        [HttpPost]
+        public async Task<bool> ForgetPasswordChange(string credentialUsername, string code, string newPassword)
+        {
+            var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+            if (credential == null) return false;
+            if (!credential.CredentialChangePasswordId.Equals(code)) return false;
+
+            await DatabaseFunctions.ChangePasswordInDb(credentialUsername, newPassword, _db);
+            
+            credential.CredentialChangePasswordId = ModelCreation.GenerateRandomString();
+            
+            await _db.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 
 }
