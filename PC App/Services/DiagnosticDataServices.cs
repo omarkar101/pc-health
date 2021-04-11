@@ -55,7 +55,11 @@ namespace PC_App.Services
                 CurrentSecond = (Counter = (Counter +1)%60),
                 PcConfiguration = pcConfigurations
             };
-            //Console.WriteLine(JsonSerializer.Serialize(diagnosticData));
+            //Console.WriteLine(pcConfigurationJsonString);
+            var x = JsonSerializer.Serialize(diagnosticData);
+
+            Console.WriteLine(JsonSerializer.Deserialize<DiagnosticData>(x).PcConfiguration.PcUsername);
+
             return JsonSerializer.Serialize(diagnosticData);
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Security;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
@@ -30,6 +31,10 @@ namespace WebApi.Controllers
             {
                 return false;
             }
+
+            // checks if the email is legit or not
+            if (!EmailServices.VerifyEmail(newAccountInfo.CredentialsUsername)) return false;
+
             var credentialList = await DatabaseFunctions.GetCredentials(_db, newAccountInfo).ConfigureAwait(false);
 
             if (credentialList.Count != 0) return false;

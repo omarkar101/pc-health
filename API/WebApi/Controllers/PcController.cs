@@ -42,15 +42,14 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<string> PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
+            var x = diagnosticData.PcConfiguration.Admins[0].Item2;
             var admins = diagnosticData.PcConfiguration.Admins;
             foreach (var admin in admins)
             {
                 if (!StaticStorageServices.PcMapper.ContainsKey(admin.Item1)) return "false";
-                //if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2))
-                //{
-                //    Console.WriteLine("Hello");
-                //    return;
-                //}
+
+                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2)) return "false";
+
                 //if the admin contains the pc
                 if (StaticStorageServices.PcMapper[admin.Item1].ContainsKey(diagnosticData.PcId))
                 {
