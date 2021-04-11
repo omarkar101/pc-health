@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
 using Database.DatabaseModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -80,6 +81,7 @@ namespace WebApi.Controllers
             return !decryptPassword.Equals(passwordInDatabase) ? "false" : GenerateToken.Generate(credential.CredentialsUsername, _jwtSettings);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<bool> ChangePassword(ChangePasswordInfo changePasswordInfo)
         {
@@ -149,6 +151,7 @@ namespace WebApi.Controllers
             return true;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<bool> ResetPcCredentialPassword(Credential credential)
         {
