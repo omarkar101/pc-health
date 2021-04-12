@@ -29,7 +29,7 @@ namespace PC_App.Services
 
             try
             {
-                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json", Encoding.UTF8);
+                pcConfigurationJsonString = await File.ReadAllTextAsync(@"~\..\Configurations.json", Encoding.UTF8);
             }
             catch (Exception e)
             {
@@ -73,28 +73,26 @@ namespace PC_App.Services
 
             CountHigh(diagnosticData);
 
-            if (DateTime.UtcNow >= StallTime && !StallTime.Equals(DateTime.MinValue))
+            if (DateTime.UtcNow.CompareTo(StallTime) >= 0 && StallTime.CompareTo(DateTime.MinValue) != 0)
             {
                 StallTime = DateTime.MinValue;
             }
 
-            if ((CpuHighCounter > 40 || MemoryHighCounter > 40) && StallTime.Equals(DateTime.MinValue))
+            if (CpuHighCounter >= 40 || MemoryHighCounter >= 40)
             {
-                var pcHealthData = new PcHealthData()
-                {
-                    CpuHighCounter = CpuHighCounter,
-                    MemoryHighCounter = MemoryHighCounter,
-                    PcConfiguration = diagnosticData.PcConfiguration ?? new PcConfiguration()
-                };
                 diagnosticData.HealthStatus = "Unhealthy";
-                StallTime = DateTime.UtcNow.AddMinutes(10);
-                await PostServices.PostPcHealthData("", pcHealthData);
+                if (StallTime.CompareTo(DateTime.MinValue) == 0)
+                {
+                    var pcHealthData = new PcHealthData()
+                    {
+                        CpuHighCounter = CpuHighCounter,
+                        MemoryHighCounter = MemoryHighCounter,
+                        PcConfiguration = diagnosticData.PcConfiguration ?? new PcConfiguration()
+                    };
+                    StallTime = DateTime.UtcNow.AddMinutes(10);
+                    await PostServices.PostPcHealthData("https://localhost:44335/Pc/PostPcHealthDataFromPc", pcHealthData);
+                }
             }
-
-            //Console.WriteLine(pcConfigurationJsonString);
-            //var x = JsonSerializer.Serialize(diagnosticData);
-
-            //Console.WriteLine(JsonSerializer.Deserialize<DiagnosticData>(x).PcConfiguration.PcUsername);
 
             return JsonSerializer.Serialize(diagnosticData);
         }
