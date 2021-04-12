@@ -51,7 +51,7 @@ namespace WebApi.Controllers
             StaticStorageServices.PcMapper.Add(newAccountInfo.CredentialsUsername, new Dictionary<string, DiagnosticData>());
 
             //send pcCredential password to the new user
-            EmailServices.SendEmail(newAccountInfo.CredentialsUsername, $"Pc Credential Password: {pcCredentialPassword}");
+            await EmailServices.SendEmail(newAccountInfo.CredentialsUsername, $"Pc Credential Password: {pcCredentialPassword}");
 
             return true;
         }
@@ -119,7 +119,7 @@ namespace WebApi.Controllers
             await _db.SaveChangesAsync();
 
             // send it by email
-            EmailServices.SendEmail(credentialUsername, $"Verification Code: {credentialUniqueId}");
+            await EmailServices.SendEmail(credentialUsername, $"Verification Code: {credentialUniqueId}");
 
             return true;
         }
@@ -172,12 +172,15 @@ namespace WebApi.Controllers
 
             StaticStorageServices.AdminMapper[credential.CredentialsUsername] = credentialFromDb.PcCredentialPassword;
 
-            EmailServices.SendEmail(credential.CredentialsUsername, $"New Pc Credential Password: {credentialFromDb.PcCredentialPassword}");
+            await EmailServices.SendEmail(credential.CredentialsUsername, $"New Pc Credential Password: {credentialFromDb.PcCredentialPassword}");
 
             await _db.SaveChangesAsync();
 
             return true;
         }
+
+
+
     }
 
 }
