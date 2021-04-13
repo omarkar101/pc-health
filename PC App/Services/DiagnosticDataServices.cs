@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,14 +17,19 @@ namespace PC_App.Services
     /// </summary>
     public static class DiagnosticDataServices
     {
+        private static int CpuHighCounter { get; set; } = 0;
+        private static int MemoryHighCounter { get; set; } = 0;
+        private static bool []_cpuHighBitArray = new bool[60];
+        private static bool[] _memoryHighBitArray = new bool[60];
         private static int Counter { get; set; } = -1;
-        public static string GetDiagnosticData()
+        private static DateTime StallTime { get; set; } = DateTime.MinValue;
+        public static async Task<string> GetDiagnosticData()
         {
             var pcConfigurationJsonString = "{\"PcUsername\" : \"\", \"Admins\" : []}";
 
             try
             {
-                pcConfigurationJsonString = File.ReadAllText(@"~\..\Configurations.json", Encoding.UTF8);
+                pcConfigurationJsonString = await File.ReadAllTextAsync(@"~\..\Configurations.json", Encoding.UTF8);
             }
             catch (Exception e)
             {
@@ -34,29 +40,86 @@ namespace PC_App.Services
 
 
             var linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-            
+
             var diagnosticData = new DiagnosticData()
             {
-                CpuUsage = (linuxFalseWindowsTrue ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
+                CpuUsage =
+                    (linuxFalseWindowsTrue ? Cpu_Windows.CpuInfo.CpuPercentage : Cpu_Linux.CpuInfo.CpuPercentage),
                 AvgNetworkBytesReceived = NetworkInfo.AvgNetworkBytesReceived,
                 AvgNetworkBytesSent = NetworkInfo.AvgNetworkBytesSent,
                 DiskTotalSpace = DiskInfo.DiskCounterPercentage,
-                MemoryUsage = (linuxFalseWindowsTrue ? Memory_Windows.MemoryInfo.RamUsagePercentage : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
+                MemoryUsage = (linuxFalseWindowsTrue
+                    ? Memory_Windows.MemoryInfo.RamUsagePercentage
+                    : Memory_Linux.MemoryInfo.MemoryUsagePercentage),
                 TotalFreeDiskSpace = DiskInfo.FreeSpaceInGb,
                 PcId = new DeviceIdBuilder()
                     .AddMachineName()
                     .ToString(),
                 Os = (linuxFalseWindowsTrue ? "Windows" : "Linux"),
-                Services = linuxFalseWindowsTrue ? PC_App.Windows_Version.Diagnostic_Data.Services_Windows.ServicesInfo.ServicesNamesAndStatus : PC_App.Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.ServicesNamesAndStatus,
-                FirewallStatus = linuxFalseWindowsTrue ? 
-                    (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus ? 
-                    "Active" : "Inactive") : 
-                    PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus ? "Active" : "Inactive",
-                CurrentSecond = (Counter = (Counter +1)%60),
-                PcConfiguration = pcConfigurations
+                Services = linuxFalseWindowsTrue
+                    ? PC_App.Windows_Version.Diagnostic_Data.Services_Windows.ServicesInfo.ServicesNamesAndStatus
+                    : PC_App.Linux_Version.Diagnostic_Data.Services_Linux.ServicesInfo.ServicesNamesAndStatus,
+                FirewallStatus = linuxFalseWindowsTrue
+                    ? (PC_App.Windows_Version.Diagnostic_Data.Firewall_Windows.FirewallInfo.FirewallStatus
+                        ? "Active"
+                        : "Inactive")
+                    : PC_App.Linux_Version.Diagnostic_Data.Firewall_Linux.FirewallInfo.FirewallStatus
+                        ? "Active"
+                        : "Inactive",
+                CurrentSecond = (Counter = (Counter + 1) % 60),
+                PcConfiguration = pcConfigurations,
+                HealthStatus = "Healthy"
             };
-            //Console.WriteLine(JsonSerializer.Serialize(diagnosticData));
+
+            CountHigh(diagnosticData);
+
+            if (DateTime.UtcNow.CompareTo(StallTime) >= 0 && StallTime.CompareTo(DateTime.MinValue) != 0)
+            {
+                StallTime = DateTime.MinValue;
+            }
+
+            if (CpuHighCounter >= 40 || MemoryHighCounter >= 40)
+            {
+                diagnosticData.HealthStatus = "Unhealthy";
+                if (StallTime.CompareTo(DateTime.MinValue) == 0)
+                {
+                    var pcHealthData = new PcHealthData()
+                    {
+                        CpuHighCounter = CpuHighCounter,
+                        MemoryHighCounter = MemoryHighCounter,
+                        PcConfiguration = diagnosticData.PcConfiguration ?? new PcConfiguration()
+                    };
+                    StallTime = DateTime.UtcNow.AddMinutes(10);
+                    await PostServices.PostPcHealthData("http://omarkar1011-001-site1.dtempurl.com/Pc/PostPcHealthDataFromPc", pcHealthData);
+                }
+            }
+
             return JsonSerializer.Serialize(diagnosticData);
+        }
+
+        private static void CountHigh(DiagnosticData diagnosticData)
+        {
+            if (_cpuHighBitArray[Counter])
+            {
+                CpuHighCounter--;
+            }
+
+            if (_memoryHighBitArray[Counter])
+            {
+                MemoryHighCounter--;
+            }
+
+            if (diagnosticData.CpuUsage > 80)
+            {
+                CpuHighCounter++;
+                _cpuHighBitArray[Counter] = true;
+            }
+
+            if (diagnosticData.MemoryUsage > 80)
+            {
+                MemoryHighCounter++;
+                _memoryHighBitArray[Counter] = true;
+            }
         }
     }
 }

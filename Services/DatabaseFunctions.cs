@@ -71,13 +71,10 @@ namespace Services
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public static async Task CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
+        public static async Task<string> CreateNewCredentials(PcHealthContext dbContext, NewAccountInfo newAccountInfo)
         {
             var (salt, passwordHash) = Services.HashServices.Encrypt(newAccountInfo.CredentialsPassword);
-            var rng = new RNGCryptoServiceProvider();
-            var buff = new byte[5];
-            rng.GetBytes(buff);
-            var pcCredentialsPassword = Convert.ToBase64String(buff);
+            var pcCredentialsPassword = ModelCreation.GenerateRandomString();
             var newCredential = new Credential()
             {
                 CredentialsUsername = newAccountInfo.CredentialsUsername,
@@ -88,6 +85,7 @@ namespace Services
             await dbContext.Credentials.AddAsync(newCredential).ConfigureAwait(false);
             StaticStorageServices.AdminMapper.Add(newAccountInfo.CredentialsUsername, pcCredentialsPassword);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
+            return pcCredentialsPassword;
         }
 
         public static async Task<string> GetPasswordSalt(PcHealthContext dbContext, Credential credential)
@@ -164,6 +162,16 @@ namespace Services
                 }
             }
 
+        }
+
+        public static async Task ChangePasswordInDb(string userName, string newPassword, PcHealthContext db)
+        {
+            var credentialFromDb = await
+                db.Credentials.Where(c => c.CredentialsUsername.Equals(userName)).FirstOrDefaultAsync();
+            var (salt, passwordHash) = HashServices.Encrypt(newPassword);
+            credentialFromDb.CredentialsPassword = passwordHash;
+            credentialFromDb.CredentialsSalt = salt;
+            await db.SaveChangesAsync();
         }
     }
 }

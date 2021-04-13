@@ -8,6 +8,6 @@ namespace ApiModels
 {
     public class TokenUsername
     {
-        public string unique_name { get; set; }
+        public string name { get; set; }
     }
 }

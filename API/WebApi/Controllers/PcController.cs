@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -34,23 +35,48 @@ namespace WebApi.Controllers
             var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
             var tokenUsername = JsonSerializer.Deserialize<TokenUsername>(payloadJson);
             if (tokenUsername == null) return null;
-            var admin = tokenUsername.unique_name;
+            var admin = tokenUsername.name;
             var pCsList = StaticStorageServices.PcMapper[admin].Values;
             return JsonSerializer.Serialize(pCsList);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<string> DiagnosticDataSpecific(string pcId)
+        {
+            var lastMinutes = _db.LastMinutes;
+            var listOfLastMinute = new List<LastMinute>();
+            for (var i = 0; i <= 59; i++)
+            {
+                var j = i;
+                var lastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId) && lm.Second == j).FirstOrDefaultAsync().ConfigureAwait(false);
+                listOfLastMinute.Add(lastMinute);
+            }
+            listOfLastMinute.Sort((LastMinute lm1, LastMinute lm2) =>
+            {
+                if (lm1.TimeChanged == null) return 0;
+                return lm2.TimeChanged != null ? ((DateTime) lm1.TimeChanged).CompareTo((DateTime) lm2.TimeChanged) : 0;
+            });
+
+            for (int i = 1; i <= 60; i++)
+            {
+                listOfLastMinute[i - 1].Second = i;
+            }
+            return JsonSerializer.Serialize(listOfLastMinute);
         }
 
         [HttpPost]
         public async Task<string> PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
+            var x = diagnosticData.PcConfiguration.Admins[0].Item2;
             var admins = diagnosticData.PcConfiguration.Admins;
             foreach (var admin in admins)
             {
                 if (!StaticStorageServices.PcMapper.ContainsKey(admin.Item1)) return "false";
-                //if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2))
-                //{
-                //    Console.WriteLine("Hello");
-                //    return;
-                //}
+
+                //Check Pc Admin Password
+                if (!StaticStorageServices.AdminMapper[admin.Item1].Equals(admin.Item2)) return "false";
+
                 //if the admin contains the pc
                 if (StaticStorageServices.PcMapper[admin.Item1].ContainsKey(diagnosticData.PcId))
                 {
@@ -85,5 +111,19 @@ namespace WebApi.Controllers
 
             return "true";
         }
+
+        [HttpPost]
+        public async Task<string> PostPcHealthDataFromPc(PcHealthData pcHealthData)
+        {
+            foreach (var admin in pcHealthData.PcConfiguration.Admins)
+            {
+                if(admin.Item2.Equals(StaticStorageServices.AdminMapper[admin.Item1]))
+                    await EmailServices.SendEmail(admin.Item1, $"In the last minute, the pc of name \"{pcHealthData.PcConfiguration.PcUsername}\" " +
+                                                     $"hit over 80%: <br>Memory Usage: {pcHealthData.MemoryHighCounter} times <br>" +
+                                                     $"Cpu Usage: {pcHealthData.CpuHighCounter} times.");
+            }
+            return "true";
+        }
+
     }
 }

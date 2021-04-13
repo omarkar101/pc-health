@@ -30,5 +30,6 @@ namespace CommonModels
         public string FirewallStatus { get; set; }
         public PcConfiguration PcConfiguration { get; set; }
         public int CurrentSecond { get; set; } = 0;
+        public string HealthStatus { get; set; }
     }
 }

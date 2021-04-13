@@ -13,5 +13,6 @@ namespace Database.DatabaseModels
         public double? PcMemoryUsage { get; set; }
         public double? PcNetworkAverageBytesSend { get; set; }
         public double? PcNetworkAverageBytesReceived { get; set; }
+        public DateTime? TimeChanged { get; set; }
     }
 }

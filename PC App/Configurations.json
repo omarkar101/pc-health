@@ -1,14 +1,9 @@
 {
-	"PcUsername" : "Mahdi's Pc",
+	"PcUsername" : "Omar's Pc",
 	"Admins" : [
-		{
-			"Item1": "rony123",
-			"Item2": "gv+yGtU="
-		},
-		{
-			"Item1": "mmm130",
-			"Item2": "12345"
-		}
-
-	]
+    {
+      "Item1": "omk13@mail.aub.edu",
+      "Item2": "UPJ5B8E="
+    }
+  ]
 }
