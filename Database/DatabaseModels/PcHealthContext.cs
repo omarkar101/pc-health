@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
@@ -24,7 +22,7 @@ namespace Database.DatabaseModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=bsvhzy1r6yrrhqucx9o9-mysql.services.clever-cloud.com;port=3306;Database=bsvhzy1r6yrrhqucx9o9;username=uclrhckmdjsm76tx;password=pUd7Fb8karg1EjPc6hVd");
+                optionsBuilder.UseMySQL("server=bsvhzy1r6yrrhqucx9o9-mysql.services.clever-cloud.com;port=3306;database=bsvhzy1r6yrrhqucx9o9;username=uclrhckmdjsm76tx;password=pUd7Fb8karg1EjPc6hVd");
             }
         }
 
@@ -37,15 +35,22 @@ namespace Database.DatabaseModels
 
                 entity.ToTable("Admin");
 
-                entity.Property(e => e.AdminCredentialsUsername).HasMaxLength(45);
+                entity.Property(e => e.AdminCredentialsUsername)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.AdminFirstName)
                     .IsRequired()
-                    .HasMaxLength(45);
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.AdminLastName)
                     .IsRequired()
-                    .HasMaxLength(45);
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.AdminCredentialsUsernameNavigation)
                     .WithOne(p => p.Admin)
@@ -56,7 +61,8 @@ namespace Database.DatabaseModels
             modelBuilder.Entity<AdminHasPc>(entity =>
             {
                 entity.HasKey(e => new { e.AdminCredentialsUsername, e.PcId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("Admin_has_Pc");
 
@@ -64,9 +70,15 @@ namespace Database.DatabaseModels
 
                 entity.HasIndex(e => e.PcId, "fk_Admin_has_Pc_Pc1_idx");
 
-                entity.Property(e => e.AdminCredentialsUsername).HasMaxLength(45);
+                entity.Property(e => e.AdminCredentialsUsername)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.PcId).HasMaxLength(150);
+                entity.Property(e => e.PcId)
+                    .HasColumnType("varchar(150)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.AdminCredentialsUsernameNavigation)
                     .WithMany(p => p.AdminHasPcs)
@@ -89,31 +101,49 @@ namespace Database.DatabaseModels
                 entity.HasIndex(e => e.CredentialsUsername, "CredentialsUsername_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.CredentialsUsername).HasMaxLength(45);
+                entity.Property(e => e.CredentialsUsername)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.CredentialChangePasswordId).HasMaxLength(45);
+                entity.Property(e => e.CredentialChangePasswordId)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.CredentialsPassword)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.CredentialsSalt)
                     .IsRequired()
-                    .HasMaxLength(45);
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PcCredentialPassword)
                     .IsRequired()
-                    .HasMaxLength(100);
+                    .HasColumnType("varchar(100)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<LastMinute>(entity =>
             {
                 entity.HasKey(e => new { e.PcId, e.Second })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("Last_Minute");
 
-                entity.Property(e => e.PcId).HasMaxLength(150);
+                entity.Property(e => e.PcId)
+                    .HasColumnType("varchar(150)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
+                entity.Property(e => e.TimeChanged).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Pc>(entity =>
@@ -123,34 +153,50 @@ namespace Database.DatabaseModels
                 entity.HasIndex(e => e.PcId, "idPc_UNIQUE")
                     .IsUnique();
 
-                entity.Property(e => e.PcId).HasMaxLength(150);
+                entity.Property(e => e.PcId)
+                    .HasColumnType("varchar(150)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PcFirewallStatus)
                     .IsRequired()
-                    .HasMaxLength(10);
+                    .HasColumnType("varchar(10)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PcOs)
                     .IsRequired()
-                    .HasMaxLength(45)
-                    .HasColumnName("PcOS");
+                    .HasColumnType("varchar(45)")
+                    .HasColumnName("PcOS")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.Property(e => e.PcUsername)
                     .IsRequired()
-                    .HasMaxLength(45);
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
             });
 
             modelBuilder.Entity<Service>(entity =>
             {
                 entity.HasKey(e => new { e.ServiceName, e.PcId })
-                    .HasName("PRIMARY");
+                    .HasName("PRIMARY")
+                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
 
                 entity.ToTable("Service");
 
                 entity.HasIndex(e => e.PcId, "PcId_idx");
 
-                entity.Property(e => e.ServiceName).HasMaxLength(45);
+                entity.Property(e => e.ServiceName)
+                    .HasColumnType("varchar(45)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
-                entity.Property(e => e.PcId).HasMaxLength(150);
+                entity.Property(e => e.PcId)
+                    .HasColumnType("varchar(150)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
 
                 entity.HasOne(d => d.Pc)
                     .WithMany(p => p.Services)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -34,9 +35,34 @@ namespace WebApi.Controllers
             var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
             var tokenUsername = JsonSerializer.Deserialize<TokenUsername>(payloadJson);
             if (tokenUsername == null) return null;
-            var admin = tokenUsername.unique_name;
+            var admin = tokenUsername.name;
             var pCsList = StaticStorageServices.PcMapper[admin].Values;
             return JsonSerializer.Serialize(pCsList);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<string> DiagnosticDataSpecific(string pcId)
+        {
+            var lastMinutes = _db.LastMinutes;
+            var listOfLastMinute = new List<LastMinute>();
+            for (var i = 0; i <= 59; i++)
+            {
+                var j = i;
+                var lastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId) && lm.Second == j).FirstOrDefaultAsync().ConfigureAwait(false);
+                listOfLastMinute.Add(lastMinute);
+            }
+            listOfLastMinute.Sort((LastMinute lm1, LastMinute lm2) =>
+            {
+                if (lm1.TimeChanged == null) return 0;
+                return lm2.TimeChanged != null ? ((DateTime) lm1.TimeChanged).CompareTo((DateTime) lm2.TimeChanged) : 0;
+            });
+
+            for (int i = 1; i <= 60; i++)
+            {
+                listOfLastMinute[i - 1].Second = i;
+            }
+            return JsonSerializer.Serialize(listOfLastMinute);
         }
 
         [HttpPost]
@@ -98,5 +124,6 @@ namespace WebApi.Controllers
             }
             return "true";
         }
+
     }
 }

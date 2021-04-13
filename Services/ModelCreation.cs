@@ -28,6 +28,7 @@ namespace Services
             lastMinute.PcMemoryUsage = diagnosticData.MemoryUsage;
             lastMinute.PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived;
             lastMinute.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
+            lastMinute.TimeChanged = DateTime.UtcNow;
             return lastMinute;
         }
 
