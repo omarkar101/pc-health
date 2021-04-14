@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestSharp;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
@@ -26,18 +27,16 @@ namespace Services
         {
             try
             {
-                var message = new MailMessage();
-                var smtp = new SmtpClient();
-                message.From = new MailAddress("team.mirai101@gmail.com");
-                message.To.Add(new MailAddress(email));
-                message.Subject = "Pc Health";
-                message.IsBodyHtml = true; //to make message body as html  
-                message.Body = body;
-                smtp.Port = 587;
-                smtp.Host = "smtp.gmail.com"; //for gmail host  
-                smtp.EnableSsl = true;
-                smtp.Credentials = new NetworkCredential("team.mirai101@gmail.com", "TeaMirai101");
-                await smtp.SendMailAsync(message);
+                var client = new RestClient("https://api.sendinblue.com/v3/smtp/email");
+                var request = new RestRequest(Method.POST);
+                double a = 3;
+                double b = 4;
+                Console.WriteLine($"Area of the right triangle with legs of {a} and {b} is {0.5 * a * b}");
+                request.AddHeader("Accept", "application/json");
+                request.AddHeader("Content-Type", "application/json");
+                request.AddHeader("api-key", "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");
+                request.AddParameter("application/json", "{\"sender\":{\"name\":\"PC-Health\",\"email\":\"team.mirai101@gmail.com\"},\"to\":[{\"email\":\""+ email +"\",\"name\":\"Rony\"}],\"subject\":\"PC-Health\",\"textContent\":\""+ body +"\"}", ParameterType.RequestBody);
+                IRestResponse response = await client.ExecuteAsync(request);
             }
             catch (Exception e)
             {
