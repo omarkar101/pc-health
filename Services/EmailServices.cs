@@ -29,9 +29,6 @@ namespace Services
             {
                 var client = new RestClient("https://api.sendinblue.com/v3/smtp/email");
                 var request = new RestRequest(Method.POST);
-                double a = 3;
-                double b = 4;
-                Console.WriteLine($"Area of the right triangle with legs of {a} and {b} is {0.5 * a * b}");
                 request.AddHeader("Accept", "application/json");
                 request.AddHeader("Content-Type", "application/json");
                 request.AddHeader("api-key", "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");
