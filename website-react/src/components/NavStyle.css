@@ -1,0 +1,166 @@
+.navigations_login{
+    /* background-color: rgba(0, 0, 0, 0.6); */
+    /* display:table; */
+
+    text-align:center;
+    width: 400px;
+    /* height: 50%; */
+    margin:auto;
+    padding: auto;
+    /* margin-top: 68%; */
+    /* overflow: hidden; */
+    /* border: 2px solid red; */
+
+    /* width:500px;  */
+    max-width:400px;
+    /* display: inline-block; */
+
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+
+.links{
+    overflow: hidden;
+    margin-left: 2%;
+}
+
+.plinks{
+    width: 100%;
+    /* float: left; */
+    /* border: 2px solid red; */
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+}
+
+.links:link {
+    color: green;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+.links:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none;
+}
+  
+.links:hover {
+    color: rgb(0, 255, 106);
+    background-color: transparent;
+    text-decoration: underline;
+}
+  
+.links:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+
+.settings_box {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 60px;
+}
+
+.settings_box_design {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+
+.SettingsButton{
+    background-color: transparent;
+    text-align: center;
+    /* padding: 5px; */
+    /* margin-bottom: -10px; */
+    /* margin-right:10px; */
+    /* margin-top: 5px; */
+    border: 0px ;
+    color:grey;
+    float: left;
+    margin-right: 20px;
+}
+
+.SettingsButton:hover{
+    background-color: transparent;
+    color: white;
+}
+
+.logout{
+    color: black;
+    text-decoration: none;
+    float: left;
+    /* height: 100%; */
+    /* margin-right: 0; */
+    /* border: 2px solid red; */
+    /* position:absolute; 
+    right:0;
+    margin-left: auto; */
+    margin-right: 1.5%;
+    margin-top: 12.5px;
+}
+
+.logout:hover{
+    color: white;
+}
+
+
+.nav_div{
+    margin-left:auto; 
+    margin-right: 0;
+    /* border: 2px solid red; */
+    width: 15%;
+    overflow: hidden;
+    background-color: rgb(226, 132, 132);
+    /* height: 50%; */
+}
+
+
+.menu_nav{
+    background-color: transparent;
+    text-align: center;
+    border: 0px ;
+    color:black;
+    float: right;
+    margin-left: auto;
+    margin-right: 1%;
+    margin-top: 1%;
+    /* margin-top: 10px; */
+    border-radius: 8px;
+    border:2px solid #253657;
+    /* z-index: 1000; */
+}
+
+.menu_nav:hover{
+    /* background-color: transparent; */
+    background-color: rgb(37, 37, 48);
+}
+
+.settingsDiv{
+    text-align: right;
+    width:50%;
+    float:right;
+
+    padding: 2px;
+    /* margin-top: 0px; */
+    margin-bottom: 5px;
+    margin-left: 5px;
+    /* border-radius: 8px; */
+    /* border:2px solid #253657; */
+}

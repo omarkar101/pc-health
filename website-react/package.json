@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "@material-ui/icons": "^4.11.2",
+    "@reach/menu-button": "^0.15.0",
+    "@szhsin/react-menu": "^1.9.1",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
@@ -11,6 +13,7 @@
     "js-cookie": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-table": "^7.6.3",
