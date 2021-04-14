@@ -45,13 +45,7 @@ namespace WebApi.Controllers
         public async Task<string> DiagnosticDataSpecific(string pcId)
         {
             var lastMinutes = _db.LastMinutes;
-            var listOfLastMinute = new List<LastMinute>();
-            for (var i = 0; i <= 59; i++)
-            {
-                var j = i;
-                var lastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId) && lm.Second == j).FirstOrDefaultAsync().ConfigureAwait(false);
-                listOfLastMinute.Add(lastMinute);
-            }
+            var listOfLastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId)).ToListAsync<LastMinute>();
             listOfLastMinute.Sort((LastMinute lm1, LastMinute lm2) =>
             {
                 if (lm1.TimeChanged == null) return 0;
