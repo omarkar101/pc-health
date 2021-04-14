@@ -44,19 +44,26 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<string> DiagnosticDataSpecific(string pcId)
         {
-            var lastMinutes = _db.LastMinutes;
-            var listOfLastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId)).ToListAsync<LastMinute>();
-            listOfLastMinute.Sort((LastMinute lm1, LastMinute lm2) =>
-            {
-                if (lm1.TimeChanged == null) return 0;
-                return lm2.TimeChanged != null ? ((DateTime) lm1.TimeChanged).CompareTo((DateTime) lm2.TimeChanged) : 0;
-            });
+            try {
+                var lastMinutes = _db.LastMinutes;
+                var listOfLastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId)).ToListAsync<LastMinute>();
+                if (listOfLastMinute.Count == 0) return "false";
+                listOfLastMinute.Sort((LastMinute lm1, LastMinute lm2) =>
+                {
+                    if (lm1.TimeChanged == null) return 0;
+                    return lm2.TimeChanged != null ? ((DateTime) lm1.TimeChanged).CompareTo((DateTime) lm2.TimeChanged) : 0;
+                });
 
-            for (int i = 1; i <= 60; i++)
-            {
-                listOfLastMinute[i - 1].Second = i;
+                for (int i = 1; i <= 60; i++)
+                {
+                    listOfLastMinute[i - 1].Second = i;
+                }
+                return JsonSerializer.Serialize(listOfLastMinute);
             }
-            return JsonSerializer.Serialize(listOfLastMinute);
+            catch(Exception e)
+            {
+                return "false";
+            }
         }
 
         [HttpPost]
