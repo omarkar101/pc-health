@@ -8,9 +8,7 @@ function ForgetPassword_ID() {
     const [result, setResult] = useState();
     const submit = async (e) => {
         e.preventDefault();
-        // const response = await fetch(`http://pc-health.somee.com/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
         const response = await fetch(`http://pc-health.somee.com/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
-        // const response = await fetch(`http://pc-health.somee.com/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${decodeURIComponent(localStorage.getItem("email"))}&code=${decodeURIComponent(code)}`, { method: "POST" })
         const ans = await response.json()
         setResult(ans)
     }

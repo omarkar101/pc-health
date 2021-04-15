@@ -72,7 +72,7 @@ function App() {
           {/* <ProtectedRoute exact path="/table" component={Table}>
             <Table i={state}></Table>
           </ProtectedRoute> */}
-          <ProtectedRoute path="/Stats" component={Stats} />
+          <ProtectedRoute path="/Stats/:id" component={Stats} />
           <ProtectedRoute path="/ResetPass" component={ResetPass} />
           <ProtectedRoute path="/table/:id" component={Services} />
           <ProtectedRoute path="/ChangePass" component={ChangePass}/>

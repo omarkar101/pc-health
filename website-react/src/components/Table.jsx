@@ -15,6 +15,7 @@ function Table(props,) {
     const [datalst, setData] = useState([]);
     const [FilteredData, setFilteredData] = useState([]);
     const [detailsShown, setDetailShown] = useState([]);
+    // const [temp, setTemp] = useState([]);
 
   const FetchData = async () => {
   axios
@@ -40,7 +41,14 @@ function Table(props,) {
 
     useEffect(() => {
         FetchData();
+        // setTemp(Array.from(Array(10).keys()));
+        // console.log(temp)
     }, []);
+
+    // useEffect(() => {
+    //   setTemp(Array.from(Array(10).keys()));
+    //   console.log(temp)
+    // }, []);
 
     useEffect(() => {
         const UpdateCycle = setInterval(() => {
@@ -62,7 +70,7 @@ function Table(props,) {
       <div className="table_div">
       
         <input
-          class="search"
+          className="search"
           type="text"
           placeholder="search username..."
           onChange={(e) => {
@@ -127,10 +135,10 @@ function Table(props,) {
                           )
                         } */}
 
-                        {(x.Os == "Windows") ? (
+                        {(x.Os === "Windows") ? (
                           <td><AiFillWindows size='1.2rem' /> &nbsp; {x.Os}</td>
                           
-                        ) : ( (x.Os == "linux") ? (
+                        ) : ( (x.Os === "linux") ? (
                           <td><FcLinux/>{x.Os}</td>) : (<td>{x.Os}</td>)
                         )}
                       
@@ -143,8 +151,8 @@ function Table(props,) {
                          Services
                         </Link>
                         &nbsp; &nbsp; &nbsp;
-                        <Link to={"/stats/" + x.PcId} target="_blank" className="tablelinks">
-                          Statistics
+                        <Link to={"/Stats/" + x.PcId} target="_blank" className="tablelinks">
+                          Performance
                         </Link>
                       </td>
                       <td>{x.PcId.slice(0, 4) + "@gmail.com"}</td>
@@ -154,12 +162,12 @@ function Table(props,) {
                         </Link>
                       </td> */}
                     </tr>
-
+                      
                     {detailsShown.includes(x.PcId) && (
                       <tr key={"DETAIL:" + x.PcId} className="additional-info">
                         <td align="center" colspan="6">
-                          <div class="wrapper">
-                            <div class="first">
+                          <div className="wrapper">
+                            <div className="first">
                               <Chart
                                 width={"350px"}
                                 height={"150px"}
@@ -225,7 +233,7 @@ function Table(props,) {
                                 // rootProps={{ 'data-testid': '1' }}
                               />
                             </div>
-                            <div class="fourth">
+                            <div className="fourth">
                               <p>
                                 <span>
                                   Average Network Bytes Sent:{" "}

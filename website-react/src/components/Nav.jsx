@@ -1,4 +1,3 @@
-// import Redirect from "react";
 import { Component } from 'react'
 import { Link , Redirect, useHistory} from "react-router-dom";
 import "./NavStyle.css";
@@ -9,17 +8,6 @@ import './settings.css'
 import ProtectedRoute from "./ProtectedRoute";
 import ResetPass from "./ResetPass"
 
-// import ChangePass from "./ChangePass";
-// import './style.css'
-// import {
-//   Menu,
-//   MenuItem,
-//   MenuButton,
-//   SubMenu,
-//   MenuDivider,
-//   MenuHeader
-// } from '@szhsin/react-menu';
-// import '@szhsin/react-menu/dist/index.css';
 import {
   Menu,
   MenuList,
@@ -186,7 +174,7 @@ export default function Nav(prop: { setToken: (token) => void }) {
             </label> */}
             {/* <div className="input_div"> */}
 
-            <input className="input-interval" type="number" onChange={handleIntervalChange} placeholder="set time interval (in seconds)" />
+            <input className="input-interval" type="number" onChange={handleIntervalChange} placeholder="set time interval" />
 
             <Select className="options" options={options} onChange={handleUnitChange} />
             {/* </div> */}
