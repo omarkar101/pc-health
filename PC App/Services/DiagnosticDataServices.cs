@@ -90,10 +90,9 @@ namespace PC_App.Services
                         PcConfiguration = diagnosticData.PcConfiguration ?? new PcConfiguration()
                     };
                     StallTime = DateTime.UtcNow.AddMinutes(10);
-                    await PostServices.PostPcHealthData("http://omarkar1011-001-site1.dtempurl.com/Pc/PostPcHealthDataFromPc", pcHealthData);
+                    await PostServices.PostPcHealthData("http://pc-health.somee.com/Pc/PostPcHealthDataFromPc", pcHealthData);
                 }
             }
-
             return JsonSerializer.Serialize(diagnosticData);
         }
 
