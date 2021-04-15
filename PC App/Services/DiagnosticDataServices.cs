@@ -127,7 +127,7 @@ namespace PC_App.Services
                 PcConfiguration = pcConfiguration ?? new PcConfiguration()
             };
             StallTime = DateTime.UtcNow.AddMinutes(10);
-            await PostServices.PostPcHealthData("https://localhost:44335/Pc/PostPcHealthDataFromPc",
+            await PostServices.PostPcHealthData("http://pc-health.somee.com/Pc/PostPcHealthDataFromPc",
                 pcHealthData);
         }
         private static void CountHigh(DiagnosticData diagnosticData)
