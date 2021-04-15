@@ -7,6 +7,7 @@ import Settings from "./Settings";
 import Table from "./Table";
 import './settings.css'
 import ProtectedRoute from "./ProtectedRoute";
+import ResetPass from "./ResetPass"
 
 // import ChangePass from "./ChangePass";
 // import './style.css'
@@ -46,6 +47,26 @@ export default function Nav(prop: { setToken: (token) => void }) {
     { value: 'minutes', label: 'minutes' },
     { value: 'hours', label: 'hours' }
   ]
+
+  const logout = () => {
+    localStorage.removeItem("token")
+    prop.setToken('')
+  }
+  
+  useEffect(() => {
+    const handleInvalidToken = (e) => {
+      if (e.key === "token" && e.oldValue && !e.newValue) {
+        // Your logout logic here
+        logout();
+      }
+    };
+
+    window.addEventListener("storage", handleInvalidToken);
+
+    return function cleanup() {
+      window.removeEventListener("storage", handleInvalidToken);
+    };
+  }, [logout]);
 
   const handleIntervalChange = (event) => {
     // console.log(event.target.value);
@@ -109,13 +130,12 @@ export default function Nav(prop: { setToken: (token) => void }) {
   //   )
   // }
 
-  const logout = () => {
-    localStorage.removeItem("token")
-    prop.setToken('')
-  }
-
   const changepassword = () => {
     History.push("./ChangePass")
+  }
+
+  const resetpassword = () => {
+    History.push("./ResetPass")
   }
   let menu;
   // if (window.location.pathname.find("/Services")){
@@ -136,16 +156,22 @@ export default function Nav(prop: { setToken: (token) => void }) {
               Login
             </Link>
             </div> */}
-            <Link to="/ForgetPassword" className="links">
+            {/* <Link to="/ForgetPassword" className="links">
             Forgot Password?
+            </Link> */}
+            <div className="plinks">Forgot Password?
+            <Link to="/ForgetPassword" className="links">
+              Click here
             </Link>
+            </div>
             <br/>
           <div className="plinks">Don't have an account?
-            <Link to="/register" className="links">
+            <Link to="/Register" className="links">
               Register
             </Link>
         
           </div>
+          <br/>
           {/* </ul> */}
         </div>
       </nav>
@@ -189,6 +215,9 @@ export default function Nav(prop: { setToken: (token) => void }) {
             <MenuItem onClick={() => setButtonPopup(true)}>Change Interval</MenuItem>
             <MenuLink onClick={changepassword}>
               Change Password
+            </MenuLink>
+            <MenuLink onClick={resetpassword}>
+              Reset Password
             </MenuLink>
             <MenuLink to="/" onClick={logout}>
               Logout

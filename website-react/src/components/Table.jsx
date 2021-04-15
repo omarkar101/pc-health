@@ -3,8 +3,11 @@ import { Link, withRouter} from "react-router-dom";
 import axios from "axios";
 import './style.css'
 import Chart from "react-google-charts";
-import {AiOutlineWarning} from 'react-icons/ai'
-import {IoMdCheckmarkCircleOutline} from 'react-icons/io'
+import {CgDanger} from 'react-icons/cg';
+import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
+import {AiFillWindows} from 'react-icons/ai';
+import {FcLinux} from 'react-icons/fc';
+// import { IconContext, DefaultContext } from 'react-icons';
 
 
 function Table(props,) {
@@ -73,9 +76,10 @@ function Table(props,) {
               <tr>
                 <th>&nbsp;</th>
                 <th>Username</th>
+                {/* <th>Activity</th> */}
                 {/* <th>Status</th> */}
                 <th>Operating System</th>
-                <th>More Info</th>
+                <th>More Info </th>
                 <th>Contact info</th>
                 {/* <th>Statistics</th> */}
               </tr>
@@ -98,13 +102,20 @@ function Table(props,) {
                           ) : 
                           (
                             // <td style={{color: "red"}}> In Danger </td>
-                            <td> <AiOutlineWarning color='red' size='1.5rem'/></td>
+                            <td> <CgDanger color='red' size='1.5rem'/></td>
                           )
                         }
                       <td>
                         {x.PcConfiguration.PcUsername}
                         {/* </Link> */}
                       </td>
+                      {/* {
+                        (x.HealthStatus === null)? (
+                          <td>Off</td>
+                        ):(
+                          <td>On</td>
+                        )
+                        } */}
                         {/* {
                           (x.HealthStatus === "Healthy") ? (
                             // <td style={{color: "green"}}> {x.HealthStatus} </td>
@@ -115,10 +126,21 @@ function Table(props,) {
                             <td> <AiOutlineWarning color='red' size='1.2rem'/></td>
                           )
                         } */}
-                      <td>{x.Os}</td>
+
+                        {(x.Os == "Windows") ? (
+                          <td><AiFillWindows size='1.2rem' /> &nbsp; {x.Os}</td>
+                          
+                        ) : ( (x.Os == "linux") ? (
+                          <td><FcLinux/>{x.Os}</td>) : (<td>{x.Os}</td>)
+                        )}
+                      
                       <td>
                         <Link to={"/table/" + x.PcId} target="_blank" className="tablelinks">
-                          Services
+                        {/* <IconContext.Provider
+                            value={{ color: 'lime', size: '30px' }}>
+                            <GrStatusInfo/>
+                          </IconContext.Provider> */}
+                         Services
                         </Link>
                         &nbsp; &nbsp; &nbsp;
                         <Link to={"/stats/" + x.PcId} target="_blank" className="tablelinks">

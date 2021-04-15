@@ -38,9 +38,9 @@ function Login(prop: { setToken: (token) => void }) {
         <form className="form_container" onSubmit={submit}>
           <h1 className="h1_d">Please Login</h1>
           <input
-            type="text"
+            type="email"
             className="design_input"
-            placeholder="Username"
+            placeholder="Email"
             required
             onChange={(e) => setUname(e.target.value)}
           />
@@ -62,7 +62,7 @@ function Login(prop: { setToken: (token) => void }) {
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
         <h1 className="h1_d">Please Login</h1>
-        <input type="text" className="design_input" placeholder="Username" required
+        <input type="email" className="design_input" placeholder="Email" required
           onChange={(e) => setUname(e.target.value)}>
         </input>
         <input type="password" className="design_input" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />

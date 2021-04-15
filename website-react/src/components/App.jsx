@@ -11,6 +11,9 @@ import ProtectedRoute from "./ProtectedRoute";
 import ChangePass from "./ChangePass";
 import ForgetPassword from "./ForgetPassword";
 import ForgetPassword_ID from "./ForgetPassword_ID";
+import NewPassword from "./NewPassword";
+import Stats from "./Stats";
+import ResetPass from "./ResetPass"
 
 
 function App() {
@@ -69,12 +72,14 @@ function App() {
           {/* <ProtectedRoute exact path="/table" component={Table}>
             <Table i={state}></Table>
           </ProtectedRoute> */}
+          <ProtectedRoute path="/Stats" component={Stats} />
+          <ProtectedRoute path="/ResetPass" component={ResetPass} />
           <ProtectedRoute path="/table/:id" component={Services} />
           <ProtectedRoute path="/ChangePass" component={ChangePass}/>
           <Route path="/register" component={Register} />
           <Route  path="/ForgetPassword" component={ForgetPassword}/>
           <Route  path="/forgotpassword/Code" component={ForgetPassword_ID}/>
-          {/* <Route path="/NewPassword" component={ForgetPassword_ID}/> */}
+          <Route path="/NewPassword" component={NewPassword}/>
         </main>
       </Router>
     </>

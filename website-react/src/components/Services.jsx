@@ -57,7 +57,7 @@ function Services({match}) {
       // temp.filter(x => ( x.Item1.toLowerCase().includes( search.toLowerCase() ) ))
       )
       // setFilteredData(
-      D.map(x => x.Services.map (x2 => x2.Item1.toLowerCase().includes(search.toLowerCase()) ? FilteredData.push(x2) : ''))
+      D.map(x => (x.Services.map (x2 => (x2.Item1.toLowerCase().includes(search.toLowerCase()) ? FilteredData.push(x2) : ''))))
       // )
     // console.log(FilteredData);
     // FilteredData.map(d=>( console.log(d)));
@@ -85,7 +85,7 @@ function Services({match}) {
       </thead>
       <tbody>
         
-      {
+      {/* {
       D.length === 0 ? (
           <div style={{ color: "red" }}> No results found </div>
         ): (
@@ -102,21 +102,24 @@ function Services({match}) {
           ))
 
           )
-          }
+          } */}
       {/* {console.log(Object.keys(FilteredData).length)} */}
+      {console.log(FilteredData)}
       {/* {alert(FilteredData)} */}
-      {/* {
-        FilteredData.map(d => {
+      { (FilteredData.length === 0 ) ? (
+        <div style={{ color: "red" }}> No results found </div>
+      ) : (
+        FilteredData.map(d =>(
           
           <>
-          {console.log("HERE")}
           <tr>
             <td>{d.Item1}</td>
             <td>{d.Item2}</td>
           </tr>
           </>
-        })
-      } */}
+      ))
+      )
+      }
 
       </tbody>
     </table>

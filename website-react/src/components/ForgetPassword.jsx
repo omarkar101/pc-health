@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Redirect } from "react-router";
+import { Link} from "react-router-dom";
 import "./Login.css"
 
 export default function ForgetPassword() {
@@ -31,8 +32,7 @@ export default function ForgetPassword() {
     return <Redirect to="/forgotpassword/Code"/>
   }
   return (
-    
-    <div className="div_design">
+    <div className="div_design forgot_page">
       <form onSubmit={submit} className="form_container">
       <p className="forgot_pass">Enter your email:</p>
         <input className="design_input"
@@ -42,6 +42,9 @@ export default function ForgetPassword() {
         />
         <button className="login_button" type="submit">Submit</button>
       </form>
+      <p> <Link to="/Login" className="links">
+              cancel
+          </Link> </p>
     </div>
   );
 }

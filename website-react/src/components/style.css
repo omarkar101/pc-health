@@ -60,7 +60,7 @@ td{
 .tablelinks:hover {
     color: rgb(18, 180, 185);
     background-color: transparent;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 /* .links:link {

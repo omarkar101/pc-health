@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 
-function stats({match}) {
+function Stats({match}) {
     const [stats, setStats] = useState([])
     const submit = async (e) => {
         e.preventDefault();
@@ -11,6 +11,7 @@ function stats({match}) {
         );
         const ans = await response.json();
         setStats(response.data)
+        console.log(stats);
     }
     return (
         <div>
@@ -19,4 +20,4 @@ function stats({match}) {
     )
 }
 
-export default stats
+export default Stats
