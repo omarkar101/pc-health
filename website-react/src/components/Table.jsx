@@ -3,6 +3,11 @@ import { Link, withRouter} from "react-router-dom";
 import axios from "axios";
 import './style.css'
 import Chart from "react-google-charts";
+import {CgDanger} from 'react-icons/cg';
+import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
+import {AiFillWindows} from 'react-icons/ai';
+import {FcLinux} from 'react-icons/fc';
+// import { IconContext, DefaultContext } from 'react-icons';
 
 
 function Table(props,) {
@@ -13,7 +18,7 @@ function Table(props,) {
 
   const FetchData = async () => {
   axios
-    .get("http://omarkar1011-001-site1.dtempurl.com/Pc/DiagnosticData", {
+    .get("http://pc-health.somee.com/Pc/DiagnosticData", {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     })
     .then((res) => {
@@ -46,15 +51,16 @@ function Table(props,) {
         };
     });
 
-
-    useEffect(() => {
-        setFilteredData(
-            datalst.filter((username) => username.PcId.toLowerCase().includes(search.toLowerCase()))
-        )
-    }, [search, datalst])
+    // useEffect(() => {
+    //   console.log("datalst", datalst);
+    //     setFilteredData(
+    //         FilteredData.filter((username) => username.PcConfiguration.PcUsername.toLowerCase().includes(search.toLowerCase()))
+    //     )
+    // }, [search, datalst])
 
     return (
-      <>
+      <div className="table_div">
+      
         <input
           class="search"
           type="text"
@@ -68,47 +74,90 @@ function Table(props,) {
           <table>
             <thead>
               <tr>
+                <th>&nbsp;</th>
                 <th>Username</th>
-                <th>Status</th>
+                {/* <th>Activity</th> */}
+                {/* <th>Status</th> */}
                 <th>Operating System</th>
-                <th>Services</th>
+                <th>More Info </th>
                 <th>Contact info</th>
+                {/* <th>Statistics</th> */}
               </tr>
             </thead>
             <tbody>
-              {FilteredData.length === 0 ? (
+              {datalst.length === 0 ? (
                 <div style={{ color: "red" }}> No results found </div>
               ) : (
-                FilteredData.map((x) => (
+                datalst.map((x) => (
                   <>
+                  
                     <tr
                       key={"NAME:" + x.PcId}
                       onClick={() => toggleShown(x.PcId)}
                     >
+                       {
+                          (x.HealthStatus === "Healthy") ? (
+                            // <td style={{color: "green"}}> {x.HealthStatus} </td>
+                            <td> <IoMdCheckmarkCircleOutline color='green' size='1.5rem'/></td>
+                          ) : 
+                          (
+                            // <td style={{color: "red"}}> In Danger </td>
+                            <td> <CgDanger color='red' size='1.5rem'/></td>
+                          )
+                        }
                       <td>
                         {x.PcConfiguration.PcUsername}
                         {/* </Link> */}
                       </td>
-                      <td>Healthy</td>
-                      <td>{x.Os}</td>
-                      {/* <td>{x.CpuUsage.toFixed(2)}</td> */}
-                      {/* <td>{x.DiskTotalSpace.toFixed(2)}</td> */}
-                      {/* <td>{x.TotalFreeDiskSpace.toFixed(2)}</td> */}
-                      {/* <td>{x.MemoryUsage.toFixed(2)}</td> */}
-                      {/* <td>{x.AvgNetworkBytesSent}</td> */}
-                      {/* <td>{x.AvgNetworkBytesReceived}</td> */}
-                      {/* <td>{x.FirewallStatus}</td> */}
+                      {/* {
+                        (x.HealthStatus === null)? (
+                          <td>Off</td>
+                        ):(
+                          <td>On</td>
+                        )
+                        } */}
+                        {/* {
+                          (x.HealthStatus === "Healthy") ? (
+                            // <td style={{color: "green"}}> {x.HealthStatus} </td>
+                            <td> <AiOutlineWarning/></td>
+                          ) : 
+                          (
+                            // <td style={{color: "red"}}> In Danger </td>
+                            <td> <AiOutlineWarning color='red' size='1.2rem'/></td>
+                          )
+                        } */}
+
+                        {(x.Os == "Windows") ? (
+                          <td><AiFillWindows size='1.2rem' /> &nbsp; {x.Os}</td>
+                          
+                        ) : ( (x.Os == "linux") ? (
+                          <td><FcLinux/>{x.Os}</td>) : (<td>{x.Os}</td>)
+                        )}
+                      
                       <td>
-                        <Link to={"/table/" + x.PcId} target="_blank">
-                          Details
+                        <Link to={"/table/" + x.PcId} target="_blank" className="tablelinks">
+                        {/* <IconContext.Provider
+                            value={{ color: 'lime', size: '30px' }}>
+                            <GrStatusInfo/>
+                          </IconContext.Provider> */}
+                         Services
+                        </Link>
+                        &nbsp; &nbsp; &nbsp;
+                        <Link to={"/stats/" + x.PcId} target="_blank" className="tablelinks">
+                          Statistics
                         </Link>
                       </td>
                       <td>{x.PcId.slice(0, 4) + "@gmail.com"}</td>
+                      {/* <td>
+                        <Link to={"/stats/" + x.PcId} target="_blank" className="tablelinks">
+                          Statistics
+                        </Link>
+                      </td> */}
                     </tr>
 
                     {detailsShown.includes(x.PcId) && (
                       <tr key={"DETAIL:" + x.PcId} className="additional-info">
-                        <td align="center" colspan="5">
+                        <td align="center" colspan="6">
                           <div class="wrapper">
                             <div class="first">
                               <Chart
@@ -187,7 +236,18 @@ function Table(props,) {
                                   {x.AvgNetworkBytesReceived} bytes
                                 </span>
                                 <br></br>
-                                <span>Firewall Status: {x.FirewallStatus}</span>
+                                {
+                                  (x.FirewallStatus === "Active") ? 
+                                    (
+                                    <div style={{overflow: "hidden"}}>
+                                    <p style={{float: "left"}}>Firewall Status: &nbsp;</p>
+                                    <p style={ {color: "lime"}}>{x.FirewallStatus}</p>  </div>
+                                    
+                                 ) : (
+                                  <div style={{overflow: "hidden"}}>
+                                  <p style={{float: "left"}}>Firewall Status: &nbsp;</p>
+                                  <p style={ {color: "red"}}>{x.FirewallStatus}</p>  </div> 
+                                  )}
                               </p>
                             </div>
                           </div>
@@ -200,7 +260,7 @@ function Table(props,) {
             </tbody>
           </table>
         </div>
-      </>
+      </div>
     );
 }
 export default withRouter(Table);
