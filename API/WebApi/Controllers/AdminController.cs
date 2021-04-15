@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Security;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 using ApiModels;
 using CommonModels;
@@ -37,7 +34,8 @@ namespace WebApi.Controllers
             {
                 return false;
             }
-            
+
+            newAccountInfo.CredentialsUsername = newAccountInfo.CredentialsUsername.ToLower();
             // checks if the email is legit or not
             if (!EmailServices.VerifyEmail(newAccountInfo.CredentialsUsername)) return false;
 
@@ -65,6 +63,7 @@ namespace WebApi.Controllers
                 return "false";
             }
 
+            credential.CredentialsUsername = credential.CredentialsUsername.ToLower();
             var credentialQueryingList = await DatabaseFunctions.GetCredentials(_db, credential).ConfigureAwait(false);
 
             if (credentialQueryingList.Count == 0)
@@ -85,98 +84,143 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<bool> ChangePassword(ChangePasswordInfo changePasswordInfo)
         {
-            var credential = new Credential()
+            try
             {
-                CredentialsPassword = changePasswordInfo.OldPassword,
-                CredentialsUsername = changePasswordInfo.CredentialUsername
-            };
+                changePasswordInfo.CredentialUsername = changePasswordInfo.CredentialUsername.ToLower();
+                var credential = new Credential()
+                {
+                    CredentialsPassword = changePasswordInfo.OldPassword,
+                    CredentialsUsername = changePasswordInfo.CredentialUsername
+                };
 
-            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential).ConfigureAwait(false);
+                var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential).ConfigureAwait(false);
 
-            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential).ConfigureAwait(false);
+                var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential).ConfigureAwait(false);
 
-            var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
+                var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
 
-            if (!decryptPassword.Equals(passwordInDatabase)) return false;
+                if (!decryptPassword.Equals(passwordInDatabase)) return false;
 
-            await DatabaseFunctions.ChangePasswordInDb(changePasswordInfo.CredentialUsername, changePasswordInfo.NewPassword,
-                _db);
-            return true;
+                await DatabaseFunctions.ChangePasswordInDb(changePasswordInfo.CredentialUsername, changePasswordInfo.NewPassword,
+                    _db);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
         // 1st step
         [HttpPost]                                          // query string
         public async Task<bool> ForgetPasswordUsername(string credentialUsername)
         {
-            var credentialFromDb = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
-                .FirstOrDefaultAsync().ConfigureAwait(false);
-            if (credentialFromDb == null) return false;
+            try
+            {
+                credentialUsername = credentialUsername.ToLower();
+                var credentialFromDb = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
+                    .FirstOrDefaultAsync().ConfigureAwait(false);
+                if (credentialFromDb == null) return false;
 
-            var credentialUniqueId = ModelCreation.GenerateRandomString();
+                var credentialUniqueId = ModelCreation.GenerateRandomString();
 
-            // generate credentialUniqueId
-            credentialFromDb.CredentialChangePasswordId = credentialUniqueId;
-            await _db.SaveChangesAsync();
+                // generate credentialUniqueId
+                credentialFromDb.CredentialChangePasswordId = credentialUniqueId;
+                await _db.SaveChangesAsync();
 
-            // send it by email
-            await EmailServices.SendEmail(credentialUsername, $"Verification Code: {credentialUniqueId}");
+                // send it by email
+                await EmailServices.SendEmail(credentialUsername, $"Verification Code: {credentialUniqueId}");
 
-            return true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
         //2nd step
         [HttpPost]
         public async Task<bool> ForgetPasswordUniqueIdCheck(string credentialUsername, string code)
         {
-            var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
-                .FirstOrDefaultAsync()
-                .ConfigureAwait(false);
-            return credential != null && credential.CredentialChangePasswordId.Equals(code);
+            try
+            {
+                credentialUsername = credentialUsername.ToLower();
+                var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
+                    .FirstOrDefaultAsync()
+                    .ConfigureAwait(false);
+                return credential != null && credential.CredentialChangePasswordId.Equals(code);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
         // 3rd step
         [HttpPost]
         public async Task<bool> ForgetPasswordChange(string credentialUsername, string code, string newPassword)
         {
-            var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
-                .FirstOrDefaultAsync()
-                .ConfigureAwait(false);
-            if (credential == null) return false;
-            if (!credential.CredentialChangePasswordId.Equals(code)) return false;
+            try
+            {
+                credentialUsername = credentialUsername.ToLower();
+                var credential = await _db.Credentials.Where(c => c.CredentialsUsername.Equals(credentialUsername))
+                    .FirstOrDefaultAsync()
+                    .ConfigureAwait(false);
+                if (credential == null) return false;
+                if (!credential.CredentialChangePasswordId.Equals(code)) return false;
 
-            await DatabaseFunctions.ChangePasswordInDb(credentialUsername, newPassword, _db);
-            
-            credential.CredentialChangePasswordId = ModelCreation.GenerateRandomString();
-            
-            await _db.SaveChangesAsync();
+                await DatabaseFunctions.ChangePasswordInDb(credentialUsername, newPassword, _db);
+                
+                credential.CredentialChangePasswordId = ModelCreation.GenerateRandomString();
+                
+                await _db.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
         [Authorize]
         [HttpPost]
         public async Task<bool> ResetPcCredentialPassword(Credential credential)
         {
-            var credentialFromDb = await _db.Credentials
-                .Where(c => c.CredentialsUsername.Equals(credential.CredentialsUsername)).FirstOrDefaultAsync()
-                .ConfigureAwait(false);
-            if (credentialFromDb == null) return false;
+            try
+            {
+                credential.CredentialsUsername = credential.CredentialsUsername.ToLower();
+                var credentialFromDb = await _db.Credentials
+                    .Where(c => c.CredentialsUsername.Equals(credential.CredentialsUsername)).FirstOrDefaultAsync()
+                    .ConfigureAwait(false);
+                if (credentialFromDb == null) return false;
 
-            var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential).ConfigureAwait(false);
+                var passwordSalt = await DatabaseFunctions.GetPasswordSalt(_db, credential).ConfigureAwait(false);
 
-            var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential).ConfigureAwait(false);
+                var passwordInDatabase = await DatabaseFunctions.GetPasswordFromDb(_db, credential).ConfigureAwait(false);
 
-            var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
+                var decryptPassword = HashServices.Decrypt(passwordSalt, credential.CredentialsPassword);
 
-            if (!decryptPassword.Equals(passwordInDatabase)) return false;
+                if (!decryptPassword.Equals(passwordInDatabase)) return false;
 
-            credentialFromDb.PcCredentialPassword = ModelCreation.GenerateRandomString();
+                credentialFromDb.PcCredentialPassword = ModelCreation.GenerateRandomString();
 
-            StaticStorageServices.AdminMapper[credential.CredentialsUsername] = credentialFromDb.PcCredentialPassword;
+                StaticStorageServices.AdminMapper[credential.CredentialsUsername] = credentialFromDb.PcCredentialPassword;
 
-            await EmailServices.SendEmail(credential.CredentialsUsername, $"New Pc Credential Password: {credentialFromDb.PcCredentialPassword}");
+                await EmailServices.SendEmail(credential.CredentialsUsername, $"New Pc Credential Password: {credentialFromDb.PcCredentialPassword}");
 
-            await _db.SaveChangesAsync();
+                await _db.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
 
     }

@@ -1,6 +1,8 @@
+using System;
 using System.IO;
 using System.Net;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using CommonModels;
 
@@ -8,6 +10,21 @@ namespace PC_App.Services
 {
     public static class PostServices
     {
+        public static async Task PostDiagnosticData()
+        {
+            while (true)
+            {
+                try
+                {
+                    await PostDiagnosticData("https://localhost:44335/Pc/PostDiagnosticDataFromPc");
+                    Thread.Sleep(500);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+        }
         public static async Task PostDiagnosticData(string url)
         {
             var diagnosticData = await DiagnosticDataServices.GetDiagnosticData();

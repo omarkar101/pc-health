@@ -46,7 +46,8 @@ namespace Services
                 PcNetworkAverageBytesReceived = diagnosticData.AvgNetworkBytesReceived,
                 PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent,
                 PcOs = diagnosticData.Os,
-                PcUsername = diagnosticData.PcConfiguration.PcUsername
+                PcUsername = diagnosticData.PcConfiguration.PcUsername,
+                PcEmail = diagnosticData.PcConfiguration.PcEmail
             };
             return newPc;
         }

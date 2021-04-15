@@ -34,11 +34,44 @@ namespace PC_App.Services
             catch (Exception e)
             {
                 Console.WriteLine(e);
-            }
+            } 
 
             var pcConfigurations = JsonSerializer.Deserialize<PcConfiguration>(pcConfigurationJsonString);
 
+            if (pcConfigurations == null) return "false";
+            //making to lower
+            MakePcConfigurationToLower(pcConfigurations);
 
+            var diagnosticData = CreateDiagnosticData(pcConfigurations);
+
+            CountHigh(diagnosticData);
+
+            if (DateTime.UtcNow.CompareTo(StallTime) >= 0 && StallTime.CompareTo(DateTime.MinValue) != 0)
+            {
+                StallTime = DateTime.MinValue;
+            }
+
+            await SendWarningIfDangerousAndNoStall(diagnosticData);
+
+            return JsonSerializer.Serialize(diagnosticData);
+
+        }
+
+        private static void MakePcConfigurationToLower(PcConfiguration? pcConfigurations)
+        {
+            if (pcConfigurations != null)
+            {
+                pcConfigurations.PcEmail = pcConfigurations.PcEmail.ToLower();
+                for (var i = 0; i < pcConfigurations.Admins.Count; i++)
+                {
+                    pcConfigurations.Admins[i] = new Tuple<string, string>(pcConfigurations.Admins[i].Item1.ToLower(),
+                        pcConfigurations.Admins[i].Item2);
+                }
+            }
+        }
+
+        private static DiagnosticData CreateDiagnosticData(PcConfiguration? pcConfigurations)
+        {
             var linuxFalseWindowsTrue = !RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
 
             var diagnosticData = new DiagnosticData()
@@ -70,33 +103,33 @@ namespace PC_App.Services
                 PcConfiguration = pcConfigurations,
                 HealthStatus = "Healthy"
             };
+            return diagnosticData;
+        }
 
-            CountHigh(diagnosticData);
-
-            if (DateTime.UtcNow.CompareTo(StallTime) >= 0 && StallTime.CompareTo(DateTime.MinValue) != 0)
-            {
-                StallTime = DateTime.MinValue;
-            }
-
+        private static async Task SendWarningIfDangerousAndNoStall(DiagnosticData diagnosticData)
+        {
             if (CpuHighCounter >= 40 || MemoryHighCounter >= 40)
             {
                 diagnosticData.HealthStatus = "Unhealthy";
                 if (StallTime.CompareTo(DateTime.MinValue) == 0)
                 {
-                    var pcHealthData = new PcHealthData()
-                    {
-                        CpuHighCounter = CpuHighCounter,
-                        MemoryHighCounter = MemoryHighCounter,
-                        PcConfiguration = diagnosticData.PcConfiguration ?? new PcConfiguration()
-                    };
-                    StallTime = DateTime.UtcNow.AddMinutes(10);
-                    await PostServices.PostPcHealthData("http://omarkar1011-001-site1.dtempurl.com/Pc/PostPcHealthDataFromPc", pcHealthData);
+                    await SendWarning(diagnosticData.PcConfiguration);
                 }
             }
-
-            return JsonSerializer.Serialize(diagnosticData);
         }
 
+        private static async Task SendWarning(PcConfiguration pcConfiguration)
+        {
+            var pcHealthData = new PcHealthData()
+            {
+                CpuHighCounter = CpuHighCounter,
+                MemoryHighCounter = MemoryHighCounter,
+                PcConfiguration = pcConfiguration ?? new PcConfiguration()
+            };
+            StallTime = DateTime.UtcNow.AddMinutes(10);
+            await PostServices.PostPcHealthData("https://localhost:44335/Pc/PostPcHealthDataFromPc",
+                pcHealthData);
+        }
         private static void CountHigh(DiagnosticData diagnosticData)
         {
             if (_cpuHighBitArray[Counter])

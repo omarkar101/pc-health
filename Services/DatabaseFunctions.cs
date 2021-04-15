@@ -86,7 +86,7 @@ namespace Services
             StaticStorageServices.AdminMapper.Add(newAccountInfo.CredentialsUsername, pcCredentialsPassword);
             await dbContext.SaveChangesAsync().ConfigureAwait(false);
             return pcCredentialsPassword;
-        }
+        } 
 
         public static async Task<string> GetPasswordSalt(PcHealthContext dbContext, Credential credential)
         {
@@ -121,6 +121,7 @@ namespace Services
                 pc.PcNetworkAverageBytesSend = diagnosticData.AvgNetworkBytesSent;
                 pc.PcOs = diagnosticData.Os;
                 pc.PcUsername = diagnosticData.PcConfiguration.PcUsername;
+                pc.PcEmail = diagnosticData.PcConfiguration.PcEmail;
                 await db.SaveChangesAsync();
             }
         }
@@ -152,7 +153,11 @@ namespace Services
                     MemoryUsage = (double)pc.PcMemoryUsage,
                     Os = pc.PcOs,
                     PcId = pc.PcId,
-                    PcConfiguration = new PcConfiguration(),
+                    PcConfiguration = new PcConfiguration()
+                    {
+                        PcUsername = pc.PcUsername,
+                        PcEmail = pc.PcEmail
+                    },
                     TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
                     Services = new List<Tuple<string, string>>()
                 };
