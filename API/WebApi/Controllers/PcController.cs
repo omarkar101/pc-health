@@ -114,7 +114,7 @@ namespace WebApi.Controllers
                     }
                     await DatabaseFunctions.AddPcToAdmin(diagnosticData, admin.Item1, _db).ConfigureAwait(false);
                     await _db.SaveChangesAsync().ConfigureAwait(false);
-                }
+                } 
             }
 
             return "true";

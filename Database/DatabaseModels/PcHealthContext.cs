@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -16,13 +18,13 @@ namespace Database.DatabaseModels
         public virtual DbSet<Credential> Credentials { get; set; }
         public virtual DbSet<LastMinute> LastMinutes { get; set; }
         public virtual DbSet<Pc> Pcs { get; set; }
-        public virtual DbSet<Service> Services { get; set; }
+        public virtual DbSet<Timestamp> Timestamps { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("server=bsvhzy1r6yrrhqucx9o9-mysql.services.clever-cloud.com;port=3306;database=bsvhzy1r6yrrhqucx9o9;username=uclrhckmdjsm76tx;password=pUd7Fb8karg1EjPc6hVd");
+                optionsBuilder.UseMySql("server=bsvhzy1r6yrrhqucx9o9-mysql.services.clever-cloud.com;port=3306;database=bsvhzy1r6yrrhqucx9o9;username=uclrhckmdjsm76tx;password=pUd7Fb8karg1EjPc6hVd", Microsoft.EntityFrameworkCore.ServerVersion.FromString("8.0.22-mysql"));
             }
         }
 
@@ -158,6 +160,11 @@ namespace Database.DatabaseModels
                     .HasCharSet("utf8")
                     .HasCollation("utf8_general_ci");
 
+                entity.Property(e => e.PcEmail)
+                    .HasColumnType("varchar(50)")
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_general_ci");
+
                 entity.Property(e => e.PcFirewallStatus)
                     .IsRequired()
                     .HasColumnType("varchar(10)")
@@ -178,31 +185,20 @@ namespace Database.DatabaseModels
                     .HasCollation("utf8_general_ci");
             });
 
-            modelBuilder.Entity<Service>(entity =>
+            modelBuilder.Entity<Timestamp>(entity =>
             {
-                entity.HasKey(e => new { e.ServiceName, e.PcId })
-                    .HasName("PRIMARY")
-                    .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
+                entity.HasNoKey();
 
-                entity.ToTable("Service");
+                entity.ToTable("timestamps");
 
-                entity.HasIndex(e => e.PcId, "PcId_idx");
+                entity.Property(e => e.CreateTime)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("create_time")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.ServiceName)
-                    .HasColumnType("varchar(45)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.Property(e => e.PcId)
-                    .HasColumnType("varchar(150)")
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_general_ci");
-
-                entity.HasOne(d => d.Pc)
-                    .WithMany(p => p.Services)
-                    .HasForeignKey(d => d.PcId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("PcId");
+                entity.Property(e => e.UpdateTime)
+                    .HasColumnType("timestamp")
+                    .HasColumnName("update_time");
             });
 
             OnModelCreatingPartial(modelBuilder);

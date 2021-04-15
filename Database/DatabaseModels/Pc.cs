@@ -10,7 +10,6 @@ namespace Database.DatabaseModels
         public Pc()
         {
             AdminHasPcs = new HashSet<AdminHasPc>();
-            Services = new HashSet<Service>();
         }
 
         public string PcId { get; set; }
@@ -23,8 +22,8 @@ namespace Database.DatabaseModels
         public double? PcNetworkAverageBytesSend { get; set; }
         public double? PcNetworkAverageBytesReceived { get; set; }
         public string PcUsername { get; set; }
+        public string PcEmail { get; set; }
 
         public virtual ICollection<AdminHasPc> AdminHasPcs { get; set; }
-        public virtual ICollection<Service> Services { get; set; }
     }
 }

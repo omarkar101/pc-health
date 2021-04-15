@@ -9,6 +9,7 @@ namespace CommonModels
     public class PcConfiguration
     {
         public string PcUsername { get; set; }
+        public string PcEmail { get; set; }
         public List<Tuple<string, string>> Admins { get; set; }
     }
 }

@@ -1,9 +1,10 @@
 {
-	"PcUsername" : "Omar's Pc",
+  "PcUsername": "Mahdi's Pc",
+  "PcEmail" :  "Mahdi@gmail.com", 
 	"Admins" : [
     {
-      "Item1": "omk13@mail.aub.edu",
-      "Item2": "UPJ5B8E="
+      "Item1": "mAhDimattout04@gmail.com",
+      "Item2": "SIsba9U="
     }
   ]
 }
