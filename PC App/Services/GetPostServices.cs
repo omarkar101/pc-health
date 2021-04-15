@@ -13,7 +13,7 @@ namespace PC_App.Services
             {
                 try
                 {
-                    await PostServices.PostDiagnosticData("http://omarkar1011-001-site1.dtempurl.com/Pc/PostDiagnosticDataFromPc");
+                    await PostServices.PostDiagnosticData("http://pc-health.somee.com/Pc/PostDiagnosticDataFromPc");
                     Thread.Sleep(500);
                 }
                 catch (Exception e)
