@@ -16,7 +16,7 @@ namespace PC_App.Services
             {
                 try
                 {
-                    await PostDiagnosticData("https://localhost:44335/Pc/PostDiagnosticDataFromPc");
+                    await PostDiagnosticData("http://pc-health.somee.com/Pc/PostDiagnosticDataFromPc");
                     Thread.Sleep(500);
                 }
                 catch (Exception e)
