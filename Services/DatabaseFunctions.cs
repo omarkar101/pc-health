@@ -152,7 +152,10 @@ namespace Services
                     MemoryUsage = (double)pc.PcMemoryUsage,
                     Os = pc.PcOs,
                     PcId = pc.PcId,
-                    PcConfiguration = new PcConfiguration(),
+                    PcConfiguration = new PcConfiguration()
+                    {
+                        PcUsername = pc.PcUsername
+                    },
                     TotalFreeDiskSpace = pc.PcDiskTotalFreeSpace,
                     Services = new List<Tuple<string, string>>()
                 };
