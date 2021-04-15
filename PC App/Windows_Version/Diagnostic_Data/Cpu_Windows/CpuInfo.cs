@@ -12,15 +12,14 @@ namespace Cpu_Windows
         private static float UpdateCpuUsage()//returns CpuPercentage
         {
             PerformanceCounter cpuCounter = new PerformanceCounter();//creates a Performance Counter object that indicates how much processing power is used
-            cpuCounter.CategoryName = "Processor Information";
-            cpuCounter.CounterName = "% Processor Utility";
+            cpuCounter.CategoryName = "Processor";
+            cpuCounter.CounterName = "% Processor Time";
             cpuCounter.InstanceName = "_Total";
-            var firstValue = cpuCounter.NextSample();
-            System.Threading.Thread.Sleep(100);
+            var firstValue = cpuCounter.NextValue();
+            System.Threading.Thread.Sleep(500);
             // now matches task manager reading
-            var currentValue = cpuCounter.NextSample();
-            var cpuValue = CounterSample.Calculate(firstValue, currentValue);
-            return cpuValue;
+            var currentValue = cpuCounter.NextValue();
+            return currentValue;
         }
     }
 }
