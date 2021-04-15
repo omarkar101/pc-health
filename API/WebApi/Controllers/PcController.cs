@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -31,13 +30,21 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<string> DiagnosticData() 
         {
-            var token = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false);
-            var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
-            var tokenUsername = JsonSerializer.Deserialize<TokenUsername>(payloadJson);
-            if (tokenUsername == null) return null;
-            var admin = tokenUsername.name;
-            var pCsList = StaticStorageServices.PcMapper[admin].Values;
-            return JsonSerializer.Serialize(pCsList);
+            try
+            {
+                var token = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false);
+                var payloadJson = new JwtSecurityTokenHandler().ReadJwtToken(token).Payload.SerializeToJson();
+                var tokenUsername = JsonSerializer.Deserialize<TokenUsername>(payloadJson);
+                if (tokenUsername == null) return "false";
+                var admin = tokenUsername.name;
+                var pCsList = StaticStorageServices.PcMapper[admin].Values;
+                return JsonSerializer.Serialize(pCsList);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return "false";
+            }
         }
 
         [Authorize]
@@ -54,7 +61,7 @@ namespace WebApi.Controllers
                     return lm2.TimeChanged != null ? ((DateTime) lm1.TimeChanged).CompareTo((DateTime) lm2.TimeChanged) : 0;
                 });
 
-                for (int i = 1; i <= 60; i++)
+                for (var i = 1; i <= 60; i++)
                 {
                     listOfLastMinute[i - 1].Second = i;
                 }
