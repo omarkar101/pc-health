@@ -32,7 +32,7 @@ namespace Services
                 request.AddHeader("Accept", "application/json");
                 request.AddHeader("Content-Type", "application/json");
                 request.AddHeader("api-key", "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");
-                request.AddParameter("application/json", "{\"sender\":{\"name\":\"PC-Health\",\"email\":\"team.mirai101@gmail.com\"},\"to\":[{\"email\":\""+ email +"\",\"name\":\"Rony\"}],\"subject\":\"PC-Health\",\"textContent\":\""+ body +"\"}", ParameterType.RequestBody);
+                request.AddParameter("application/json", "{\"sender\":{\"name\":\"PC-Health\",\"email\":\"team.mirai101@gmail.com\"},\"to\":[{\"email\":\""+ email +"\",\"name\":\"Rony\"}],\"subject\":\"PC-Health\",\"htmlContent\":\""+ body +"\"}", ParameterType.RequestBody);
                 IRestResponse response = await client.ExecuteAsync(request);
             }
             catch (Exception e)

@@ -126,7 +126,7 @@ namespace WebApi.Controllers
             foreach (var admin in pcHealthData.PcConfiguration.Admins)
             {
                 if(admin.Item2.Equals(StaticStorageServices.AdminMapper[admin.Item1]))
-                    await EmailServices.SendEmail(admin.Item1, $"In the last minute, the pc of name \"{pcHealthData.PcConfiguration.PcUsername}\" " +
+                    await EmailServices.SendEmail(admin.Item1, $"In the last minute, the pc of name {pcHealthData.PcConfiguration.PcUsername} " +
                                                      $"hit over 80%: <br>Memory Usage: {pcHealthData.MemoryHighCounter} times <br>" +
                                                      $"Cpu Usage: {pcHealthData.CpuHighCounter} times.");
             }
