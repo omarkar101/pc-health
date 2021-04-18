@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import "./services.css"
 
 function Services({match}) {
   const [D, setData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [FilteredData, setFilteredData] = useState([]);
+  const [FilteredData2, setFilteredData2] = useState([]);
+
   const FetchData = () => {
     axios
-      .get("http://omarkar1011-001-site1.dtempurl.com/Pc/DiagnosticData")
+      .get("http://pc-health.somee.com/Pc/DiagnosticData", {
+      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
       .then((res) => {
-        console.log(res);
         setData(res.data.filter((d) => d.PcId === match.params.id));
+        // console.log(res)
       })
       .catch((err) => console.log(err));
   }
@@ -24,7 +30,36 @@ function Services({match}) {
       clearInterval(UpdateCycle);
     };
   });
+
+  useEffect(() => {
+    // console.log("D:",D)
+    setFilteredData(
+      // D.filter(D.map(x => (x.Services.map (x2 => (x2.Item1.toLowerCase().includes(search.toLowerCase()))))))
+      []
+      )
+      D.map(x => (x.Services.map (x2 => (x2.Item1.toLowerCase().includes(search.toLowerCase()) ? FilteredData.push(x2) : ''))))
+      // setFilteredData(FilteredData)
+      setFilteredData2(FilteredData)
+
+  }, [search, D])
+
+  // useEffect(() => {
+  //   setFilteredData2(FilteredData)
+  // }, [FilteredData])
+
   return (
+
+    <>
+    <div className="div_background">
+      <input
+        className="search"
+        type="text"
+        placeholder="search username..."
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
+
     <table className="table">
       <thead className="thead-dark">
         <tr className = 'header'>
@@ -33,16 +68,45 @@ function Services({match}) {
         </tr>
       </thead>
       <tbody>
-        {D.map(d => (
-          d.Services.map(service => (
+        {console.log(FilteredData2)}
+      {/* {
+      D.length === 0 ? (
+          <div style={{ color: "red" }}> No results found </div>
+        ): (
+
+          D.map(d=>(
+            d.Services.map(service => (            
+            <>
             <tr>
               <td>{service.Item1}</td>
               <td>{service.Item2}</td>
             </tr>
+            </>
+            ))
           ))
-        ))}
+
+          )
+          } */}
+
+      { (FilteredData2.length === 0 ) ? (
+        <div style={{ color: "red" }}> No results found </div>
+      ) : (
+        FilteredData2.map(d =>(
+          
+          <>
+          <tr>
+            <td>{d.Item1}</td>
+            <td>{d.Item2}</td>
+          </tr>
+          </>
+      ))
+      )
+      }
+
       </tbody>
     </table>
+    </div>
+    </>
   );
 }
 
