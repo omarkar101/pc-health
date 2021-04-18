@@ -14,13 +14,14 @@ import ForgetPassword_ID from "./ForgetPassword_ID";
 import NewPassword from "./NewPassword";
 import Stats from "./Stats";
 import ResetPass from "./ResetPass"
-
+import { Beforeunload } from 'react-beforeunload';
 
 function App() {
   const [token, setToken] = useState();
 
   return (
     <>
+      <Beforeunload onBeforeunload={()=>localStorage.removeItem("token")}/>
       <Router>
         <Nav setToken={setToken} />
         <main>
