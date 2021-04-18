@@ -58,8 +58,8 @@ export default function Register() {
           </div>
           <div className="div2">
           <input
-            type="text"
-            placeholder="Username"
+            type="email"
+            placeholder="Email"
             className="rdesign_input"
             required
             onChange={(e) => setUName(e.target.value)}
