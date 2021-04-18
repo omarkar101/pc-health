@@ -107,41 +107,20 @@ function Table(props,) {
                             <td> <CgDanger color='red' size='1.5rem'/></td>
                           )
                         }
-                      <td>
+                      <td style={{fontWeight:"bold"}}>
                         {x.PcConfiguration.PcUsername}
                         {/* </Link> */}
                       </td>
-                      {/* {
-                        (x.HealthStatus === null)? (
-                          <td>Off</td>
-                        ):(
-                          <td>On</td>
-                        )
-                        } */}
-                        {/* {
-                          (x.HealthStatus === "Healthy") ? (
-                            // <td style={{color: "green"}}> {x.HealthStatus} </td>
-                            <td> <AiOutlineWarning/></td>
-                          ) : 
-                          (
-                            // <td style={{color: "red"}}> In Danger </td>
-                            <td> <AiOutlineWarning color='red' size='1.2rem'/></td>
-                          )
-                        } */}
 
                         {(x.Os === "Windows") ? (
                           <td><AiFillWindows size='1.2rem' /> &nbsp; {x.Os}</td>
                           
                         ) : ( (x.Os === "linux") ? (
-                          <td><FcLinux/>{x.Os}</td>) : (<td>{x.Os}</td>)
+                          <td><FcLinux size='1.2rem'/>{x.Os}</td>) : (<td>{x.Os}</td>)
                         )}
                       
                       <td>
                         <Link to={"/table/" + x.PcId} target="_blank" className="tablelinks">
-                        {/* <IconContext.Provider
-                            value={{ color: 'lime', size: '30px' }}>
-                            <GrStatusInfo/>
-                          </IconContext.Provider> */}
                          Services
                         </Link>
                         &nbsp; &nbsp; &nbsp;
@@ -150,11 +129,7 @@ function Table(props,) {
                         </Link>
                       </td>
                       <td>{x.PcConfiguration.PcEmail}</td>
-                      {/* <td>
-                        <Link to={"/stats/" + x.PcId} target="_blank" className="tablelinks">
-                          Statistics
-                        </Link>
-                      </td> */}
+
                     </tr>
                       
                     {detailsShown.includes(x.PcId) && (

@@ -31,13 +31,20 @@ function Stats({ match }) {
   //   FetchStats()
   // }, );
 
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     FetchStats()
+  //   }, 1000);
+  //   return () => {
+  //     clearTimeout(timer);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const interval = setInterval(() => {
       FetchStats()
     }, 1000);
-    return () => {
-      clearTimeout(timer);
-    }
+    return () => clearInterval(interval);
   }, []);
 
   // setInterval ( () =>{

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./services.css"
 
-
 function Services({match}) {
   const [D, setData] = useState([]);
   const [search, setSearch] = useState('');
   const [FilteredData, setFilteredData] = useState([]);
+  const [FilteredData2, setFilteredData2] = useState([]);
 
   const FetchData = () => {
     axios
@@ -38,8 +38,14 @@ function Services({match}) {
       []
       )
       D.map(x => (x.Services.map (x2 => (x2.Item1.toLowerCase().includes(search.toLowerCase()) ? FilteredData.push(x2) : ''))))
+      // setFilteredData(FilteredData)
+      setFilteredData2(FilteredData)
 
   }, [search, D])
+
+  // useEffect(() => {
+  //   setFilteredData2(FilteredData)
+  // }, [FilteredData])
 
   return (
 
@@ -62,8 +68,8 @@ function Services({match}) {
         </tr>
       </thead>
       <tbody>
-        {console.log(FilteredData)}
-      {
+        {console.log(FilteredData2)}
+      {/* {
       D.length === 0 ? (
           <div style={{ color: "red" }}> No results found </div>
         ): (
@@ -80,12 +86,12 @@ function Services({match}) {
           ))
 
           )
-          }
+          } */}
 
-      {/* { (FilteredData.length === 0 ) ? (
+      { (FilteredData2.length === 0 ) ? (
         <div style={{ color: "red" }}> No results found </div>
       ) : (
-        FilteredData.map(d =>(
+        FilteredData2.map(d =>(
           
           <>
           <tr>
@@ -95,7 +101,7 @@ function Services({match}) {
           </>
       ))
       )
-      } */}
+      }
 
       </tbody>
     </table>
