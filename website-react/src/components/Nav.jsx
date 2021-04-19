@@ -18,7 +18,7 @@ import "@reach/menu-button/styles.css";
 import Select from 'react-select'
 
 
-export default function Nav(prop: { setToken: (token) => void }) {
+export default function Nav() {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [state, setState] = useState({
     interval: 3,
@@ -35,7 +35,9 @@ export default function Nav(prop: { setToken: (token) => void }) {
 
   const logout = () => {
     localStorage.removeItem("token")
-    prop.setToken('')
+    return <Redirect to="/"/>
+    // History.push("/")
+    // prop.setToken('')
   }
   
   useEffect(() => {
@@ -105,33 +107,10 @@ export default function Nav(prop: { setToken: (token) => void }) {
     History.push("./ResetPass")
   }
   let menu;
-  if (
-    localStorage.getItem("token") === "false" ||
-    localStorage.getItem("token") === null ||
-    !window.location.pathname === "/table"
-  ) {
-    return (
-      <nav>
-        <div className="navigations_login">
-            <div className="plinks">Forgot Password?
-            <Link to="/ForgetPassword" className="links">
-              Click here
-            </Link>
-            </div>
-            <br/>
-          <div className="plinks">Don't have an account?
-            <Link to="/Register" className="links">
-              Register
-            </Link>
-        
-          </div>
-          <br/>
-          {/* </ul> */}
-        </div>
-      </nav>
-    );
-  }
-  else {
+  
+
+  
+
     return (
       <>
         <Settings trigger={buttonPopup} setTrigger={setButtonPopup}>
@@ -173,5 +152,5 @@ export default function Nav(prop: { setToken: (token) => void }) {
         </ProtectedRoute>
       </>
     );
-  }
-}
+ }
+

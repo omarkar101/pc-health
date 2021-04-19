@@ -21,9 +21,7 @@ function App() {
 
   return (
     <>
-      <Beforeunload onBeforeunload={()=>localStorage.removeItem("token")}/>
       <Router>
-        <Nav setToken={setToken} />
         <main>
           <Route path="/" exact component={Login}>
             <Login setToken={setToken} />

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import "./Login.css";
 import { Redirect } from "react-router";
-
+import {Link} from 'react-router-dom'
 
 
 function Login(prop: { setToken: (token) => void }) {
   const [CredentialsUsername, setUname] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
+
   // function validateForm() {
   //     return CredentialsUsername.length > 0 && CredentialsPassword.length > 0;
   // }
@@ -28,7 +29,6 @@ function Login(prop: { setToken: (token) => void }) {
     );
     const token = await response.text();
     localStorage.setItem("token", token)
-    prop.setToken(token)
     setRedirect(token);
   }
   if (redirect !== "false" && redirect !== "") { return <div><Redirect to="/table" /></div> }
@@ -62,15 +62,45 @@ function Login(prop: { setToken: (token) => void }) {
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
         <h1 className="h1_d">Please Login</h1>
-        <input type="email" className="design_input" placeholder="Email" required
-          onChange={(e) => setUname(e.target.value)}>
-        </input>
-        <input type="password" className="design_input" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
+        <input
+          type="email"
+          className="design_input"
+          placeholder="Email"
+          required
+          onChange={(e) => setUname(e.target.value)}
+        ></input>
+        <input
+          type="password"
+          className="design_input"
+          placeholder="Password"
+          required
+          onChange={(e) => setPassword(e.target.value)}
+        />
         <button className="login_button" type="submit">
           Log in
         </button>
       </form>
-    </div>)
+      <nav>
+        <div className="navigations_login">
+          <div className="plinks">
+            Forgot Password?
+            <Link to="/ForgetPassword" className="links">
+              Click here
+            </Link>
+          </div>
+          <br />
+          <div className="plinks">
+            Don't have an account?
+            <Link to="/register" className="links">
+              Register
+            </Link>
+          </div>
+          <br />
+          {/* </ul> */}
+        </div>
+      </nav>
+    </div>
+  );
 
 }
 export default Login
