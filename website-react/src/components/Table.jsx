@@ -32,7 +32,7 @@ function Table() {
         const shownState = detailsShown.slice();
         const index = shownState.indexOf(username);
         if (index >= 0) {
-            shownState.splice(index, 1);
+            shownState.splice(index, 1); 
             setDetailShown(shownState);
         } else {
             shownState.push(username);
@@ -56,16 +56,17 @@ function Table() {
     });
 
     useEffect(() => {
-      console.log("datalst", datalst);
+      // console.log("datalst", datalst);
         setFilteredData(
             datalst.filter((username) => username.PcConfiguration.PcUsername.toLowerCase().includes(search.toLowerCase()))
         )
     }, [search, datalst])
-
+  let counter = 0
+  // console.log(counter)
   return (
     <>
       <div className="table_div">
-        <Nav/>
+        <Nav />
         <input
           className="search"
           type="text"
@@ -83,6 +84,7 @@ function Table() {
                 <th>Username</th>
                 {/* <th>Activity</th> */}
                 {/* <th>Status</th> */}
+                <th>Status</th>
                 <th>Operating System</th>
                 <th>More Info </th>
                 <th>Contact info</th>
@@ -95,6 +97,8 @@ function Table() {
               ) : (
                 FilteredData.map((x) => (
                   <>
+                    {console.log(temp[counter]===x)}
+                    {/* {console.log("datalst", x)} */}
                     <tr
                       key={"NAME:" + x.PcId}
                       onClick={() => toggleShown(x.PcId)}
@@ -119,7 +123,11 @@ function Table() {
                         {x.PcConfiguration.PcUsername}
                         {/* </Link> */}
                       </td>
-
+                      {temp[counter] === x ? (
+                        <td>Inactive</td>
+                      ) : (
+                        <td>Active</td>
+                      )}
                       {x.Os === "Windows" ? (
                         <td>
                           <AiFillWindows size="1.2rem" /> &nbsp; {x.Os}
@@ -152,7 +160,6 @@ function Table() {
                       </td>
                       <td>{x.PcConfiguration.PcEmail}</td>
                     </tr>
-
                     {detailsShown.includes(x.PcId) && (
                       <tr key={"DETAIL:" + x.PcId} className="additional-info">
                         <td align="center" colSpan="6">
