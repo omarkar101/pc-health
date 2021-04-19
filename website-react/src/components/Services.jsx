@@ -37,6 +37,7 @@ function Services({match}) {
       // D.filter(D.map(x => (x.Services.map (x2 => (x2.Item1.toLowerCase().includes(search.toLowerCase()))))))
       []
       )
+      // D.map(x => (x.Services.map (x2 => (console.log(x2)))))
       D.map(x => (x.Services.map (x2 => (x2.Item1.toLowerCase().includes(search.toLowerCase()) ? FilteredData.push(x2) : ''))))
       // setFilteredData(FilteredData)
       setFilteredData2(FilteredData)
