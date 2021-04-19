@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Redirect } from "react-router";
+import { Redirect, Route} from "react-router";
+import { BrowserRouter as Router } from "react-router-dom";
 import {Link} from 'react-router-dom'
-
+import Nav from './Nav'
 
 function Login(prop: { setToken: (token) => void }) {
   const [CredentialsUsername, setUname] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
+  const [token,setToken]=useState("")
 
   // function validateForm() {
   //     return CredentialsUsername.length > 0 && CredentialsPassword.length > 0;
@@ -29,9 +31,12 @@ function Login(prop: { setToken: (token) => void }) {
     );
     const token = await response.text();
     localStorage.setItem("token", token)
+    localStorage.setItem("interval",3)
     setRedirect(token);
   }
-  if (redirect !== "false" && redirect !== "") { return <div><Redirect to="/table" /></div> }
+  if (redirect !== "false" && redirect !== "") {
+    return (<Redirect to="/table"/>
+    ); }
   if (redirect === 'false') {
     return (
       <div className="div_design">

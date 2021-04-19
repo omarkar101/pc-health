@@ -34,10 +34,8 @@ export default function Nav() {
   ]
 
   const logout = () => {
-    localStorage.removeItem("token")
-    return <Redirect to="/"/>
-    // History.push("/")
-    // prop.setToken('')
+    localStorage.clear()
+    History.push("./")
   }
   
   useEffect(() => {
@@ -83,14 +81,17 @@ export default function Nav() {
       if (unit === "seconds") {
         state.interval = state.input * 1;
         setState(state);
+        localStorage.setItem("interval",state.interval)
       }
       else if (unit === "minutes") {
         state.interval = state.input * 60;
         setState(state);
+        localStorage.setItem("interval", state.interval);
       }
       else if (unit === "hours") {
         state.interval = state.input * 3600;
         setState(state);
+        localStorage.setItem("interval", state.interval);
       }
       state.input = -1;
       console.log(state);
@@ -101,6 +102,7 @@ export default function Nav() {
 
   const changepassword = () => {
     History.push("./ChangePass")
+    // window.location.reload()
   }
 
   const resetpassword = () => {
@@ -146,10 +148,6 @@ export default function Nav() {
           </MenuList>
 
         </Menu>
-
-        <ProtectedRoute exact path="/table" component={Table}>
-          <Table i={state}></Table>
-        </ProtectedRoute>
       </>
     );
  }
