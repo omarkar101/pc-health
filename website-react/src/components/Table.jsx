@@ -1,68 +1,109 @@
-import React, {useState, useEffect} from "react";
-import { Link, withRouter} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 import axios from "axios";
 import './style.css'
 import Chart from "react-google-charts";
-import {CgDanger} from 'react-icons/cg';
-import {IoMdCheckmarkCircleOutline} from 'react-icons/io';
-import {AiFillWindows} from 'react-icons/ai';
-import {FcLinux} from 'react-icons/fc';
+import { CgDanger } from 'react-icons/cg';
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { AiFillWindows } from 'react-icons/ai';
+import { FcLinux } from 'react-icons/fc';
+import Nav from './Nav'
 
-
-function Table(props,) {
-    const [search, setSearch] = useState('');
-    const [datalst, setData] = useState([]);
-    const [FilteredData, setFilteredData] = useState([]);
-    const [detailsShown, setDetailShown] = useState([]);
-    const [temp, setTemp] = useState([]);
-
+function Table() {
+  const [search, setSearch] = useState('');
+  const [datalst, setData] = useState([]);
+  const [FilteredData, setFilteredData] = useState([]);
+  const [detailsShown, setDetailShown] = useState([]);
+  const [temp, setTemp] = useState([]);
+  const [temp2, setTemp2] = useState([]);
+  const [active, setActive] = useState([]);
+  // const [counter, setCounter] = useState(0)
   const FetchData = async () => {
-  axios
-    .get("http://pc-health.somee.com/Pc/DiagnosticData", {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
-    })
-    .then((res) => {
-      setData(res.data);
-    });
+    axios
+      .get("http://pc-health.somee.com/Pc/DiagnosticData", {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+        // setTemp(datalst)
+        setData(res.data);
+      });
   }
+  const FetchData2 = async () => {
+    axios
+      .get("http://pc-health.somee.com/Pc/DiagnosticData", {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((res) => {
+        setTemp(res.data)
+        // setData(res.data);
+      });
+  }
+  useEffect(() => {
+        setTemp([])
+  }, [])
+  const toggleShown = username => {
+    const shownState = detailsShown.slice();
+    const index = shownState.indexOf(username);
+    if (index >= 0) {
+      shownState.splice(index, 1);
+      setDetailShown(shownState);
+    } else {
+      shownState.push(username);
+      setDetailShown(shownState);
+    }
+  };
 
-    const toggleShown = username => {
-        const shownState = detailsShown.slice();
-        const index = shownState.indexOf(username);
-        if (index >= 0) {
-            shownState.splice(index, 1);
-            setDetailShown(shownState);
-        } else {
-            shownState.push(username);
-            setDetailShown(shownState);
-        }
-    };
 
-    useEffect(() => {
+
+  useEffect(() => {
         FetchData();
-    }, []);
+  }, []);
 
-    
-    useEffect(() => {
-        const UpdateCycle = setInterval(() => {
-            FetchData();
-        }, (props.i.interval * 1000));
-        return () => {
-          // console.log(datalst);
-            clearInterval(UpdateCycle);
-        };
-    });
+  useEffect(() => {
+    setTimeout(()=>{
+      FetchData2();
+    }, 1000)
+  }, []);
 
-    useEffect(() => {
-      console.log("datalst", datalst);
-        setFilteredData(
-            datalst.filter((username) => username.PcConfiguration.PcUsername.toLowerCase().includes(search.toLowerCase()))
-        )
-    }, [search, datalst])
 
-    return (
+  useEffect(() => {
+    const UpdateCycle = setInterval(() => {
+      FetchData();
+      setTimeout( function() {FetchData2();} , 1000);
+
+    }, (localStorage.getItem('interval') * 1000));
+    return () => {
+      // console.log(datalst);
+      clearInterval(UpdateCycle);
+    };
+  });
+
+
+  useEffect(() => {
+    setFilteredData(
+      datalst.filter((username) => username.PcConfiguration.PcUsername.toLowerCase().includes(search.toLowerCase()))
+    )
+    setTemp2(
+      temp.filter((username) => username.PcConfiguration.PcUsername.toLowerCase().includes(search.toLowerCase()))
+    )
+  }, [search, datalst])
+
+
+  useEffect(() => {
+    FilteredData.map((x, index) => (
+      (temp2.length !== 0) ? 
+      ( ((x.CpuUsage === temp2[index].CpuUsage) && (x.AvgNetworkBytesReceived === temp2[index].AvgNetworkBytesReceived) && (x.AvgNetworkBytesSent === temp2[index].AvgNetworkBytesSent) && (x.MemoryUsage === temp2[index].MemoryUsage))  ? (active[index] = "Inactive") : (active[index]= "Active") ) :
+      ('')
+    )
+    )
+  }, [temp2])
+
+
+
+  return (
+    <>
       <div className="table_div">
-      
+        <Nav />
         <input
           className="search"
           type="text"
@@ -80,6 +121,7 @@ function Table(props,) {
                 <th>Username</th>
                 {/* <th>Activity</th> */}
                 {/* <th>Status</th> */}
+                <th>Status</th>
                 <th>Operating System</th>
                 <th>More Info </th>
                 <th>Contact info</th>
@@ -90,48 +132,81 @@ function Table(props,) {
               {FilteredData.length === 0 ? (
                 <div style={{ color: "red" }}> No results found </div>
               ) : (
-                datalst.map((x) => (
+                FilteredData.map((x, c) => (
                   <>
-                  
+                    {/* {console.log(temp[counter] === x)} */}
+                    {/* {console.log("datalst", x)} */}
                     <tr
                       key={"NAME:" + x.PcId}
                       onClick={() => toggleShown(x.PcId)}
                     >
-                       {
-                          (x.HealthStatus === "Healthy") ? (
-                            // <td style={{color: "green"}}> {x.HealthStatus} </td>
-                            <td> <IoMdCheckmarkCircleOutline color='green' size='1.5rem'/></td>
-                          ) : 
-                          (
-                            // <td style={{color: "red"}}> In Danger </td>
-                            <td> <CgDanger color='red' size='1.5rem'/></td>
-                          )
-                        }
-                      <td style={{fontWeight:"bold"}}>
+                      {x.HealthStatus === "Healthy" ? (
+                        // <td style={{color: "green"}}> {x.HealthStatus} </td>
+                        <td>
+                          {" "}
+                          <IoMdCheckmarkCircleOutline
+                            color="green"
+                            size="1.5rem"
+                          />
+                        </td>
+                      ) : (
+                        // <td style={{color: "red"}}> In Danger </td>
+                        <td>
+                          {" "}
+                          <CgDanger color="red" size="1.5rem" />
+                        </td>
+                      )}
+                      <td style={{ fontWeight: "bold" }}>
                         {x.PcConfiguration.PcUsername}
                         {/* </Link> */}
                       </td>
+                      {/* {temp[counter] === x ? (
+                        <td>Inactive</td>
+                      ) : (
+                        <td>Active</td>
+                      )} */}
+                      {/* {console.log("a:",active)} */}
+                      {/* {console.log(FilteredData)} */}
+                      <td>{(active.length===0)? "loading..." : active[c]}</td>
+                      {x.Os === "Windows" ? (
+                        <td>
+                          <AiFillWindows size="1.2rem" /> &nbsp; {x.Os}
+                        </td>
+                      ) : x.Os === "linux" ? (
+                        <td>
+                          <FcLinux size="1.2rem" />
+                          {x.Os}
+                        </td>
+                      ) : (
+                        <td>{x.Os}</td>
+                      )}
 
-                        {(x.Os === "Windows") ? (
-                          <td><AiFillWindows size='1.2rem' /> &nbsp; {x.Os}</td>
-                          
-                        ) : ( (x.Os === "linux") ? (
-                          <td><FcLinux size='1.2rem'/>{x.Os}</td>) : (<td>{x.Os}</td>)
-                        )}
-                      
+                      {(active[c]==="Inactive") ? <td>Unavailable</td>
+                      :
+                
                       <td>
-                        <Link to={"/table/" + x.PcId} target="_blank" className="tablelinks">
-                         Services
+                        
+                        <Link
+                          to={"/table/" + x.PcId}
+                          target="_blank"
+                          className="tablelinks"
+                        >
+                          Services
                         </Link>
                         &nbsp; &nbsp; &nbsp;
-                        <Link to={"/Stats/" + x.PcId} target="_blank" className="tablelinks">
+                        <Link
+                          to={"/Stats/" + x.PcId}
+                          target="_blank"
+                          className="tablelinks"
+                        >
                           Performance
                         </Link>
                       </td>
-                      <td>{x.PcConfiguration.PcEmail}</td>
 
+                        }
+                      <td>{x.PcConfiguration.PcEmail}</td>
                     </tr>
-                      
+
                     {detailsShown.includes(x.PcId) && (
                       <tr key={"DETAIL:" + x.PcId} className="additional-info">
                         <td align="center" colSpan="6">
@@ -154,7 +229,7 @@ function Table(props,) {
                                     1: { color: "black" },
                                   },
                                 }}
-                                // rootProps={{ 'data-testid': '2' }}
+                              // rootProps={{ 'data-testid': '2' }}
                               />
                             </div>
                             <div className="second">
@@ -175,7 +250,7 @@ function Table(props,) {
                                     1: { color: "black" },
                                   },
                                 }}
-                                // rootProps={{ 'data-testid': '1' }}
+                              // rootProps={{ 'data-testid': '1' }}
                               />
                             </div>
                             <div className="third">
@@ -199,7 +274,7 @@ function Table(props,) {
                                     1: { color: "black" },
                                   },
                                 }}
-                                // rootProps={{ 'data-testid': '1' }}
+                              // rootProps={{ 'data-testid': '1' }}
                               />
                             </div>
                             <div className="fourth">
@@ -213,18 +288,25 @@ function Table(props,) {
                                   {x.AvgNetworkBytesReceived} bytes
                                 </span>
                                 <br></br>
-                                {
-                                  (x.FirewallStatus === "Active") ? 
-                                    (
-                                    <div style={{overflow: "hidden"}}>
-                                    <p style={{float: "left"}}>Firewall Status: &nbsp;</p>
-                                    <p style={ {color: "lime"}}>{x.FirewallStatus}</p>  </div>
-                                    
-                                 ) : (
-                                  <div style={{overflow: "hidden"}}>
-                                  <p style={{float: "left"}}>Firewall Status: &nbsp;</p>
-                                  <p style={ {color: "red"}}>{x.FirewallStatus}</p>  </div> 
-                                  )}
+                                {x.FirewallStatus === "Active" ? (
+                                  <div style={{ overflow: "hidden" }}>
+                                    <p style={{ float: "left" }}>
+                                      Firewall Status: &nbsp;
+                                    </p>
+                                    <p style={{ color: "lime" }}>
+                                      {x.FirewallStatus}
+                                    </p>{" "}
+                                  </div>
+                                ) : (
+                                  <div style={{ overflow: "hidden" }}>
+                                    <p style={{ float: "left" }}>
+                                      Firewall Status: &nbsp;
+                                    </p>
+                                    <p style={{ color: "red" }}>
+                                      {x.FirewallStatus}
+                                    </p>{" "}
+                                  </div>
+                                )}
                               </p>
                             </div>
                           </div>
@@ -238,6 +320,7 @@ function Table(props,) {
           </table>
         </div>
       </div>
-    );
+    </>
+  );
 }
 export default withRouter(Table);
