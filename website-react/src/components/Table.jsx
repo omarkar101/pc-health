@@ -15,6 +15,7 @@ function Table() {
     const [FilteredData, setFilteredData] = useState([]);
     const [detailsShown, setDetailShown] = useState([]);
   const [temp, setTemp] = useState([]);
+  const [counter,setCounter]=useState(0)
   const FetchData = async () => {
   axios
     .get("http://pc-health.somee.com/Pc/DiagnosticData", {
@@ -41,7 +42,7 @@ function Table() {
     };
 
     useEffect(() => {
-        FetchData();
+      FetchData();
     }, []);
 
     
@@ -61,7 +62,6 @@ function Table() {
             datalst.filter((username) => username.PcConfiguration.PcUsername.toLowerCase().includes(search.toLowerCase()))
         )
     }, [search, datalst])
-  let counter = 0
   // console.log(counter)
   return (
     <>
@@ -97,7 +97,7 @@ function Table() {
               ) : (
                 FilteredData.map((x) => (
                   <>
-                    {console.log(temp[counter]===x)}
+                    {console.log(temp[counter] === x)}
                     {/* {console.log("datalst", x)} */}
                     <tr
                       key={"NAME:" + x.PcId}
@@ -140,7 +140,6 @@ function Table() {
                       ) : (
                         <td>{x.Os}</td>
                       )}
-
                       <td>
                         <Link
                           to={"/table/" + x.PcId}
@@ -274,6 +273,6 @@ function Table() {
         </div>
       </div>
     </>
-  );
+  setCounter(counter+1)});
 }
 export default withRouter(Table);
