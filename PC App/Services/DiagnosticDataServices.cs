@@ -29,7 +29,7 @@ namespace PC_App.Services
 
             try
             {
-                pcConfigurationJsonString = await File.ReadAllTextAsync(@"~\..\Configurations.json", Encoding.UTF8);
+                pcConfigurationJsonString = await File.ReadAllTextAsync(@"Configurations.json", Encoding.UTF8);
             }
             catch (Exception e)
             {
