@@ -8,6 +8,7 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { AiFillWindows } from 'react-icons/ai';
 import { FcLinux } from 'react-icons/fc';
 import Nav from './Nav'
+import { AiOutlineWarning } from 'react-icons/ai'
 
 function Table() {
   const [search, setSearch] = useState('');
@@ -39,7 +40,7 @@ function Table() {
       });
   }
   useEffect(() => {
-        setTemp([])
+    setTemp([])
   }, [])
   const toggleShown = username => {
     const shownState = detailsShown.slice();
@@ -56,11 +57,11 @@ function Table() {
 
 
   useEffect(() => {
-        FetchData();
+    FetchData();
   }, []);
 
   useEffect(() => {
-    setTimeout(()=>{
+    setTimeout(() => {
       FetchData2();
     }, 1000)
   }, []);
@@ -69,7 +70,7 @@ function Table() {
   useEffect(() => {
     const UpdateCycle = setInterval(() => {
       FetchData();
-      setTimeout( function() {FetchData2();} , 1000);
+      setTimeout(function () { FetchData2(); }, 1000);
 
     }, (localStorage.getItem('interval') * 1000));
     return () => {
@@ -91,9 +92,9 @@ function Table() {
 
   useEffect(() => {
     FilteredData.map((x, index) => (
-      (temp2.length !== 0) ? 
-      ( ((x.CpuUsage === temp2[index].CpuUsage) && (x.AvgNetworkBytesReceived === temp2[index].AvgNetworkBytesReceived) && (x.AvgNetworkBytesSent === temp2[index].AvgNetworkBytesSent) && (x.MemoryUsage === temp2[index].MemoryUsage))  ? (active[index] = "Inactive") : (active[index]= "Active") ) :
-      ('')
+      (temp2.length !== 0) ?
+        (((x.CpuUsage === temp2[index].CpuUsage) && (x.AvgNetworkBytesReceived === temp2[index].AvgNetworkBytesReceived) && (x.AvgNetworkBytesSent === temp2[index].AvgNetworkBytesSent) && (x.MemoryUsage === temp2[index].MemoryUsage)) ? (active[index] = "Inactive") : (active[index] = "Active")) :
+        ('')
     )
     )
   }, [temp2])
@@ -103,18 +104,21 @@ function Table() {
   return (
     <>
       <div className="table_div">
-        <Nav />
-        <input
-          className="search"
-          type="text"
-          placeholder="search username..."
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
-        />
+        <div className="search_settings">
+          <Nav />
+          <input
+            className="search"
+            type="text"
+            placeholder="search username..."
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+        </div>
 
-        <div className="table-container">
-          <table>
+
+        <div className="table-box table-container">
+          <table className="center">
             <thead>
               <tr>
                 <th>&nbsp;</th>
@@ -153,7 +157,7 @@ function Table() {
                         // <td style={{color: "red"}}> In Danger </td>
                         <td>
                           {" "}
-                          <CgDanger color="red" size="1.5rem" />
+                          <AiOutlineWarning color="red" size="1.5rem" />
                         </td>
                       )}
                       <td style={{ fontWeight: "bold" }}>
@@ -167,10 +171,10 @@ function Table() {
                       )} */}
                       {/* {console.log("a:",active)} */}
                       {/* {console.log(FilteredData)} */}
-                      <td>{(active.length===0)? "loading..." : active[c]}</td>
+                      <td>{(active.length === 0) ? "loading..." : active[c]}</td>
                       {x.Os === "Windows" ? (
                         <td>
-                          <AiFillWindows size="1.2rem" /> &nbsp; {x.Os}
+                          <AiFillWindows size="1.2rem" /> {x.Os}
                         </td>
                       ) : x.Os === "linux" ? (
                         <td>
@@ -181,29 +185,29 @@ function Table() {
                         <td>{x.Os}</td>
                       )}
 
-                      {(active[c]==="Inactive") ? <td>Unavailable</td>
-                      :
-                
-                      <td>
-                        
-                        <Link
-                          to={"/table/" + x.PcId}
-                          target="_blank"
-                          className="tablelinks"
-                        >
-                          Services
-                        </Link>
-                        &nbsp; &nbsp; &nbsp;
-                        <Link
-                          to={"/Stats/" + x.PcId}
-                          target="_blank"
-                          className="tablelinks"
-                        >
-                          Performance
-                        </Link>
-                      </td>
+                      {(active[c] === "Inactive") ? <td>Unavailable</td>
+                        :
 
-                        }
+                        <td>
+
+                          <Link
+                            to={"/table/" + x.PcId}
+                            target="_blank"
+                            className="tablelinks"
+                          >
+                            Services
+                        </Link>
+                        &nbsp; &nbsp;
+                        <Link
+                            to={"/Stats/" + x.PcId}
+                            target="_blank"
+                            className="tablelinks"
+                          >
+                            Performance
+                        </Link>
+                        </td>
+
+                      }
                       <td>{x.PcConfiguration.PcEmail}</td>
                     </tr>
 
@@ -211,10 +215,9 @@ function Table() {
                       <tr key={"DETAIL:" + x.PcId} className="additional-info">
                         <td align="center" colSpan="6">
                           <div className="wrapper">
-                            <div className="first">
+                            <div className="piechart">
                               <Chart
-                                width={"350px"}
-                                height={"150px"}
+                                className="charts"
                                 chartType="PieChart"
                                 loader={<div>Loading Chart</div>}
                                 data={[
@@ -228,14 +231,18 @@ function Table() {
                                     0: { color: "steelblue" },
                                     1: { color: "black" },
                                   },
+                                  width: '100%',
+                                  height: 150,
+                                  // backgroundColor: 'salmon',
+                                  chartArea: { width: '100%', height: '70%' },
+                                  legend: { position: 'bottom' },
+                                  // titlePosition: 'none',
                                 }}
-                              // rootProps={{ 'data-testid': '2' }}
                               />
                             </div>
-                            <div className="second">
+                            <div className="piechart">
                               <Chart
-                                width={"350px"}
-                                height={"150px"}
+                                className="charts"
                                 chartType="PieChart"
                                 loader={<div>Loading Chart</div>}
                                 data={[
@@ -249,14 +256,16 @@ function Table() {
                                     0: { color: "lightseagreen" },
                                     1: { color: "black" },
                                   },
+                                    width: '100%',
+                                    height: 150,
+                                    chartArea: { width: '100%', height: '70%' },
+                                    legend: { position: 'bottom' }
                                 }}
-                              // rootProps={{ 'data-testid': '1' }}
                               />
                             </div>
-                            <div className="third">
+                            <div className="piechart">
                               <Chart
-                                width={"350px"}
-                                height={"150px"}
+                                className="charts"
                                 chartType="PieChart"
                                 loader={<div>Loading Chart</div>}
                                 data={[
@@ -273,8 +282,11 @@ function Table() {
                                     0: { color: "indianred" },
                                     1: { color: "black" },
                                   },
+                                  width: '100%',
+                                  height: 150,
+                                  chartArea: { width: '100%', height: '70%' },
+                                  legend: { position: 'bottom' }
                                 }}
-                              // rootProps={{ 'data-testid': '1' }}
                               />
                             </div>
                             <div className="fourth">

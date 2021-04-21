@@ -95,9 +95,9 @@ export default function Nav(prop:{setToken:(token)=>void}) {
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
       <div className="container-fluid">
-        <div className="navbar-brand">
+        {/* <div className="navbar-brand"> */}
           {/* Home */}
-        </div>
+        {/* </div> */}
         <div>
           {menu}
         </div>

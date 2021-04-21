@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import "./RegisterStyle.css"
 import { Link } from "react-router-dom";
+import { AiOutlineMail } from 'react-icons/ai'
+import { RiLockPasswordFill } from 'react-icons/ri'
+import { ImKey } from 'react-icons/im'
+import { FaUserAlt } from 'react-icons/fa'
 
 export default function Register() {
   const [AdminFirstName, setFName] = useState("")
@@ -10,6 +14,16 @@ export default function Register() {
   // const [email, setEmail] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
   const [account, setAccount] = useState()
+  const [validPass, setValidPass] = useState(false)
+
+  const handlePassword = (e) => {
+    e.preventDefault()
+    var pass = e.target.value
+    var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])([!@#\$%\^&\*]*)(?=.{8,})^/
+    var test = reg.test(pass)
+    if (test === true) { setPassword(pass); setValidPass(true); console.log(validPass) }
+    else { setValidPass(false); console.log(validPass) }
+  }
 
 
 
@@ -35,108 +49,99 @@ export default function Register() {
 
   }
   if (account) { return <Redirect to="/" />; }
-  if (account === false) {
-    return (
-      <div className="rdiv_design">
-        <form className="rform_container" onSubmit={(e) => submit(e)}>
-          <h1 className="rh1_d">Please Register</h1>
-          <div className="div1">
-          <input
-            type="text"
-            placeholder="FirstName"
-            className="rdesign_input"
-            required
-            onChange={(e) => setFName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="rdesign_input2"
-            required
-            onChange={(e) => setLName(e.target.value)}
-          ></input>
-          </div>
-          <div className="div2">
-          <input
-            type="email"
-            placeholder="Email"
-            className="rdesign_input"
-            required
-            onChange={(e) => setUName(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="rdesign_input2"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>
-          </div>
-          <button class="rlogin_button" type="submit">
-            Register
-          </button>
-        <p className="failed_register">An account with this email already exists!</p>
-        </form>
-        <div className="navigations_login">
-        {/* <ul> */}
-        <div className="plinks">Already have an account?
-  <Link to="/" className="links">
-            Login
-  </Link>
-        </div>
-      </div>
-      </div>
-    );
-  }
+  // if (account === false) {}
   return (
     <div className="rdiv_design">
       <form className="rform_container" onSubmit={(e) => submit(e)}>
-        <h1 className="rh1_d">Please Register</h1>
-        <div className="div1">
-          <input
-            type="text"
-            placeholder="FirstName"
-            className="rdesign_input"
-            required
-            onChange={(e) => setFName(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="rdesign_input2"
-            required
-            onChange={(e) => setLName(e.target.value)}
-          ></input>
+        <h2 className="rh1_d">Sign up</h2>
+        {/* <p className="rfailed_register">An account with this email already exists!</p> */}
+
+        {(validPass === true || validPass === null) ? (
+        account !== false ? (
+          <><br/><br/></>
+        ) : (
+          <p className="rfailed_register">
+            An account with this email already exists!
+          </p>
+        )
+        )
+         : (
+          <p className="weak_password">
+            Passwords should be at least 8 character long, have at least one uppercase and one lowercase character, and must include numbers
+          </p>
+        )}
+        {/* {account !== false ? (
+          ""
+        ) : (
+          <p className="rfailed_register">
+            An account with this email already exists!
+          </p>
+        )} */}
+
+        <div className="rdiv1">
+          <div className="rinput-icon">
+            <FaUserAlt className="ricon" />
+            <input
+              type="text"
+              placeholder="FirstName"
+              className="rdesign_input"
+              required
+              onChange={(e) => setFName(e.target.value)}
+            />
+          </div>
+
+          <div className="rinput-icon">
+            <input
+              type="text"
+              placeholder="Last Name"
+              className="rno_icon_design_input"
+              required
+              onChange={(e) => setLName(e.target.value)}
+            ></input>
+          </div>
         </div>
-        <div className="div2">
-          <input
-            type="email"
-            placeholder="Email"
-            className="rdesign_input"
-            required
-            onChange={(e) => setUName(e.target.value)}
-          />
+
+        <div className="rdiv2">
+          <div className="rinput-icon">
+            <AiOutlineMail className="ricon" />
+            <input
+              type="email"
+              placeholder="Email"
+              className="rdesign_input"
+              required
+              onChange={(e) => setUName(e.target.value)}
+            />
+          </div>
+
           {/* <input type="email" platextceholder="Email Address" required onChange={e=>setEmail(e.target.value)  }/> */}
-          <input
-            type="password"
-            placeholder="Password"
-            className="rdesign_input2"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>
+
+          <div className="rinput-icon">
+            <ImKey className="ricon" />
+            <input
+              type="password"
+              placeholder="Password"
+              className="rdesign_input"
+              required
+              onChange={(e) => handlePassword(e)}
+            ></input>
+          </div>
         </div>
-        <button class="rlogin_button" type="submit">
+
+        <button class="rlogin_button" type="submit" disabled={!validPass}>
           Register
-            </button>
-      </form>
-      <div className="navigations_login">
-        {/* <ul> */}
-        <div className="plinks">Already have an account?
-  <Link to="/" className="links">
+        </button>
+
+        <hr />
+
+        {/* <div className="navigations_login"></div> */}
+
+        <div className="rplinks">Already have an account?
+            <Link to="/" className="rlinks">
             Login
-  </Link>
+            </Link>
         </div>
-      </div>
+        {/* </div> */}
+      </form>
     </div>
   );
 }

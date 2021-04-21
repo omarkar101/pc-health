@@ -1,15 +1,21 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { Redirect, Route} from "react-router";
+import { Redirect, Route } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
-import {Link} from 'react-router-dom'
-import Nav from './Nav'
+import { Link } from 'react-router-dom'
+import { AiOutlineMail } from 'react-icons/ai'
+// import { RiLockPasswordFill } from 'react-icons/ri'
+import { ImKey } from 'react-icons/im'
+
+// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function Login(prop: { setToken: (token) => void }) {
   const [CredentialsUsername, setUname] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
-  const [token,setToken]=useState("")
+  const [token, setToken] = useState("")
+  const [Error, setError] = useState("")
+  const [loginState, setLoginState] = useState()
 
   // function validateForm() {
   //     return CredentialsUsername.length > 0 && CredentialsPassword.length > 0;
@@ -27,85 +33,76 @@ function Login(prop: { setToken: (token) => void }) {
           CredentialsUsername,
           CredentialsPassword,
         }),
-      }
-    );
-    const token = await response.text();
-    localStorage.setItem("token", token)
-    localStorage.setItem("interval",3)
-    setRedirect(token);
+      }).then((response) => response.text()).then(result => {
+        localStorage.setItem("token", result);
+        localStorage.setItem("interval", 3);
+        setRedirect(result);
+      })
+      .catch(() => { setError("Server Error, please reload the page") });;
   }
+
+  if (Error !== '') { return <h1>{Error}</h1> }
   if (redirect !== "false" && redirect !== "") {
-    return (<Redirect to="/table"/>
-    ); }
-  if (redirect === 'false') {
-    return (
-      <div className="div_design">
-        <form className="form_container" onSubmit={submit}>
-          <h1 className="h1_d">Please Login</h1>
+    return (<Redirect to="/table" />
+    );
+  }
+  return (
+    <div className="div_design">
+      <form className="form_container" onSubmit={submit}>
+        <h2 className="h1_d">Log in to PC-Health</h2>
+        {/* <p className="failed_login">Error: The username or password you entered is incorrect.</p> */}
+
+        {redirect==='false' ? <p className="failed_login">
+            The username/password you entered is incorrect!
+          </p> : <><br/><br/></>}
+
+
+        <div className="input-icon">
+          <AiOutlineMail className="icon" />
           <input
             type="email"
             className="design_input"
             placeholder="Email"
             required
-            onChange={(e) => setUname(e.target.value)}
-          />
+            onChange={(e) => setUname(e.target.value)}>
+          </input>
+        </div>
+
+        <div className="input-icon">
+          <ImKey className="icon" />
           <input
             type="password"
             className="design_input"
             placeholder="Password"
             required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="login_button" type="submit">
-            Log in
-          </button>
-          <p className="failed_login">The username/password you entered is incorrect!</p>
-        </form>
-      </div>);
-  }
-  return (
-    <div className="div_design">
-      <form className="form_container" onSubmit={submit}>
-        <h1 className="h1_d">Please Login</h1>
-        <input
-          type="email"
-          className="design_input"
-          placeholder="Email"
-          required
-          onChange={(e) => setUname(e.target.value)}
-        ></input>
-        <input
-          type="password"
-          className="design_input"
-          placeholder="Password"
-          required
-          onChange={(e) => setPassword(e.target.value)}
-        />
+            onChange={(e) => setPassword(e.target.value)} />
+        </div>
+
         <button className="login_button" type="submit">
           Log in
-        </button>
-      </form>
-      <nav>
-        <div className="navigations_login">
-          <div className="plinks">
-            Forgot Password?
+          </button>
+        <hr />
+        <nav>
+          <div className="navigations_login">
+            <div className="plinks">
+              Forgot Password?
             <Link to="/ForgetPassword" className="links">
-              Click here
+                Click here
             </Link>
-          </div>
-          <br />
-          <div className="plinks">
-            Don't have an account?
+            </div>
+            <br />
+            <div className="plinks">
+              Don't have an account?
             <Link to="/register" className="links">
-              Register
+                Sign up
             </Link>
+            </div>
+            <br />
           </div>
-          <br />
-          {/* </ul> */}
-        </div>
-      </nav>
+        </nav>
+      </form>
     </div>
-  );
 
+  );
 }
 export default Login
