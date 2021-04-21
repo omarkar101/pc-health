@@ -1,5 +1,5 @@
 import React from "react";
-import './settings.css'
+import './NavStyle.css'
 // import Form from './settingsForm'
 
 

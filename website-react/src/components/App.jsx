@@ -14,7 +14,6 @@ import ForgetPassword_ID from "./ForgetPassword_ID";
 import NewPassword from "./NewPassword";
 import Stats from "./Stats";
 import ResetPass from "./ResetPass"
-import { Beforeunload } from 'react-beforeunload';
 import { CgWindows } from "react-icons/cg";
 
 function App() {

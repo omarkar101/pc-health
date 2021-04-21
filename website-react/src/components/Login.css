@@ -1,31 +1,56 @@
 .failed_login{
-  color: rgb(206, 90, 90);
+  color: red;
+  margin-top: 8%;
 }
 
 
 .form_container{
-  /* text-align: center;
-  display: grid; */
-  /* grid-auto-rows: 70px; */
-
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: white;
   text-align:center;
   width: 500px;
-  height: 350px;
-  /* display:table; */
-  /* margin:auto; */
-  /* padding: auto; */
-  /* margin-top: 20%; */
-
+  height: 80%;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+.forgot_pass_form_container{
+  background-color: white;
+  text-align:center;
+  width: 500px;
+  height: 65%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.no_match{
+  color: red;
+  margin-top: 10%;
+}
+
+.forgot_pass_message{
+  margin-top: 10%;
+  font-size: 16px;
+  color: grey;
+}
+
+.new_pass_message{
+  margin-top: 7%;
+  font-size: 16px;
+  color: grey;
+}
+
 .forgot_pass{
   color: white;
   margin-top: 15%;
+}
+
+.wrong_code{
+  color: red;
+  margin-top: 5%;
 }
 
 .div_design{
@@ -34,15 +59,12 @@
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background-color: rgb(0, 0, 0);
+  background-color: rgb(238, 237, 237);
   z-index: -1;
-
   font-family:Arial, Helvetica, sans-serif;
-  background-image: linear-gradient(#2b2b2ce3, #5b5c5ee3, #969696e3);
-  /* backdrop-filter: blur(5px); */
-  /* background-size: cover; */
-  /* display:table-cell; */
+  /* background-image: linear-gradient(#2b2b2ce3, #5b5c5ee3, #969696e3); */
   vertical-align:middle;
+  text-align: center;
 }
 
 .forgot_page{
@@ -54,47 +76,128 @@
   margin-left: 25%;
   width: 50%;
   background-color:grey;
-
   font-weight: bold;
-  color: rgba(255, 255, 255, 0.781);
+  color: rgba(29, 28, 28, 0.781);
   border: 3px solid rgba(0, 0, 0, 0);
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.548);
+  /* background-color: rgba(0, 0, 0, 0.548); */
+  background-color: rgba(66, 176, 180, 0.26);
   display:block;
-  margin:20px auto;
-  padding: 15px 35px;
+  /* margin:20px auto; */
+  margin-top: 40px;
+  padding: 10px 35px;
   border-radius: 12px;
 }
 
 .login_button:hover{
-  border-color: rgba(15, 63, 82, 0.671);
+  background-color: rgba(66, 176, 180, 0.932);
+  box-shadow: 0 0 10px #9ecaed;
+  /* border-color: rgba(66, 176, 180, 0.26); */
+  color: white;
+}
+
+.input-icon{
+  position: relative;
+  width: 75%;
+  margin-left: 12.5%;
+  margin-bottom: 20px ;
+  /* border: 2px solid yellow; */
+}
+
+.icon{
+  position:absolute;
+  right: 90%;
+  bottom:25%;
+  width:24px;
+  height:24px;
 }
 
 .design_input{
-  /* position: absolute; */
-  /* top: 0px;
-  left: 0px; */
   width: 75%;
-  /* margin-top: 10px;
-  margin-left:15%; */
-
-  border: 3px solid rgba(255, 255, 255, 0.562);
-  background:none;
-  display:block;
-  margin:20px auto;
-  text-align: center;
+  border: 3px solid rgba(66, 176, 180, 0.932);
+  /* background: rgba(66, 176, 180, 0.26); */
+  background: none;
   padding: 2%;
-  /* width: 200px; */
   outline: none;
-  color: white;
+  color: black;
   border-radius: 12px;
+  padding-left: 13%;
+  width: 100%;
+}
+
+.no_icon_design_input{
+  width: 75%;
+  border: 3px solid rgba(66, 176, 180, 0.932);
+  /* background: rgba(66, 176, 180, 0.26); */
+  background: none;
+  padding: 2%;
+  outline: none;
+  color: black;
+  border-radius: 12px;
+  padding-left: 2%;
+  width: 100%;
 }
 
 .design_input:hover{
-  border-color: rgba(15, 63, 82, 0.671); 
+  /* border-color: rgba(41, 113, 116, 0.932);  */
+  /* border-color: rgba(66, 176, 180, 0.932); */
+  box-shadow: 0 0 10px #9ecaed;
 }
 
 .h1_d{
-  color: white;
+  color: black;
   padding-top: 35px;
+  font-weight: 100px;
+}
+
+
+
+
+
+.navigations_login{
+  text-align:center;
+  width: 400px;
+  margin:auto;
+  padding: auto;
+  max-width:400px;
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 8%;
+}
+
+.plinks{
+  width: 100%;
+  position: absolute;
+}
+
+.links{
+  overflow: hidden;
+  font-weight: bold;
+  margin-left: 2%;
+}
+
+.links:link {
+  color: rgb(0, 31, 133);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.links:visited {
+  color: rgb(139, 7, 111);
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.links:hover {
+  color: rgb(0, 255, 106);
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+.links:active {
+  color: yellow;
+  background-color: transparent;
+  text-decoration: underline;
 }
