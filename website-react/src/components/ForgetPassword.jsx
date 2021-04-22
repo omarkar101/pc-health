@@ -20,6 +20,7 @@ export default function ForgetPassword() {
     )
     const ans = await response.json()
     setResult(ans)
+    setUsername("")
   };
   if (result===true) {
     localStorage.setItem("Email", credentialUsername);
@@ -28,33 +29,30 @@ export default function ForgetPassword() {
   return (
     <div className="div_design">
       <form onSubmit={submit} className="forgot_pass_form_container">
-        {/* <p className="forgot_pass">Enter your email:</p> */}
         <h2 className="h1_d">Reset Password</h2>
+        {result===false ? <p className="failed_login">
+            The email you entered does not exist
+          </p> : ""}
         <p className="forgot_pass_message">
           Verify your identity using your Email Address.
         </p>
-
         <div className="input-icon">
           <AiOutlineMail className="icon" />
           <input
             type="email"
             className="design_input"
+            value={credentialUsername}
             placeholder="Email"
             required
             onChange={(e) => setUsername(e.target.value)}>
           </input>
         </div>
-
         <button className="login_button" type="submit">Submit</button>
-
         <div className="navigations_login">
-          {/* <div className="plinks"> */}
             <Link to="/" className="links">
               cancel
             </Link>
-          {/* </div> */}
         </div>
-
       </form>
     </div>
   );
