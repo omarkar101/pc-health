@@ -12,6 +12,7 @@ function ForgetPassword_ID() {
         const response = await fetch(`http://pc-health.somee.com/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
         const ans = await response.json()
         setResult(ans)
+        setCode("")
     }
     if (result) {
         localStorage.setItem("code", code)
@@ -34,6 +35,7 @@ function ForgetPassword_ID() {
                         type="text"
                         className="design_input"
                         placeholder="Code"
+                        value={code}
                         required
                         onChange={(e) => setCode(e.target.value)} />
                 </div>

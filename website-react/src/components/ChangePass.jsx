@@ -13,7 +13,6 @@ function ChangePass() {
   const [NewPassword, setNew] = useState("")
   const [ConfirmedPassword, setConfirmed] = useState("")
   const [result, setResult] = useState()
-  // const [error, setError] = useState("")
   const [validPass, setValidPass] = useState(false);
 
   const handlePassword = (e) => {
