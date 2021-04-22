@@ -17,12 +17,9 @@ function Login(prop: { setToken: (token) => void }) {
   const [Error, setError] = useState("")
   const [loginState, setLoginState] = useState()
 
-  // function validateForm() {
-  //     return CredentialsUsername.length > 0 && CredentialsPassword.length > 0;
-  // }
   const submit = async (e) => {
     e.preventDefault();
-    const response = await fetch(
+    await fetch(
       "http://pc-health.somee.com/Admin/Login",
       {
         method: "POST",
@@ -38,7 +35,9 @@ function Login(prop: { setToken: (token) => void }) {
         localStorage.setItem("interval", 3);
         setRedirect(result);
       })
-      .catch(() => { setError("Server Error, please reload the page") });;
+      .catch(() => { setError("Server Error, please reload the page") });
+    setPassword("")
+    setUname("")
   }
 
   if (Error !== '') { return <h1>{Error}</h1> }
@@ -50,8 +49,6 @@ function Login(prop: { setToken: (token) => void }) {
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
         <h2 className="h1_d">Log in to PC-Health</h2>
-        {/* <p className="failed_login">Error: The username or password you entered is incorrect.</p> */}
-
         {redirect==='false' ? <p className="failed_login">
             The username/password you entered is incorrect!
           </p> : <><br/><br/></>}
@@ -63,6 +60,7 @@ function Login(prop: { setToken: (token) => void }) {
             type="email"
             className="design_input"
             placeholder="Email"
+            value={CredentialsUsername}
             required
             onChange={(e) => setUname(e.target.value)}>
           </input>
@@ -74,6 +72,7 @@ function Login(prop: { setToken: (token) => void }) {
             type="password"
             className="design_input"
             placeholder="Password"
+            value={CredentialsPassword}
             required
             onChange={(e) => setPassword(e.target.value)} />
         </div>
