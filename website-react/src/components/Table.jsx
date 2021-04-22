@@ -9,6 +9,8 @@ import { AiFillWindows } from 'react-icons/ai';
 import { FcLinux } from 'react-icons/fc';
 import Nav from './Nav'
 import { AiOutlineWarning } from 'react-icons/ai'
+import { GrStatusUnknown } from 'react-icons/gr'
+import { CgOpenCollective } from "react-icons/cg";
 
 function Table() {
   const [search, setSearch] = useState('');
@@ -43,12 +45,15 @@ function Table() {
     setTemp([])
   }, [])
   const toggleShown = username => {
+    console.log(detailsShown)
     const shownState = detailsShown.slice();
     const index = shownState.indexOf(username);
     if (index >= 0) {
+      console.log("here")
       shownState.splice(index, 1);
       setDetailShown(shownState);
     } else {
+      console.log("herez")
       shownState.push(username);
       setDetailShown(shownState);
     }
@@ -118,18 +123,15 @@ function Table() {
 
 
         <div className="table-box table-container">
-          <table className="center">
+          <table className="center bottomBorder roundedCorners">
             <thead>
-              <tr>
+              <tr className="header_tr">
                 <th>&nbsp;</th>
                 <th>Username</th>
-                {/* <th>Activity</th> */}
-                {/* <th>Status</th> */}
                 <th>Status</th>
-                <th>Operating System</th>
+                <th>O.S</th>
                 <th>More Info </th>
                 <th>Contact info</th>
-                {/* <th>Statistics</th> */}
               </tr>
             </thead>
             <tbody>
@@ -140,7 +142,7 @@ function Table() {
                   <>
                     {/* {console.log(temp[counter] === x)} */}
                     {/* {console.log("datalst", x)} */}
-                    <tr
+                    <tr className="not_collapsed"
                       key={"NAME:" + x.PcId}
                       onClick={() => toggleShown(x.PcId)}
                     >
@@ -185,7 +187,8 @@ function Table() {
                         <td>{x.Os}</td>
                       )}
 
-                      {(active[c] === "Inactive") ? <td>Unavailable</td>
+                      {
+                      (active[c] === "Inactive") ? <td>Unavailable</td>
                         :
 
                         <td>
@@ -210,12 +213,15 @@ function Table() {
                       }
                       <td>{x.PcConfiguration.PcEmail}</td>
                     </tr>
-
+                    {/* {console.log(detailsShown.includes(x.PcId) )} */}
                     {detailsShown.includes(x.PcId) && (
                       <tr key={"DETAIL:" + x.PcId} className="additional-info">
                         <td align="center" colSpan="6">
+                          {/* <hr className="collapse_line"/> */}
+                          {/* {console.log("HERE")} */}
                           <div className="wrapper">
                             <div className="piechart">
+                              <p className="chart_p">Memory</p>
                               <Chart
                                 className="charts"
                                 chartType="PieChart"
@@ -226,7 +232,7 @@ function Table() {
                                   ["Remaining", 100 - x.MemoryUsage],
                                 ]}
                                 options={{
-                                  title: "Memory",
+                                  // title: "Memory",
                                   slices: {
                                     0: { color: "steelblue" },
                                     1: { color: "black" },
@@ -236,11 +242,12 @@ function Table() {
                                   // backgroundColor: 'salmon',
                                   chartArea: { width: '100%', height: '70%' },
                                   legend: { position: 'bottom' },
-                                  // titlePosition: 'none',
+                                  titlePosition: 'none',
                                 }}
                               />
                             </div>
                             <div className="piechart">
+                              <p className="chart_p">CPU</p>
                               <Chart
                                 className="charts"
                                 chartType="PieChart"
@@ -251,19 +258,21 @@ function Table() {
                                   ["Remaining", 100 - x.CpuUsage],
                                 ]}
                                 options={{
-                                  title: "CPU",
+                                  // title: "CPU",
                                   slices: {
                                     0: { color: "lightseagreen" },
                                     1: { color: "black" },
                                   },
-                                    width: '100%',
-                                    height: 150,
-                                    chartArea: { width: '100%', height: '70%' },
-                                    legend: { position: 'bottom' }
+                                  width: '100%',
+                                  height: 150,
+                                  chartArea: { width: '100%', height: '70%' },
+                                  legend: { position: 'bottom' },
+                                  titlePosition: 'none',
                                 }}
                               />
                             </div>
                             <div className="piechart">
+                              <p className="chart_p">Disk</p>
                               <Chart
                                 className="charts"
                                 chartType="PieChart"
@@ -277,7 +286,7 @@ function Table() {
                                   ["Remaining", x.TotalFreeDiskSpace],
                                 ]}
                                 options={{
-                                  title: "Disk",
+                                  // title: "Disk",
                                   slices: {
                                     0: { color: "indianred" },
                                     1: { color: "black" },
@@ -285,39 +294,33 @@ function Table() {
                                   width: '100%',
                                   height: 150,
                                   chartArea: { width: '100%', height: '70%' },
-                                  legend: { position: 'bottom' }
+                                  legend: { position: 'bottom' },
+                                  titlePosition: 'none',
                                 }}
                               />
                             </div>
+
                             <div className="fourth">
                               <p>
-                                <span>
-                                  Average Network Bytes Sent:{" "}
-                                  {x.AvgNetworkBytesSent} bytes
+                                <span style={{fontWeight:"bold", textDecoration: "underline"}}>
+                                  More Info:
                                 </span>
-                                <span>
-                                  Average Network Bytes Received:{" "}
-                                  {x.AvgNetworkBytesReceived} bytes
+                                <br/>
+                                <span style={{color:"black"}}>
+                                  Average Network Bytes
+                                  </span>
+                                <span style={{color:"midnightblue"}}>
+                                Received:  &nbsp;{x.AvgNetworkBytesReceived.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
                                 </span>
-                                <br></br>
+                                <span style={{color:"midnightblue"}}>
+                                Sent:  &nbsp;&nbsp;&nbsp;{x.AvgNetworkBytesSent.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                                </span>
+                                <br/>
+                                <span style={{color:"black"}}>Firewall Status</span>
                                 {x.FirewallStatus === "Active" ? (
-                                  <div style={{ overflow: "hidden" }}>
-                                    <p style={{ float: "left" }}>
-                                      Firewall Status: &nbsp;
-                                    </p>
-                                    <p style={{ color: "lime" }}>
-                                      {x.FirewallStatus}
-                                    </p>{" "}
-                                  </div>
+                                  <span style={{color:"lime"}}>Active</span>
                                 ) : (
-                                  <div style={{ overflow: "hidden" }}>
-                                    <p style={{ float: "left" }}>
-                                      Firewall Status: &nbsp;
-                                    </p>
-                                    <p style={{ color: "red" }}>
-                                      {x.FirewallStatus}
-                                    </p>{" "}
-                                  </div>
+                                  <span style={{color:"lime"}}>{x.FirewallStatus}</span>
                                 )}
                               </p>
                             </div>
