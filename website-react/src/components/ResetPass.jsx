@@ -31,64 +31,24 @@ function ResetPass() {
     );
     const ans = await response.json()
     setResult(ans)
+    setPassword("")
+    setEmail("")
   }
 
   if (result === true) { return <Redirect to="/table" />; }
-  if (result === false) {
-    return (
-
-      <div className="div_design">
-        <form className="form_container" onSubmit={submit}>
-          <h2 className="h1_d">Reset Password</h2>
-          {/* <p className="forgot_pass_message">Enter your credentials here </p> */}
-          <p className="failed_login">Account credentials are incorrect</p>
-
-          <div className="input-icon">
-            <RiLockPasswordFill className="icon" />
-            <input
-              className="design_input"
-              type="email"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className="input-icon">
-            <ImKey className="icon" />
-            <input
-              className="design_input"
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button className="login_button" type="submit">Submit</button>
-          {/* <p style={{ color: "red" }}>Account credentials are incorrect</p> */}
-
-
-
-          <div className="navigations_login">
-            <Link to="/table" className="links">
-              cancel
-            </Link>
-          </div>
-        </form>
-      </div>
-
-    );
-  }
   return (
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
         <h2 className="h1_d">Reset Password</h2>
-        <p className="forgot_pass_message">Enter your credentials here </p>
+        {result===false ? <p className="failed_login">Account credentials are incorrect</p>: ""}
+        <p className="forgot_pass_message">Enter your credentials here.<br/> You will receive an email containing the new code.</p>
 
         <div className="input-icon">
           <RiLockPasswordFill className="icon" />
           <input
             className="design_input"
             type="email"
+            value={CredentialsUsername}
             placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -99,6 +59,7 @@ function ResetPass() {
           <input
             className="design_input"
             type="password"
+            value={CredentialsPassword}
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />

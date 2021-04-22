@@ -21,7 +21,7 @@ export default function ForgetPassword() {
     const ans = await response.json()
     setResult(ans)
   };
-  if (result) {
+  if (result===true) {
     localStorage.setItem("Email", credentialUsername);
     return <Redirect to="/forgotpassword/Code" />
   }
@@ -30,9 +30,8 @@ export default function ForgetPassword() {
       <form onSubmit={submit} className="forgot_pass_form_container">
         {/* <p className="forgot_pass">Enter your email:</p> */}
         <h2 className="h1_d">Reset Password</h2>
-
         <p className="forgot_pass_message">
-          Verify your identity using your Email Address
+          Verify your identity using your Email Address.
         </p>
 
         <div className="input-icon">
