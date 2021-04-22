@@ -17,34 +17,13 @@ function ForgetPassword_ID() {
         localStorage.setItem("code", code)
         return <Redirect to="/NewPassword" />
     }
-    if (result === false) {
-        return (
-            <div className="div_design">
-                <form className="forgot_pass_form_container" onSubmit={submit}>
-                    <h2 className="h1_d">Reset Password</h2>
-                    <p className="forgot_pass_message">You will receive a verification code by email shortly.
-                    <br />Please enter your code below.
-                    </p>
-
-                    <div className="input-icon">
-                        <RiLockPasswordFill className="icon" />
-                        <input
-                            type="text"
-                            className="design_input"
-                            placeholder="Code"
-                            required
-                            onChange={(e) => setCode(e.target.value)} />
-                    </div>
-                    <button className="login_button" type="submit">Submit</button>
-                    <p className="wrong_code" >The code entered is incorrect!</p>
-                </form>
-            </div>
-        );
-    }
     return (
         <div className="div_design">
             <form className="forgot_pass_form_container" onSubmit={submit}>
                 <h2 className="h1_d">Reset Password</h2>
+                {result===false ? <p className="failed_login">
+            The code you entered is incorrect!
+          </p> : ""}
                 <p className="forgot_pass_message">You will receive a verification code by email shortly.
                     <br />Please enter your code below.
                     </p>

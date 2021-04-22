@@ -19,18 +19,20 @@ function ChangePass() {
   const handlePassword = (e) => {
     e.preventDefault();
     var pass = e.target.value;
+    setNew(pass);
     var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])([!@#\$%\^&\*]*)(?=.{8,})^/;
     var test = reg.test(pass);
     if (test === true) {
-      setNew(pass);
+      setValidPass(true);
     }
+    else{setValidPass(false)}
   };
 
   const submit = async (e) => {
     e.preventDefault();
     const response =
       await fetch(
-        "http://pc-health.somee.com/Admin/ChangePassword", //You receive true or false, delete token when true and logout
+        "http://pc-health.somee.com/Admin/ChangePassword",
         {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -44,105 +46,8 @@ function ChangePass() {
     const res = await response.json()
     setResult(res)
   }
-  // console.log(NewPassword === ConfirmedPassword)
-  // const checkValidation = (e) => {
-  //   setConfirmed(e.target.value)
-  //   if (NewPassword !== ConfirmedPassword) {
-  //     setError("Confirm password should match the new password"); setResult(false)
-  //   } else { setError("") }
-  // }
-
   if (result === true) {
     return <Redirect to='/table' />
-  }
-
-  if (result === false) {
-
-    return (
-      <div className="rdiv_design">
-        <form className="rform_container" onSubmit={submit}>
-          <h2 className="rh1_d">Change Password</h2>
-
-
-          {/* {(result === false) ? <p className="rno_match">Email and old password do not match</p> : 
-         <p className="rno_match">{error}</p>} */}
-
-
-          {/* {(result === false) ? <p style={{ "color": "white" }}>Email and old password do not match</p> : ""}
-        <p style={{ "color": "white" }}>{error}</p> */}
-
-          {/* {(result === false) ? <p className="rno_match">Email and old password do not match</p> : ''}
-          {(error === "") ? <><br /><br /></> : <p className="rno_match">{error}</p>} */}
-          
-
-          {NewPassword !== ConfirmedPassword ? (
-            <p className="rfailed_register">Passwords do not match</p>
-          ) : (
-            <p className="rfailed_register">Email and password do not match</p>
-          )}
-
-          <div className="rdiv1">
-            <div className="rinput-icon">
-              <FaUserAlt className="ricon" />
-              <input
-                className="rdesign_input"
-                type="text"
-                placeholder="Email"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="rinput-icon">
-              <ImKey className="ricon" />
-              <input
-                className="rdesign_input"
-                type="password"
-                placeholder="Old Password"
-                onChange={(e) => setOldPassword(e.target.value)}
-              />
-            </div>
-
-          </div>
-
-
-          <div className="rdiv2">
-            <div className="rinput-icon">
-              <input
-                className="rno_icon_design_input"
-                type="password"
-                placeholder="New Password"
-                onChange={(e) => handlePassword(e)}
-              />
-            </div>
-
-            <div className="rinput-icon">
-              <input
-                className="rno_icon_design_input"
-                type="password"
-                placeholder="Confirm new password"
-                onChange={(e) => setConfirmed(e.target.value)}
-              />
-            </div>
-          </div>
-
-
-          <button className="rlogin_button" type="submit" disabled={NewPassword !== ConfirmedPassword}>
-            Submit
-        </button>
-
-
-          <hr />
-
-          <div className="rplinks">
-            <Link to="/table" className="rlinks">
-              cancel
-          </Link>
-          </div>
-
-
-        </form>
-
-      </div>
-    );
   }
   return (
     <div className="rdiv_design">
@@ -153,8 +58,7 @@ function ChangePass() {
           (
             (NewPassword !==ConfirmedPassword && NewPassword.length >0) ? <p className="rfailed_register">Passwords do not match</p> : <><br/><br/></>
           )
-          }
-
+        }
           <div className="rdiv1">
             <div className="rinput-icon">
               <FaUserAlt className="ricon" />
@@ -197,13 +101,9 @@ function ChangePass() {
               />
             </div>
           </div>
-
-
-          <button className="rlogin_button" type="submit" disabled={NewPassword!==ConfirmedPassword}>
+          <button className="rlogin_button" type="submit" disabled={NewPassword!==ConfirmedPassword && !validPass}>
             Submit
         </button>
-
-
           <hr />
 
           <div className="rplinks">
