@@ -3,7 +3,6 @@ import { Redirect } from 'react-router';
 import "./RegisterStyle.css"
 import { Link } from "react-router-dom";
 import { AiOutlineMail } from 'react-icons/ai'
-import { RiLockPasswordFill } from 'react-icons/ri'
 import { ImKey } from 'react-icons/im'
 import { FaUserAlt } from 'react-icons/fa'
 
@@ -11,18 +10,18 @@ export default function Register() {
   const [AdminFirstName, setFName] = useState("")
   const [AdminLastName, setLName] = useState("");
   const [CredentialsUsername, setUName] = useState("");
-  // const [email, setEmail] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
-  const [account, setAccount] = useState()
+  const [account, setAccount] = useState("")
   const [validPass, setValidPass] = useState(false)
 
   const handlePassword = (e) => {
     e.preventDefault()
     var pass = e.target.value
+    setPassword(pass)
     var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])([!@#\$%\^&\*]*)(?=.{8,})^/
     var test = reg.test(pass)
-    if (test === true) { setPassword(pass); setValidPass(true); console.log(validPass) }
-    else { setValidPass(false); console.log(validPass) }
+    if (test === true) {setValidPass(true);}
+    else { setValidPass(false); }
   }
 
 
@@ -43,31 +42,33 @@ export default function Register() {
         }),
       }
     );
-    const answer = await response.json();
+    const answer = await response.text();
     setAccount(answer)
-
+    setUName("")
+    setFName("")
+    setLName("")
+    setPassword("")
 
   }
-  if (account) { return <Redirect to="/" />; }
-  // if (account === false) {}
+
+  if (account==="Success") { return <Redirect to="/" />; }
   return (
     <div className="rdiv_design">
       <form className="rform_container" onSubmit={(e) => submit(e)}>
         <h2 className="rh1_d">Sign up</h2>
-        {/* <p className="rfailed_register">An account with this email already exists!</p> */}
-
-        {(validPass === true || validPass === null) ? (
-        account !== false ? (
-          <><br/><br/></>
+        {validPass === true || validPass === null ? (
+          account === "Success" ? (
+            <>
+              <br />
+              <br />
+            </>
+          ) : (
+            <p className="rfailed_register">{account}</p>
+          )
         ) : (
-          <p className="rfailed_register">
-            An account with this email already exists!
-          </p>
-        )
-        )
-         : (
           <p className="weak_password">
-            Passwords should be at least 8 character long, have at least one uppercase and one lowercase character, and must include numbers
+            Passwords should be at least 8 character long, have at least one
+            uppercase and one lowercase character, and must include numbers
           </p>
         )}
         {/* {account !== false ? (
@@ -84,6 +85,7 @@ export default function Register() {
             <input
               type="text"
               placeholder="FirstName"
+              value={AdminFirstName}
               className="rdesign_input"
               required
               onChange={(e) => setFName(e.target.value)}
@@ -94,6 +96,7 @@ export default function Register() {
             <input
               type="text"
               placeholder="Last Name"
+              value={AdminLastName}
               className="rno_icon_design_input"
               required
               onChange={(e) => setLName(e.target.value)}
@@ -107,6 +110,7 @@ export default function Register() {
             <input
               type="email"
               placeholder="Email"
+              value={CredentialsUsername}
               className="rdesign_input"
               required
               onChange={(e) => setUName(e.target.value)}
@@ -120,6 +124,7 @@ export default function Register() {
             <input
               type="password"
               placeholder="Password"
+              value={CredentialsPassword}
               className="rdesign_input"
               required
               onChange={(e) => handlePassword(e)}
@@ -135,10 +140,11 @@ export default function Register() {
 
         {/* <div className="navigations_login"></div> */}
 
-        <div className="rplinks">Already have an account?
-            <Link to="/" className="rlinks">
+        <div className="rplinks">
+          Already have an account?
+          <Link to="/" className="rlinks">
             Login
-            </Link>
+          </Link>
         </div>
         {/* </div> */}
       </form>
