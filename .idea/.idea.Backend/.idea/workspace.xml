@@ -7,6 +7,9 @@
   <component name="ChangeListManager">
     <list default="true" id="74a781f5-b70b-4e11-8697-bd6bc765bed0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Backend/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/API/WebApi/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/API/WebApi/obj/rider.project.restore.info" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PC App/Configurations.json" beforeDir="false" afterPath="$PROJECT_DIR$/PC App/Configurations.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PC App/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/PC App/obj/rider.project.restore.info" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,7 +57,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="6f62da3a-8b87-4dac-a28c-1fac65b1bae0">
+  <component name="RunManager" selected=".NET Launch Settings Profile.PC App">
     <configuration name="PC App" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/PC App/PC App.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net5.0" />
@@ -112,6 +115,7 @@
       <workItem from="1619191520527" duration="109000" />
       <workItem from="1619191686022" duration="561000" />
       <workItem from="1619199467659" duration="4882000" />
+      <workItem from="1619210066216" duration="1922000" />
     </task>
     <servers />
   </component>
