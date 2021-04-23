@@ -128,6 +128,7 @@ namespace Services
         public static async Task InitializeStaticStorage(PcHealthContext dbContext)
         {
             if (StaticStorageServices.PcMapper.Count != 0) return;
+            if (StaticStorageServices.AdminMapper.Count != 0) return;
             var admins = await dbContext.Credentials.ToListAsync().ConfigureAwait(false);
             foreach (var admin in admins)
             {

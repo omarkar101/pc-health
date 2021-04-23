@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text.Json;
 
-namespace Services
+namespace PC_App.Services
 {
     public static class GetServices
     {

@@ -30,6 +30,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<string> DiagnosticData() 
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try
             {
                 var token = await HttpContext.GetTokenAsync("access_token").ConfigureAwait(false);
@@ -51,6 +52,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<string> DiagnosticDataSpecific(string pcId)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try {
                 var lastMinutes = _db.LastMinutes;
                 var listOfLastMinute = await lastMinutes.Where(lm => lm.PcId.Equals(pcId)).ToListAsync<LastMinute>();
@@ -76,6 +78,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<string> PostDiagnosticDataFromPc(DiagnosticData diagnosticData)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             var x = diagnosticData.PcConfiguration.Admins[0].Item2;
             var admins = diagnosticData.PcConfiguration.Admins;
             foreach (var admin in admins)
@@ -123,6 +126,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<string> PostPcHealthDataFromPc(PcHealthData pcHealthData)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             foreach (var admin in pcHealthData.PcConfiguration.Admins)
             {
                 if(admin.Item2.Equals(StaticStorageServices.AdminMapper[admin.Item1]))
