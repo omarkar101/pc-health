@@ -7,7 +7,6 @@
   <component name="ChangeListManager">
     <list default="true" id="74a781f5-b70b-4e11-8697-bd6bc765bed0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Backend/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiTest/AdminControllerTest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApiTest/AdminControllerTest.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +27,8 @@
       <option value="$PROJECT_DIR$/Services/GetPostServices.cs" />
       <option value="$PROJECT_DIR$/ApiTest/PcControllerTest.cs" />
       <option value="$PROJECT_DIR$/ApiTest/AdminControllerTest.cs" />
+      <option value="$PROJECT_DIR$/PC App/Services/DiagnosticDataServices.cs" />
+      <option value="$PROJECT_DIR$/PC App/Services/PostServices.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1rZlLyMTkmzYwYZ2lpakrOiaJp2" />
@@ -110,7 +111,7 @@
       <updated>1619191445053</updated>
       <workItem from="1619191520527" duration="109000" />
       <workItem from="1619191686022" duration="561000" />
-      <workItem from="1619199467659" duration="4567000" />
+      <workItem from="1619199467659" duration="4882000" />
     </task>
     <servers />
   </component>
