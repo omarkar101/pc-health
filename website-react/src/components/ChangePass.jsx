@@ -29,6 +29,7 @@ function ChangePass() {
 
   const submit = async (e) => {
     e.preventDefault();
+
     const response =
       await fetch(
         "https://pc-health.azurewebsites.net/Admin/ChangePassword",
@@ -42,6 +43,7 @@ function ChangePass() {
           }),
         }
       );
+
     const res = await response.json()
     setResult(res)
   }

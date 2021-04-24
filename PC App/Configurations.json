@@ -1,10 +1,12 @@
 {
-  "PcUsername": "Julia Kammouni",
-  "PcEmail" :  "JK@gmail.com", 
+
+  "PcUsername": "Omar",
+  "PcEmail" :  "Omar@gmail.com", 
 	"Admins" : [
     {
       "Item1": "allawrg@gmail.com",
-      "Item2": "PlaxN8s="
+      "Item2": "MHmNKrg="
+
     }
   ]
 }

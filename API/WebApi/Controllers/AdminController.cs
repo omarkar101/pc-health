@@ -30,6 +30,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<string> Create(NewAccountInfo newAccountInfo)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             if (newAccountInfo is null)
             {
                 return "No credentials received";
@@ -84,6 +85,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<bool> ChangePassword(ChangePasswordInfo changePasswordInfo)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try
             {
                 changePasswordInfo.CredentialUsername = changePasswordInfo.CredentialUsername.ToLower();
@@ -116,6 +118,7 @@ namespace WebApi.Controllers
         [HttpPost]                                          // query string
         public async Task<bool> ForgetPasswordUsername(string credentialUsername)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try
             {
                 credentialUsername = credentialUsername.ToLower();
@@ -144,6 +147,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<bool> ForgetPasswordUniqueIdCheck(string credentialUsername, string code)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try
             {
                 credentialUsername = credentialUsername.ToLower();
@@ -162,6 +166,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<bool> ForgetPasswordChange(string credentialUsername, string code, string newPassword)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try
             {
                 credentialUsername = credentialUsername.ToLower();
@@ -190,6 +195,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<bool> ResetPcCredentialPassword(Credential credential)
         {
+            await DatabaseFunctions.InitializeStaticStorage(_db).ConfigureAwait(false);
             try
             {
                 credential.CredentialsUsername = credential.CredentialsUsername.ToLower();

@@ -41,7 +41,7 @@ function Table() {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-        setTemp(res.data)
+        setTemp(res.data);
         // setData(res.data);
       });
   }

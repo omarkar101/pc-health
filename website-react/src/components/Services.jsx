@@ -11,7 +11,9 @@ function Services({match}) {
   const FetchData = () => {
     axios
       .get("https://pc-health.azurewebsites.net/Pc/DiagnosticData", {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+
       })
       .then((res) => {
         setData(res.data.filter((d) => d.PcId === match.params.id));

@@ -11,6 +11,7 @@ function Stats({ match }) {
     console.log("name", match)
     const response = await fetch(
       `https://pc-health.azurewebsites.net/Pc/DiagnosticDataSpecific?pcId=${match.params.id}`, {
+
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     }
     );
