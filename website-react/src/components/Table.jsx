@@ -10,7 +10,10 @@ import { FcLinux } from 'react-icons/fc';
 import Nav from './Nav'
 import { AiOutlineWarning } from 'react-icons/ai'
 import { GrStatusUnknown } from 'react-icons/gr'
-import { CgOpenCollective } from "react-icons/cg";
+import { BsQuestionCircle } from "react-icons/bs";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
+// import { ReactComponent as Logo } from './images/logo.jpeg';
 
 function Table() {
   const [search, setSearch] = useState('');
@@ -19,6 +22,7 @@ function Table() {
   const [detailsShown, setDetailShown] = useState([]);
   const [temp, setTemp] = useState([]);
   const [temp2, setTemp2] = useState([]);
+  const [inactives, setInactives] = useState([]);
   const [active, setActive] = useState([]);
   // const [counter, setCounter] = useState(0)
   const FetchData = async () => {
@@ -44,21 +48,38 @@ function Table() {
   useEffect(() => {
     setTemp([])
   }, [])
-  const toggleShown = username => {
-    console.log(detailsShown)
+
+  const toggleShown = (username, a) => {
+    // console.log(detailsShown)
     const shownState = detailsShown.slice();
     const index = shownState.indexOf(username);
-    if (index >= 0) {
-      console.log("here")
-      shownState.splice(index, 1);
-      setDetailShown(shownState);
-    } else {
-      console.log("herez")
-      shownState.push(username);
-      setDetailShown(shownState);
+
+    const InactiveShownState = inactives.slice();
+    const iindex = InactiveShownState.indexOf(username);
+
+    if (a === "Inactive") {
+      if (iindex >= 0) {
+        // close
+        InactiveShownState.splice(index, 1);
+        setInactives(InactiveShownState);
+      } else {
+        // open extra info 
+        InactiveShownState.push(username);
+        setInactives(InactiveShownState);
+      }
+    }
+    else {
+      if (index >= 0) {
+        // close
+        shownState.splice(index, 1);
+        setDetailShown(shownState);
+      } else {
+        // open extra info
+        shownState.push(username);
+        setDetailShown(shownState);
+      }
     }
   };
-
 
 
   useEffect(() => {
@@ -110,17 +131,20 @@ function Table() {
     <>
       <div className="table_div">
         <div className="search_settings">
-          <Nav />
+          <img className="logo" src="/images/logo2.jpg" alt="" />
+          {/* <Nav /> */}
           <input
             className="search"
             type="text"
-            placeholder="search username..."
+            placeholder=" Search username..."
             onChange={(e) => {
               setSearch(e.target.value);
             }}
           />
+          <Nav />
         </div>
 
+        <br />
 
         <div className="table-box table-container">
           <table className="center bottomBorder roundedCorners">
@@ -128,7 +152,7 @@ function Table() {
               <tr className="header_tr">
                 <th>&nbsp;</th>
                 <th>Username</th>
-                <th>Status</th>
+                <th>Activity Status</th>
                 <th>O.S</th>
                 <th>More Info </th>
                 <th>Contact info</th>
@@ -144,24 +168,57 @@ function Table() {
                     {/* {console.log("datalst", x)} */}
                     <tr className="not_collapsed"
                       key={"NAME:" + x.PcId}
-                      onClick={() => toggleShown(x.PcId)}
+                      onClick={() => toggleShown(x.PcId, active[c])}
                     >
-                      {x.HealthStatus === "Healthy" ? (
-                        // <td style={{color: "green"}}> {x.HealthStatus} </td>
-                        <td>
-                          {" "}
-                          <IoMdCheckmarkCircleOutline
-                            color="green"
-                            size="1.5rem"
-                          />
-                        </td>
-                      ) : (
-                        // <td style={{color: "red"}}> In Danger </td>
-                        <td>
-                          {" "}
-                          <AiOutlineWarning color="red" size="1.5rem" />
-                        </td>
-                      )}
+                      {
+                        (active[c] === "Inactive" || active.length === 0) ?
+                          (
+                            <td>
+                              <BsQuestionCircle
+                                color="gold"
+                                size="1.5rem"
+                              />
+                            </td>) :
+                          (
+                            x.HealthStatus === "Healthy" ?
+                              (
+                                <td>
+                                  <IoMdCheckmarkCircleOutline
+                                    color="green"
+                                    size="1.5rem"
+                                  />
+                                </td>) :
+                              <td>
+                                (<AiOutlineWarning color="red" size="1.5rem" />
+                              </td>
+                          )
+                      }
+
+                      {/* // {(active[c] === "Inactive" || active.length === 0) ?
+                      //   <td>
+                      //     {" "}
+                      //     <BsQuestionCircle
+                      //       color="gold"
+                      //       size="1.5rem"
+                      //     />
+                      //   </td>
+                      // :
+                      // x.HealthStatus === "Healthy" ? (
+                      //   // <td style={{color: "green"}}> {x.HealthStatus} </td>
+                      //   <td>
+                      //     {" "}
+                      //     <IoMdCheckmarkCircleOutline
+                      //       color="green"
+                      //       size="1.5rem"
+                      //     />
+                      //   </td>
+                      // ) : (
+                      //   // <td style={{color: "red"}}> In Danger </td>
+                      //   <td>
+                      //     {" "}
+                      //     <AiOutlineWarning color="red" size="1.5rem" />
+                      //   </td>
+                      // )} */}
                       <td style={{ fontWeight: "bold" }}>
                         {x.PcConfiguration.PcUsername}
                         {/* </Link> */}
@@ -171,14 +228,20 @@ function Table() {
                       ) : (
                         <td>Active</td>
                       )} */}
-                      {/* {console.log("a:",active)} */}
-                      {/* {console.log(FilteredData)} */}
-                      <td>{(active.length === 0) ? "loading..." : active[c]}</td>
+                      <td>{(active.length === 0) ?
+                        <Loader
+                          type="ThreeDots"
+                          color="grey"
+                          height={20}
+                          width={20}
+                          timeout={6000}
+                        />
+                        : active[c]}</td>
                       {x.Os === "Windows" ? (
                         <td>
                           <AiFillWindows size="1.2rem" /> {x.Os}
                         </td>
-                      ) : x.Os === "linux" ? (
+                      ) : x.Os === "Linux" ? (
                         <td>
                           <FcLinux size="1.2rem" />
                           {x.Os}
@@ -187,147 +250,172 @@ function Table() {
                         <td>{x.Os}</td>
                       )}
 
-                      {
-                      (active[c] === "Inactive") ? <td>Unavailable</td>
-                        :
+
+                      {(active.length === 0) ?
 
                         <td>
+                          <Loader
+                            type="ThreeDots"
+                            color="grey"
+                            height={20}
+                            width={20}
+                            timeout={6000}
+                          />
+                        </td>
+                        :
+                        (active[c] === "Inactive") ? <td>Unavailable</td>
+                          :
 
-                          <Link
-                            to={"/table/" + x.PcId}
-                            target="_blank"
-                            className="tablelinks"
-                          >
-                            Services
+                          <td>
+
+                            <Link
+                              to={"/table/" + x.PcId}
+                              target="_blank"
+                              className="tablelinks"
+                            >
+                              Services
                         </Link>
                         &nbsp; &nbsp;
                         <Link
-                            to={"/Stats/" + x.PcId}
-                            target="_blank"
-                            className="tablelinks"
-                          >
-                            Performance
+                              to={"/Stats/" + x.PcId}
+                              target="_blank"
+                              className="tablelinks"
+                            >
+                              Performance
                         </Link>
-                        </td>
+                          </td>
 
                       }
                       <td>{x.PcConfiguration.PcEmail}</td>
                     </tr>
                     {/* {console.log(detailsShown.includes(x.PcId) )} */}
-                    {detailsShown.includes(x.PcId) && (
-                      <tr key={"DETAIL:" + x.PcId} className="additional-info">
+                    {/* {(active.length === 0) && (<tr className="additional-info">
+                      <td align="center" colSpan="6">
+                        Loading...
+                          </td>
+                    </tr>)} */}
+                    {(inactives.includes(x.PcId)) ? (
+                      <tr className="additional-info">
                         <td align="center" colSpan="6">
-                          {/* <hr className="collapse_line"/> */}
-                          {/* {console.log("HERE")} */}
-                          <div className="wrapper">
-                            <div className="piechart">
-                              <p className="chart_p">Memory</p>
-                              <Chart
-                                className="charts"
-                                chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
-                                data={[
-                                  ["memory", "usage"],
-                                  ["Used", x.MemoryUsage],
-                                  ["Remaining", 100 - x.MemoryUsage],
-                                ]}
-                                options={{
-                                  // title: "Memory",
-                                  slices: {
-                                    0: { color: "steelblue" },
-                                    1: { color: "black" },
-                                  },
-                                  width: '100%',
-                                  height: 150,
-                                  // backgroundColor: 'salmon',
-                                  chartArea: { width: '100%', height: '70%' },
-                                  legend: { position: 'bottom' },
-                                  titlePosition: 'none',
-                                }}
-                              />
-                            </div>
-                            <div className="piechart">
-                              <p className="chart_p">CPU</p>
-                              <Chart
-                                className="charts"
-                                chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
-                                data={[
-                                  ["cpu", "usage"],
-                                  ["Used", x.CpuUsage],
-                                  ["Remaining", 100 - x.CpuUsage],
-                                ]}
-                                options={{
-                                  // title: "CPU",
-                                  slices: {
-                                    0: { color: "lightseagreen" },
-                                    1: { color: "black" },
-                                  },
-                                  width: '100%',
-                                  height: 150,
-                                  chartArea: { width: '100%', height: '70%' },
-                                  legend: { position: 'bottom' },
-                                  titlePosition: 'none',
-                                }}
-                              />
-                            </div>
-                            <div className="piechart">
-                              <p className="chart_p">Disk</p>
-                              <Chart
-                                className="charts"
-                                chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
-                                data={[
-                                  ["disk", "usage"],
-                                  [
-                                    "Used",
-                                    x.DiskTotalSpace - x.TotalFreeDiskSpace,
-                                  ],
-                                  ["Remaining", x.TotalFreeDiskSpace],
-                                ]}
-                                options={{
-                                  // title: "Disk",
-                                  slices: {
-                                    0: { color: "indianred" },
-                                    1: { color: "black" },
-                                  },
-                                  width: '100%',
-                                  height: 150,
-                                  chartArea: { width: '100%', height: '70%' },
-                                  legend: { position: 'bottom' },
-                                  titlePosition: 'none',
-                                }}
-                              />
-                            </div>
-
-                            <div className="fourth">
-                              <p>
-                                <span style={{fontWeight:"bold", textDecoration: "underline"}}>
-                                  More Info:
-                                </span>
-                                <br/>
-                                <span style={{color:"black"}}>
-                                  Average Network Bytes
-                                  </span>
-                                <span style={{color:"midnightblue"}}>
-                                Received:  &nbsp;{x.AvgNetworkBytesReceived.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                                </span>
-                                <span style={{color:"midnightblue"}}>
-                                Sent:  &nbsp;&nbsp;&nbsp;{x.AvgNetworkBytesSent.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
-                                </span>
-                                <br/>
-                                <span style={{color:"black"}}>Firewall Status</span>
-                                {x.FirewallStatus === "Active" ? (
-                                  <span style={{color:"lime"}}>Active</span>
-                                ) : (
-                                  <span style={{color:"lime"}}>{x.FirewallStatus}</span>
-                                )}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
+                          This PC is currently inactive. Cannot view additional information.
+                          </td>
                       </tr>
-                    )}
+                    ) :
+                      (detailsShown.includes(x.PcId) && active.length !== 0) ? (
+                        <tr key={"DETAIL:" + x.PcId} className="additional-info">
+                          <td align="center" colSpan="6">
+                            {/* <hr className="collapse_line"/> */}
+                            {/* {console.log("HERE")} */}
+                            {console.log(detailsShown.includes(x.PcId))}
+                            <div className="wrapper">
+                              <div className="piechart">
+                                <p className="chart_p">Memory</p>
+                                <Chart
+                                  className="charts"
+                                  chartType="PieChart"
+                                  loader={<div>Loading Chart</div>}
+                                  data={[
+                                    ["memory", "usage"],
+                                    ["Used", x.MemoryUsage],
+                                    ["Remaining", 100 - x.MemoryUsage],
+                                  ]}
+                                  options={{
+                                    // title: "Memory",
+                                    slices: {
+                                      0: { color: "steelblue" },
+                                      1: { color: "black" },
+                                    },
+                                    width: '100%',
+                                    height: 150,
+                                    // backgroundColor: 'salmon',
+                                    chartArea: { width: '100%', height: '70%' },
+                                    legend: { position: 'bottom' },
+                                    titlePosition: 'none',
+                                  }}
+                                />
+                              </div>
+                              <div className="piechart">
+                                <p className="chart_p">CPU</p>
+                                <Chart
+                                  className="charts"
+                                  chartType="PieChart"
+                                  loader={<div>Loading Chart</div>}
+                                  data={[
+                                    ["cpu", "usage"],
+                                    ["Used", x.CpuUsage],
+                                    ["Remaining", 100 - x.CpuUsage],
+                                  ]}
+                                  options={{
+                                    // title: "CPU",
+                                    slices: {
+                                      0: { color: "lightseagreen" },
+                                      1: { color: "black" },
+                                    },
+                                    width: '100%',
+                                    height: 150,
+                                    chartArea: { width: '100%', height: '70%' },
+                                    legend: { position: 'bottom' },
+                                    titlePosition: 'none',
+                                  }}
+                                />
+                              </div>
+                              <div className="piechart">
+                                <p className="chart_p">Disk</p>
+                                <Chart
+                                  className="charts"
+                                  chartType="PieChart"
+                                  loader={<div>Loading Chart</div>}
+                                  data={[
+                                    ["disk", "usage"],
+                                    [
+                                      "Used",
+                                      x.DiskTotalSpace - x.TotalFreeDiskSpace,
+                                    ],
+                                    ["Remaining", x.TotalFreeDiskSpace],
+                                  ]}
+                                  options={{
+                                    // title: "Disk",
+                                    slices: {
+                                      0: { color: "indianred" },
+                                      1: { color: "black" },
+                                    },
+                                    width: '100%',
+                                    height: 150,
+                                    chartArea: { width: '100%', height: '70%' },
+                                    legend: { position: 'bottom' },
+                                    titlePosition: 'none',
+                                  }}
+                                />
+                              </div>
+
+                              <div className="fourth">
+                                <p>
+                                  <span style={{ fontWeight: "bold", textDecoration: "underline" }}>
+                                    More Info:
+                                </span>
+                                  <br />
+                                  <span style={{ color: "black" }}>
+                                    Average Network Bytes
+                                  </span>
+                                  <span style={{ color: "midnightblue" }}>
+                                    Received:  &nbsp;{x.AvgNetworkBytesReceived.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                                  </span>
+                                  <span style={{ color: "midnightblue" }}>
+                                    Sent:  &nbsp;&nbsp;&nbsp;{x.AvgNetworkBytesSent.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}
+                                  </span>
+                                  <br />
+                                  <span style={{ color: "black" }}>Firewall Status</span>
+                                  {x.FirewallStatus === "Active" ? (
+                                    <span style={{ color: "lime" }}>Active</span>
+                                  ) : (
+                                    <span style={{ color: "lime" }}>{x.FirewallStatus}</span>
+                                  )}
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ) : ''}
                   </>
                 ))
               )}

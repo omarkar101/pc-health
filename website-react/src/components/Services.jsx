@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./services.css"
+import './style.css'
 
 function Services({match}) {
   const [D, setData] = useState([]);
@@ -11,7 +11,9 @@ function Services({match}) {
   const FetchData = () => {
     axios
       .get("https://pc-health.azurewebsites.net/Pc/DiagnosticData", {
+
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+
       })
       .then((res) => {
         setData(res.data.filter((d) => d.PcId === match.params.id));
@@ -55,7 +57,7 @@ function Services({match}) {
       <input
         className="search"
         type="text"
-        placeholder="search username..."
+        placeholder="search services..."
         onChange={(e) => {
           setSearch(e.target.value);
         }}

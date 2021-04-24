@@ -62,23 +62,26 @@
     border: 0px ;
     float: right;
     margin-left: auto;
-    margin-right: 1%;
-    margin-top: 1%;
+    margin-right: 2%;
+    margin-top: 7px;
     /* width: 75%; */
-    border: 2px solid black;
+    /* border: 2px solid black; */
     /* background: rgba(66, 176, 180, 0.26); */
-    background: transparent;
+    /* background: transparent; */
     /* padding: 2%; */
     outline: none;
-    color: black;
+    color: whitesmoke;
     border-radius: 7px;
     /* padding-left: 13%; */
     /* width: 100%; */
+
+    border: 2px solid rgb(49, 49, 49);
+    background-color: rgba(31, 31, 31, 0.774);
 }
 
 .menu_nav:hover{
     background-color: transparent;
-    color: black;
+    color: white;
     /* background-color: rgb(37, 37, 48); */
     /* box-shadow: 0 0 10px #9ecaed; */
 }

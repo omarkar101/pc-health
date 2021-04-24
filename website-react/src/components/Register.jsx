@@ -56,28 +56,25 @@ export default function Register() {
     <div className="rdiv_design">
       <form className="rform_container" onSubmit={(e) => submit(e)}>
         <h2 className="rh1_d">Sign up</h2>
-        {validPass === true || validPass === null ? (
-          account === "Success" ? (
-            <>
-              <br />
-              <br />
-            </>
-          ) : (
-            <p className="rfailed_register">{account}</p>
-          )
-        ) : (
+        {/* {console.log(CredentialsPassword)} */}
+        {CredentialsPassword.length > 0 && CredentialsPassword !== null ? 
+        (
+          validPass === false ?
           <p className="weak_password">
             Passwords should be at least 8 character long, have at least one
             uppercase and one lowercase character, and must include numbers
           </p>
-        )}
-        {/* {account !== false ? (
-          ""
-        ) : (
-          <p className="rfailed_register">
-            An account with this email already exists!
-          </p>
-        )} */}
+          :
+          <p className="rfailed_register"> &nbsp; </p>
+        ) : 
+        (
+          account === "Success" ? (
+            <p className="rfailed_register"> {account} </p>
+          ) : (
+            <p className="rfailed_register"> &nbsp; </p>
+          )
+        )
+        }
 
         <div className="rdiv1">
           <div className="rinput-icon">
@@ -132,7 +129,7 @@ export default function Register() {
           </div>
         </div>
 
-        <button class="rlogin_button" type="submit" disabled={!validPass}>
+        <button class="register_button" type="submit" disabled={!validPass}>
           Register
         </button>
 

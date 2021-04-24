@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Chart from "react-google-charts";
 import "./style.css";
+import "./StatsStyle.css";
 
 function Stats({ match }) {
   const [stats, setStats] = useState([])
 
   const FetchStats = async () => {
     // e.preventDefault();
-    // console.log("id", match.params.id)
+    console.log("name", match)
     const response = await fetch(
-      `https://pc-health.azurewebsites.net/Pc/DiagnosticDataSpecific?pcId=${ match.params.id }`, {
+      `https://pc-health.azurewebsites.net/Pc/DiagnosticDataSpecific?pcId=${match.params.id}`, {
+
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     }
     );

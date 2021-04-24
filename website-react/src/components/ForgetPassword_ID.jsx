@@ -11,6 +11,7 @@ function ForgetPassword_ID() {
         e.preventDefault();
         const response = await fetch(`https://pc-health.azurewebsites.net/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
         const ans = await response.json()
+        console.log(response.json())
         setResult(ans)
         setCode("")
     }
@@ -22,9 +23,7 @@ function ForgetPassword_ID() {
         <div className="div_design">
             <form className="forgot_pass_form_container" onSubmit={submit}>
                 <h2 className="h1_d">Reset Password</h2>
-                {result===false ? <p className="failed_login">
-            The code you entered is incorrect!
-          </p> : ""}
+
                 <p className="forgot_pass_message">You will receive a verification code by email shortly.
                     <br />Please enter your code below.
                     </p>
@@ -40,6 +39,9 @@ function ForgetPassword_ID() {
                         onChange={(e) => setCode(e.target.value)} />
                 </div>
                 <button className="login_button" type="submit">Submit</button>
+                {result === false ? <p className="wrong_reset_code">
+                    The code you entered is incorrect!
+                 </p> : ""}
             </form>
         </div>
     )

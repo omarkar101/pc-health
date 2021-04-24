@@ -19,18 +19,20 @@ function Login() {
 
   const submit = async (e) => {
     e.preventDefault();
-    await fetch("https://pc-health.azurewebsites.net/Admin/Login", {
-      method: "POST",
-      // authorization: "Bearer Token",
-      headers: { "Content-Type": "application/json" },
-      // credentials: "include",
-      body: JSON.stringify({
-        CredentialsUsername,
-        CredentialsPassword,
-      }),
-    })
-      .then((response) => response.text())
-      .then((result) => {
+
+    await fetch(
+      "https://pc-health.azurewebsites.net/Admin/Login",
+      {
+        method: "POST",
+        // authorization: "Bearer Token",
+        headers: { "Content-Type": "application/json" },
+        // credentials: "include",
+        body: JSON.stringify({
+          CredentialsUsername,
+          CredentialsPassword,
+        }),
+      }).then((response) => response.text()).then(result => {
+
         localStorage.setItem("token", result);
         localStorage.setItem("interval", 3);
         setRedirect(result);
@@ -51,9 +53,14 @@ function Login() {
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
         <h2 className="h1_d">Log in to PC-Health</h2>
-        {redirect==='false' ? <p className="failed_login">
+
+        {redirect==='false' ? 
+        <p className="failed_login">
             The username/password you entered is incorrect!
-          </p> : <><br/><br/></>}
+          </p> :   <p style={{marginTop: "5.5%"}}>
+          &nbsp;
+          </p>
+          }
 
 
         <div className="input-icon">
@@ -82,6 +89,7 @@ function Login() {
         <button className="login_button" type="submit">
           Log in
           </button>
+
         <hr />
         <nav>
           <div className="navigations_login">
