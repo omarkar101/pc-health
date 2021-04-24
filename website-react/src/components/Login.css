@@ -1,14 +1,24 @@
 .failed_login{
   color: red;
-  margin-top: 8%;
+  margin-top: 5.5%;
 }
 
+.failed_email_in_forgot_password{
+  margin-top: 10%;
+  font-size: 16px;
+  color: red;
+}
+
+.wrong_reset_code{
+  color: red;
+  margin-top: 3%;
+}
 
 .form_container{
   background-color: white;
   text-align:center;
   width: 500px;
-  height: 80%;
+  height: 470px;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -19,7 +29,7 @@
   background-color: white;
   text-align:center;
   width: 500px;
-  height: 65%;
+  height: 370px;
   position: fixed;
   top: 50%;
   left: 50%;

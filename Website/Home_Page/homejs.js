@@ -8,7 +8,7 @@ var num = 1
 /**
  * @var {string} url Will refer to the link that is used to get HTTP request
  */
-let url = 'https://pchealth.azurewebsites.net/api/Base/GetDiagnosticData';
+let url = 'https://pc-health.azurewebsites.net/api/Base/GetDiagnosticData';
 
 /**
  * @var xhReq is used to get the HTTP request

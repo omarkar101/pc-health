@@ -1,15 +1,46 @@
 .search{
-    padding: 2px;
-    margin-top: 1%;
-    margin-bottom: 40px;
-    margin-left: 5px;
+    /* padding: 2px; */
+    /* margin-top: 9px; */
+    /* margin-bottom: 40px; */
+    margin-left: 1%;
     border-radius: 7px;
-    border: 2px solid black;
+    border: 2px solid rgb(49, 49, 49);
     /* border:2px solid #253657; */
-    width: 40%;
+    width: 35%;
     /* margin-left: auto;
     margin-right: auto; */
-    background-color:transparent;
+    background-color: rgba(31, 31, 31, 0.774);
+    /* border: 2px solid red; */
+}
+
+.search_settings{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    /* overflow-y:scroll; */
+    background-color: rgb(0, 0, 0);
+    height: 50px;
+    /* position: relative; */
+    /* display: flex; */
+}
+
+.logo{
+    margin-top: 0%;
+    /* margin-bottom: auto; */
+    margin-left: 0%;
+    /* border-radius: 7px; */
+    height: 50px;
+    width: 50px;
+    /* border: 2px solid red; */
+    /* width: auto; */
+}
+
+input.search::placeholder{
+    color: whitesmoke;
+}
+
+input.search{
+    color: white
 }
 
 /* table.center {
@@ -29,31 +60,27 @@
     left:0px;
     /* z-index:1000; */
 }
-.search_settings{
-    width: 97%;
-    margin-left: auto;
-    margin-right: auto;
-    /* overflow-y:scroll; */
-}
 
-/*{
-    left: 50%;
-    top: 50%;
-    border-collapse: collapse;
-    border:2px solid rgba(0,0,0,0.4);
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;   
-} */
 .table-container{
     /* height:100%; */
     width: 97%;
-    margin-left: auto;
+    margin-left: 2%;
     margin-right: auto;
+    overflow: hidden;
     overflow-y:scroll;
+    height: 480px;
     /* box-shadow: 0px 10px 100px rgba(0,0,0,0.5); */
 }
 
+.div_background{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: white;
+    z-index: 1;
+}
 
 table{
     /* left: 50%;
@@ -63,6 +90,7 @@ table{
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    overflow-y:scroll;
     text-align: center;
 }
 
@@ -115,7 +143,7 @@ table.bottomBorder tr{
     border-bottom: 0 
 }
 table.bottomBorder tr.not_collapsed { 
-    border-top: 1px solid rgb(0, 0, 0); 
+    border-top: 1.5px solid rgb(0, 0, 0); 
 }
 
 tr.additional-info{

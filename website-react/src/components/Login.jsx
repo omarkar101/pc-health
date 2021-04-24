@@ -20,7 +20,7 @@ function Login(prop: { setToken: (token) => void }) {
   const submit = async (e) => {
     e.preventDefault();
     await fetch(
-      "http://pc-health.somee.com/Admin/Login",
+      "https://pc-health.azurewebsites.net/Admin/Login",
       {
         method: "POST",
         // authorization: "Bearer Token",
@@ -49,9 +49,14 @@ function Login(prop: { setToken: (token) => void }) {
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
         <h2 className="h1_d">Log in to PC-Health</h2>
-        {redirect==='false' ? <p className="failed_login">
+
+        {redirect==='false' ? 
+        <p className="failed_login">
             The username/password you entered is incorrect!
-          </p> : <><br/><br/></>}
+          </p> :   <p style={{marginTop: "5.5%"}}>
+          &nbsp;
+          </p>
+          }
 
 
         <div className="input-icon">
@@ -80,6 +85,7 @@ function Login(prop: { setToken: (token) => void }) {
         <button className="login_button" type="submit">
           Log in
           </button>
+
         <hr />
         <nav>
           <div className="navigations_login">

@@ -1,0 +1,25 @@
+.wrapper {
+    width: 100%;
+    overflow: hidden;
+}
+
+.chart_p{
+    margin-bottom: 0%;
+    font-weight: bold;
+}
+
+.charts{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.fourth{
+    border-left: 1px solid rgb(192, 192, 192); 
+    width: 33%;
+    float: left; 
+    height: 100%;
+    margin-left: 4%;
+    text-align: center;
+}
