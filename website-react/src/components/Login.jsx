@@ -9,7 +9,7 @@ import { ImKey } from 'react-icons/im'
 
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-function Login(prop: { setToken: (token) => void }) {
+function Login() {
   const [CredentialsUsername, setUname] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
@@ -19,23 +19,25 @@ function Login(prop: { setToken: (token) => void }) {
 
   const submit = async (e) => {
     e.preventDefault();
-    await fetch(
-      "http://pc-health.somee.com/Admin/Login",
-      {
-        method: "POST",
-        // authorization: "Bearer Token",
-        headers: { "Content-Type": "application/json" },
-        // credentials: "include",
-        body: JSON.stringify({
-          CredentialsUsername,
-          CredentialsPassword,
-        }),
-      }).then((response) => response.text()).then(result => {
+    await fetch("https://pc-health.azurewebsites.net/Admin/Login", {
+      method: "POST",
+      // authorization: "Bearer Token",
+      headers: { "Content-Type": "application/json" },
+      // credentials: "include",
+      body: JSON.stringify({
+        CredentialsUsername,
+        CredentialsPassword,
+      }),
+    })
+      .then((response) => response.text())
+      .then((result) => {
         localStorage.setItem("token", result);
         localStorage.setItem("interval", 3);
         setRedirect(result);
       })
-      .catch(() => { setError("Server Error, please reload the page") });
+      .catch(() => {
+        setError("Server Error, please reload the page");
+      });
     setPassword("")
     setUname("")
   }

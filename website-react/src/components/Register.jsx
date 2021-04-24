@@ -29,7 +29,7 @@ export default function Register() {
   const submit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "http://pc-health.somee.com/Admin/Create",
+      "https://pc-health.azurewebsites.net/Admin/Create",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

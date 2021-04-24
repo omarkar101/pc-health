@@ -23,7 +23,7 @@ function Table() {
   // const [counter, setCounter] = useState(0)
   const FetchData = async () => {
     axios
-      .get("http://pc-health.somee.com/Pc/DiagnosticData", {
+      .get("https://pc-health.azurewebsites.net/Pc/DiagnosticData", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -33,11 +33,11 @@ function Table() {
   }
   const FetchData2 = async () => {
     axios
-      .get("http://pc-health.somee.com/Pc/DiagnosticData", {
+      .get("https://pc-health.azurewebsites.net/Pc/DiagnosticData", {
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
-        setTemp(res.data)
+        setTemp(res.data);
         // setData(res.data);
       });
   }

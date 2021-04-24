@@ -29,19 +29,21 @@ function ChangePass() {
 
   const submit = async (e) => {
     e.preventDefault();
-    const response =
-      await fetch(
-        "http://pc-health.somee.com/Admin/ChangePassword",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
-          body: JSON.stringify({
-            CredentialUsername,
-            OldPassword,
-            NewPassword,
-          }),
-        }
-      );
+    const response = await fetch(
+      "https://pc-health.azurewebsites.net/Admin/ChangePassword",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          CredentialUsername,
+          OldPassword,
+          NewPassword,
+        }),
+      }
+    );
     const res = await response.json()
     setResult(res)
   }
