@@ -16,7 +16,7 @@ function ResetPass() {
   async function submit(e) {
     e.preventDefault();
     const response = await fetch(
-      "http://pc-health.somee.com/Admin/ResetPcCredentialPassword",
+      "https://pc-health.azurewebsites.net/Admin/ResetPcCredentialPassword",
       {
         method: "POST",
         headers: {

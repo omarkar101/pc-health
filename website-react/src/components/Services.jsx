@@ -10,8 +10,8 @@ function Services({match}) {
 
   const FetchData = () => {
     axios
-      .get("http://pc-health.somee.com/Pc/DiagnosticData", {
-      headers: { Authorization: "Bearer " + localStorage.getItem("token") },
+      .get("https://pc-health.azurewebsites.net/Pc/DiagnosticData", {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
         setData(res.data.filter((d) => d.PcId === match.params.id));

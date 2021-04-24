@@ -25,7 +25,7 @@ const [valid,setValid]=useState()
   const submit = async (e) => {
     e.preventDefault()
     const response = await fetch(
-      `http://pc-health.somee.com/Admin/ForgetPasswordChange?credentialUsername=${localStorage.getItem("Email")}&code=${localStorage.getItem("code")}&newPassword=${newPass}`, {
+      `https://pc-health.azurewebsites.net/Admin/ForgetPasswordChange?credentialUsername=${localStorage.getItem("Email")}&code=${localStorage.getItem("code")}&newPassword=${newPass}`, {
       method: "POST"
     }
     );

@@ -9,7 +9,7 @@ function Stats({ match }) {
     // e.preventDefault();
     // console.log("id", match.params.id)
     const response = await fetch(
-      `http://pc-health.somee.com/Pc/DiagnosticDataSpecific?pcId=${match.params.id}`, {
+      `https://pc-health.azurewebsites.net/Pc/DiagnosticDataSpecific?pcId=${ match.params.id }`, {
       headers: { Authorization: "Bearer " + localStorage.getItem("token") },
     }
     );
