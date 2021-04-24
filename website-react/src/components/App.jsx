@@ -15,7 +15,9 @@ import NewPassword from "./NewPassword";
 import Stats from "./Stats";
 import ResetPass from "./ResetPass"
 import { CgWindows } from "react-icons/cg";
-
+import Error from './Error'
+import Home from './Home'
+import AboutUs from './AboutUs'
 function App() {
   const [token, setToken] = useState();
   return (
@@ -23,12 +25,25 @@ function App() {
       <Router>
         <main>
           <Switch>
+            <Route exact path = '/aboutus' component={AboutUs}/>
+            <Route path = "/home" exact component={Home}/>
             <Route path="/" exact component={Login}>
               <Login setToken={setToken} />
             </Route>
-            <ProtectedRoute exact path="/table" render={props=>(<Table {...props}/>)}>
-              <Table/>
+            <ProtectedRoute
+              exact
+              path="/table"
+              render={(props) => <Table {...props} />}
+            >
+              <Table />
             </ProtectedRoute>
+            <Route
+              exact
+              path="/error"
+              render={(props) => <Error {...props} />}
+            >
+              <Error />
+            </Route>
             <ProtectedRoute path="/Stats/:id" component={Stats} />
             <ProtectedRoute path="/ResetPass" component={ResetPass} />
             <ProtectedRoute path="/table/:id" component={Services} />

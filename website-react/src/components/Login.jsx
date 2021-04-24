@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { AiOutlineMail } from 'react-icons/ai'
 // import { RiLockPasswordFill } from 'react-icons/ri'
 import { ImKey } from 'react-icons/im'
-
+import Error from './Error'
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function Login() {
@@ -14,7 +14,7 @@ function Login() {
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
   const [token, setToken] = useState("")
-  const [Error, setError] = useState("")
+  const [error, setError] = useState(false)
   const [loginState, setLoginState] = useState()
 
   const submit = async (e) => {
@@ -38,13 +38,14 @@ function Login() {
         setRedirect(result);
       })
       .catch(() => {
-        setError("Server Error, please reload the page");
+        setError(true);
       });
     setPassword("")
     setUname("")
   }
 
-  if (Error !== '') { return <h1>{Error}</h1> }
+  if (error) {
+    return <Redirect to='/error'/>}
   if (redirect !== "false" && redirect !== "") {
     return (<Redirect to="/table" />
     );
