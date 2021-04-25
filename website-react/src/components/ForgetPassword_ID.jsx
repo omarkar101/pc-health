@@ -9,7 +9,7 @@ function ForgetPassword_ID() {
     const [result, setResult] = useState();
     const submit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`https://pc-health.azurewebsites.net/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
+        const response = await fetch(`https://pchealth.azurewebsites.net/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
         const ans = await response.json()
         console.log(response.json())
         setResult(ans)

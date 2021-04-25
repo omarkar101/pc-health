@@ -1,12 +1,12 @@
 import React from "react";
-import "./Home.css";
+import "./HomeStyles.css";
 import { Link } from "react-router-dom";
 function Home() {
   return (
-    <div>
+    <div className="body_s">
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div className="container-fluid">
-          <Link className="navbar-brand" aria-disabled="true">
+          <Link className="navbar-brand" aria-disabled="false">
             PC-Health
           </Link>
           <button

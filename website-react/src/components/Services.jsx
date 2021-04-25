@@ -10,7 +10,7 @@ function Services({match}) {
 
   const FetchData = () => {
     axios
-      .get("https://pc-health.azurewebsites.net/Pc/DiagnosticData", {
+      .get("https://pchealth.azurewebsites.net/Pc/DiagnosticData", {
 
         headers: { Authorization: "Bearer " + localStorage.getItem("token") },
 

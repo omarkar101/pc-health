@@ -32,7 +32,7 @@ function ChangePass() {
 
     const response =
       await fetch(
-        "https://pc-health.azurewebsites.net/Admin/ChangePassword",
+        "https://pchealth.azurewebsites.net/Admin/ChangePassword",
         {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },

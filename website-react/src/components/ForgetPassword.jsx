@@ -13,7 +13,7 @@ export default function ForgetPassword() {
       credentialUsername,
     }));
     const response = await fetch(
-      `https://pc-health.azurewebsites.net/Admin/ForgetPasswordUsername?${params}`,
+      `https://pchealth.azurewebsites.net/Admin/ForgetPasswordUsername?${params}`,
       {
         method: "POST",
       }

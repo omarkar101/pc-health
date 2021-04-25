@@ -2,11 +2,10 @@
 :root {
   --main-color: #eaeaea;
   --stroke-color: black;
-  
 }
 /**/
 body {
-  background: var(--main-color);
+  /* background: var(--main-color); */
 }
 h1 {
   margin: 100px auto 0 auto;
