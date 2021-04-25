@@ -1,5 +1,5 @@
 import React from 'react'
-import './Error.css'
+import './ErrorStyles.css'
 import ReactDOM, { render } from "react-dom";
 
 const f = () => {
@@ -34,4 +34,3 @@ function Error() {
     )
 }
 export default Error
-

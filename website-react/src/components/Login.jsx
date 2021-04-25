@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import { AiOutlineMail } from 'react-icons/ai'
 // import { RiLockPasswordFill } from 'react-icons/ri'
 import { ImKey } from 'react-icons/im'
-import Error from './Error'
+
 // import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function Login() {
@@ -14,14 +14,14 @@ function Login() {
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
   const [token, setToken] = useState("")
-  const [error, setError] = useState(false)
+  const [Error, setError] = useState("")
   const [loginState, setLoginState] = useState()
 
   const submit = async (e) => {
     e.preventDefault();
 
     await fetch(
-      "https://pc-health.azurewebsites.net/Admin/Login",
+      "https://pchealth.azurewebsites.net/Admin/Login",
       {
         method: "POST",
         // authorization: "Bearer Token",
@@ -38,14 +38,13 @@ function Login() {
         setRedirect(result);
       })
       .catch(() => {
-        setError(true);
+        setError("Server Error, please reload the page");
       });
     setPassword("")
     setUname("")
   }
 
-  if (error) {
-    return <Redirect to='/error'/>}
+  if (Error !== '') { return <h1>{Error}</h1> }
   if (redirect !== "false" && redirect !== "") {
     return (<Redirect to="/table" />
     );

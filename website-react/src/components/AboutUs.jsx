@@ -1,12 +1,15 @@
 import React from 'react'
-import './Home.css'
+import './HomeStyles.css'
 import {Link} from 'react-router-dom'
+
+
 export default function AboutUs() {
     return (
-      <div className="container marketing">
+      <div className="body_s container marketing">
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
           <div className="container-fluid">
-            <Link className="navbar-brand" aria-disabled="true">
+            <Link className="navbar-brand" 
+            >
               PC-Health
             </Link>
             <button
@@ -132,4 +135,3 @@ export default function AboutUs() {
       </div>
     );
 }
-
