@@ -5,6 +5,14 @@
     background-color: rgb(238, 237, 237);
 }
 
+image.borders{
+  /* border-width: 3, */
+  /* border: 2px solid red; */
+  /* borderColor: "red" */
+  border-width: 5;
+  border-color: black;
+}
+
 .aboutus_contain{
   z-index: -1;
   background-color:rgba(235, 233, 233, 0.767);
