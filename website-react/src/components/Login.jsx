@@ -1,32 +1,24 @@
 import React, { useState } from "react";
-import "./Login.css";
-import { Redirect, Route } from "react-router";
-import { BrowserRouter as Router } from "react-router-dom";
+import { Redirect } from "react-router";
 import { Link } from 'react-router-dom'
 import { AiOutlineMail } from 'react-icons/ai'
-// import { RiLockPasswordFill } from 'react-icons/ri'
 import { ImKey } from 'react-icons/im'
+import "./Login.css";
 
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 function Login() {
   const [CredentialsUsername, setUname] = useState("");
   const [CredentialsPassword, setPassword] = useState("");
   const [redirect, setRedirect] = useState("");
-  const [token, setToken] = useState("")
-  const [Error, setError] = useState("")
-  const [loginState, setLoginState] = useState()
 
   const submit = async (e) => {
     e.preventDefault();
 
     await fetch(
-      "https://pchealth.azurewebsites.net/Admin/Login",
+      "https://pc-health.azurewebsites.net/Admin/Login",
       {
         method: "POST",
-        // authorization: "Bearer Token",
         headers: { "Content-Type": "application/json" },
-        // credentials: "include",
         body: JSON.stringify({
           CredentialsUsername,
           CredentialsPassword,
@@ -37,30 +29,28 @@ function Login() {
         localStorage.setItem("interval", 3);
         setRedirect(result);
       })
-      .catch(() => {
-        setError("Server Error, please reload the page");
-      });
     setPassword("")
     setUname("")
   }
 
-  if (Error !== '') { return <h1>{Error}</h1> }
   if (redirect !== "false" && redirect !== "") {
     return (<Redirect to="/table" />
     );
   }
   return (
     <div className="div_design">
-      <form className="form_container" onSubmit={submit}>
-        <h2 className="h1_d">Log in to PC-Health</h2>
 
-        {redirect==='false' ? 
-        <p className="failed_login">
+      <form className="form_container" onSubmit={submit}>
+        <img className="logologin" src="/images/logo3.png" alt="" />
+        <h2 className="h1_d">Log in to P-See</h2>
+
+        {redirect === 'false' ?
+          <p className="failed_login">
             The username/password you entered is incorrect!
-          </p> :   <p style={{marginTop: "5.5%"}}>
-          &nbsp;
+          </p> : <p style={{ marginTop: "5.5%" }}>
+            &nbsp;
           </p>
-          }
+        }
 
 
         <div className="input-icon">

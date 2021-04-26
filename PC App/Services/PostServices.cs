@@ -16,7 +16,7 @@ namespace PC_App.Services
             {
                 try
                 {
-                    await PostDiagnosticData("https://pchealth.azurewebsites.net/Pc/PostDiagnosticDataFromPc");
+                    await PostDiagnosticData("https://pc-health.azurewebsites.net/Pc/PostDiagnosticDataFromPc");
                     Thread.Sleep(500);
                 }
                 catch (Exception e)

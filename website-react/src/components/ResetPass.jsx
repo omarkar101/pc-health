@@ -1,14 +1,11 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router'
-import "./Login.css";
 import { Link } from "react-router-dom";
-import { AiOutlineMail } from 'react-icons/ai'
 import { RiLockPasswordFill } from 'react-icons/ri'
 import { ImKey } from 'react-icons/im'
+import "./Login.css";
 
 function ResetPass() {
-  // const [CredentialUsername, setEmail] = useState("")
-  // const [CredentialPassword, setPassword] = useState("")
   const [result, setResult] = useState()
   const [CredentialsUsername, setEmail] = useState("")
   const [CredentialsPassword, setPassword] = useState("")
@@ -16,7 +13,7 @@ function ResetPass() {
   async function submit(e) {
     e.preventDefault();
     const response = await fetch(
-      "https://pchealth.azurewebsites.net/Admin/ResetPcCredentialPassword",
+      "https://pc-health.azurewebsites.net/Admin/ResetPcCredentialPassword",
       {
         method: "POST",
         headers: {
@@ -39,10 +36,11 @@ function ResetPass() {
   return (
     <div className="div_design">
       <form className="form_container" onSubmit={submit}>
+        <img className="logologin" src="/images/logo3.png" alt="" />
         <h2 className="h1_d">Reset Account Code</h2>
-        {result===false ? <><p className="failed_email_in_forgot_password">Account credentials are incorrect.</p><br/></>: 
-        
-        <p className="forgot_pass_message">Enter your credentials here.<br/> You will receive an email containing the new code.</p>
+        {result === false ? <><p className="failed_email_in_forgot_password">Account credentials are incorrect.</p><br /></> :
+
+          <p className="forgot_pass_message">Enter your credentials here.<br /> You will receive an email containing the new code.</p>
         }
         <div className="input-icon">
           <RiLockPasswordFill className="icon" />

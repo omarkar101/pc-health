@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import "./RegisterStyle.css"
 import { Link } from "react-router-dom";
-import { AiOutlineMail } from 'react-icons/ai'
-import { RiLockPasswordFill } from 'react-icons/ri'
 import { ImKey } from 'react-icons/im'
 import { FaUserAlt } from 'react-icons/fa'
+import "./RegisterStyle.css"
 
 function ChangePass() {
   const [CredentialUsername, setUsername] = useState("")
@@ -32,7 +30,7 @@ function ChangePass() {
 
     const response =
       await fetch(
-        "https://pchealth.azurewebsites.net/Admin/ChangePassword",
+        "https://pc-health.azurewebsites.net/Admin/ChangePassword",
         {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -53,22 +51,23 @@ function ChangePass() {
   return (
     <div className="rdiv_design">
       <form className="rform_container" onSubmit={submit}>
+        <img className="logologin" src="/images/logo3.png" alt="" />
         <h2 className="rh1_d">Change Password</h2>
 
         {
-        NewPassword.length > 0 && NewPassword !== null ? (
-          validPass === false ?
-            <p className="weak_password">
-              Passwords should be at least 8 character long, have at least one
-              uppercase and one lowercase character, and must include numbers
-          </p> : 
-          ( 
-            (NewPassword !== ConfirmedPassword && ConfirmedPassword.length > 0) ? 
-            <p className="rfailed_register">Passwords do not match</p> 
-            : <p className="rfailed_register"> &nbsp; </p>
+          NewPassword.length > 0 && NewPassword !== null ? (
+            validPass === false ?
+              <p className="weak_password">
+                Passwords should be at least 8 character long, have at least one
+                uppercase and one lowercase character, and must include numbers
+          </p> :
+              (
+                (NewPassword !== ConfirmedPassword && ConfirmedPassword.length > 0) ?
+                  <p className="rfailed_register">Passwords do not match</p>
+                  : <p className="rfailed_register"> &nbsp; </p>
+              )
           )
-        )
-          : <p className="rfailed_register"> &nbsp; </p>
+            : <p className="rfailed_register"> &nbsp; </p>
         }
 
         <div className="rdiv1">
