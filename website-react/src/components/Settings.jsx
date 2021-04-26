@@ -1,6 +1,5 @@
 import React from "react";
 import './NavStyle.css'
-// import Form from './settingsForm'
 
 
 function Settings(props) {
@@ -8,9 +7,6 @@ function Settings(props) {
     return (props.trigger) ?
         (< div className="popup" >
             <div className="popup-inner">
-                {/* <button className="close-btn" onClick={() => props.setTrigger(false)}>
-                    close
-                </button> */}
                 <span onClick={() => props.setTrigger(false)} className="close-btn"
                     title="Close Modal">&times;
                 </span>
@@ -18,7 +14,7 @@ function Settings(props) {
             </div>
 
         </div >) : "";
-    
+
 }
 
 

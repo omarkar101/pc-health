@@ -15,15 +15,12 @@
     width: 100%;
     margin-top: 10%;
     overflow: hidden;
-    /* border: 2px solid red; */
-    /* margin-top: 5%; */
 }
 
 .input-interval{
     float: left;
     margin-right: 2%;
     margin-top: 1%;
-    /* border: 2px solid green; */
     min-height: 100%;
     min-width: 48%; 
     max-width: 48%;
@@ -34,11 +31,8 @@
     background-color: transparent;
     text-align: center;
     color:black;
-    /* margin: auto; */
-    /* margin-top: 10px; */
     border-radius: 8px;
     border:2px solid #253657;
-
     margin:0 auto;
     display:block;
     margin-top: 13%;
@@ -47,9 +41,7 @@
 .options{
     min-width: 50%; 
     max-width: 50%;
-    /* border: 2px solid yellow;  */
     float: left; 
-    /* z-index: 1000; */
     margin-top: 6%;
 }
 
@@ -63,7 +55,6 @@
     background-color: #FFF;
     border:2px solid #253657;
     border-radius: 8px;
-    /* padding-top: 3%; */
 }
 
 .popup-inner .close-btn{
@@ -76,7 +67,6 @@
     position: absolute;
     right: 25px;
     margin-top: -10px;
-    /* top: 0; */
     color: black;
     font-size: 35px;
     font-weight: bold;
@@ -87,14 +77,3 @@
     color: red;
     cursor: pointer;
 }
-
-/* .cancelbutton {
-    width: auto;
-    padding: 10px 18px;
-    color: black;
-} */
-/* .applybutton {
-    width: auto;
-    padding: 10px 18px;
-    color: black;
-} */

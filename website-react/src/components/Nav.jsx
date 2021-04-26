@@ -1,7 +1,7 @@
-import { Link, Redirect, useHistory } from "react-router-dom";
-import "./NavStyle.css";
+import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import Settings from "./Settings";
+import Select from 'react-select'
 import {
   Menu,
   MenuList,
@@ -10,7 +10,7 @@ import {
   MenuLink,
 } from "@reach/menu-button";
 import "@reach/menu-button/styles.css";
-import Select from 'react-select'
+import "./NavStyle.css";
 
 
 export default function Nav() {
@@ -59,7 +59,6 @@ export default function Nav() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state);
     if (state.input === -1) {
       alert("please provide a time!");
     }
@@ -89,7 +88,6 @@ export default function Nav() {
         localStorage.setItem("interval", state.interval);
       }
       state.input = -1;
-      console.log(state);
       setButtonPopup(false);
     }
   };
@@ -97,15 +95,12 @@ export default function Nav() {
 
   const changepassword = () => {
     History.push("./ChangePass")
-    // window.location.reload()
   }
 
   const resetpassword = () => {
     History.push("./ResetPass")
   }
   let menu;
-
-
 
 
   return (
@@ -115,15 +110,12 @@ export default function Nav() {
 
           <p className="message"> Enter the time interval in which you want the information to be updated</p>
 
-          {/* <div className="input_div"> */}
+          <input className="input-interval" type="number" onChange={handleIntervalChange} placeholder="Duration" />
 
-            <input className="input-interval" type="number" onChange={handleIntervalChange} placeholder="Duration" />
+          <Select className="options" options={options} placeholder="Time unit" onChange={handleUnitChange} />
 
-            <Select className="options" options={options} placeholder="Time unit" onChange={handleUnitChange} />
-
-          {/* </div> */}
-            <button className="save_button" type="submit">
-              Save Changes
+          <button className="save_button" type="submit">
+            Save Changes
             </button>
         </form>
       </Settings>

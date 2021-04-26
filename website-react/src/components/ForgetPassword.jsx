@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import "./Login.css"
-import { AiOutlineMail } from 'react-icons/ai'
+import { AiOutlineMail } from 'react-icons/ai';
+import "./Login.css";
 
 export default function ForgetPassword() {
   const [credentialUsername, setUsername] = useState("");
@@ -13,7 +13,7 @@ export default function ForgetPassword() {
       credentialUsername,
     }));
     const response = await fetch(
-      `https://pchealth.azurewebsites.net/Admin/ForgetPasswordUsername?${params}`,
+      `https://pc-health.azurewebsites.net/Admin/ForgetPasswordUsername?${params}`,
       {
         method: "POST",
       }
@@ -22,21 +22,21 @@ export default function ForgetPassword() {
     setResult(ans)
     setUsername("")
   };
-  if (result===true) {
+  if (result === true) {
     localStorage.setItem("Email", credentialUsername);
     return <Redirect to="/forgotpassword/Code" />
   }
   return (
     <div className="div_design">
       <form onSubmit={submit} className="forgot_pass_form_container">
-        <h2 className="h1_d">Reset Password</h2>
+        <h2 className="h1_drp">Reset Password</h2>
 
 
-        {result===false ? <p className="failed_email_in_forgot_password">
-            The email you entered does not exist
+        {result === false ? <p className="failed_email_in_forgot_password">
+          The email you entered does not exist
           </p> : <p className="forgot_pass_message">
           Verify your identity using your Email Address.
-        </p> }
+        </p>}
         <div className="input-icon">
           <AiOutlineMail className="icon" />
           <input
@@ -51,8 +51,8 @@ export default function ForgetPassword() {
 
         <button className="login_button" type="submit">Submit</button>
         <div className="navigations_login">
-            <Link to="/" className="links">
-              cancel
+          <Link to="/Login" className="links">
+            cancel
             </Link>
         </div>
       </form>

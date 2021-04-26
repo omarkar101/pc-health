@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import "./RegisterStyle.css"
 import { Link } from "react-router-dom";
 import { AiOutlineMail } from 'react-icons/ai'
 import { ImKey } from 'react-icons/im'
 import { FaUserAlt } from 'react-icons/fa'
+import "./RegisterStyle.css"
 
 export default function Register() {
   const [AdminFirstName, setFName] = useState("")
@@ -20,20 +20,18 @@ export default function Register() {
     setPassword(pass)
     var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])([!@#\$%\^&\*]*)(?=.{8,})^/
     var test = reg.test(pass)
-    if (test === true) {setValidPass(true);}
+    if (test === true) { setValidPass(true); }
     else { setValidPass(false); }
   }
-
 
 
   const submit = async (e) => {
     e.preventDefault();
     const response = await fetch(
-      "https://pchealth.azurewebsites.net/Admin/Create",
+      "https://pc-health.azurewebsites.net/Admin/Create",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // credentials:'true',
         body: JSON.stringify({
           AdminFirstName,
           AdminLastName,
@@ -51,29 +49,31 @@ export default function Register() {
 
   }
 
-  if (account==="Success") { return <Redirect to="/" />; }
+  if (account === "Success") { return <Redirect to="/" />; }
   return (
     <div className="rdiv_design">
       <form className="rform_container" onSubmit={(e) => submit(e)}>
+        <img className="logologin" src="/images/logo3.png" alt="" />
+
         <h2 className="rh1_d">Sign up</h2>
-        {/* {console.log(CredentialsPassword)} */}
-        {CredentialsPassword.length > 0 && CredentialsPassword !== null ? 
-        (
-          validPass === false ?
-          <p className="weak_password">
-            Passwords should be at least 8 character long, have at least one
-            uppercase and one lowercase character, and must include numbers
+        {CredentialsPassword.length > 0 && CredentialsPassword !== null ?
+          (
+            validPass === false ?
+              <p className="weak_password">
+                Passwords should be at least 8 character long, have at least one
+                uppercase and one lowercase character, and must include numbers
           </p>
-          :
-          <p className="rfailed_register"> &nbsp; </p>
-        ) : 
-        (
-          account === "Success" ? (
-            <p className="rfailed_register"> {account} </p>
-          ) : (
-            <p className="rfailed_register"> &nbsp; </p>
+              :
+              <p className="rfailed_register"> &nbsp; </p>
+          ) :
+          (
+            account === "Success" || account === "" ? (
+
+              <p className="rfailed_register"> &nbsp; </p>
+            ) : (
+              <p className="rfailed_register"> {account} </p>
+            )
           )
-        )
         }
 
         <div className="rdiv1">
@@ -114,8 +114,6 @@ export default function Register() {
             />
           </div>
 
-          {/* <input type="email" platextceholder="Email Address" required onChange={e=>setEmail(e.target.value)  }/> */}
-
           <div className="rinput-icon">
             <ImKey className="ricon" />
             <input
@@ -135,15 +133,12 @@ export default function Register() {
 
         <hr />
 
-        {/* <div className="navigations_login"></div> */}
-
         <div className="rplinks">
           Already have an account?
-          <Link to="/" className="rlinks">
+          <Link to="/Login" className="rlinks">
             Login
           </Link>
         </div>
-        {/* </div> */}
       </form>
     </div>
   );

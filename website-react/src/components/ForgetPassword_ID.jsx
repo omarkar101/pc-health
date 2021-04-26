@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router';
+import { RiLockPasswordFill } from 'react-icons/ri';
 import './Login.css';
-import { RiLockPasswordFill } from 'react-icons/ri'
 
 
 function ForgetPassword_ID() {
@@ -9,9 +9,8 @@ function ForgetPassword_ID() {
     const [result, setResult] = useState();
     const submit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`https://pchealth.azurewebsites.net/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
+        const response = await fetch(`https://pc-health.azurewebsites.net/Admin/ForgetPasswordUniqueIdCheck?credentialUsername=${localStorage.getItem("Email")}&code=${code}`, { method: "POST" })
         const ans = await response.json()
-        console.log(response.json())
         setResult(ans)
         setCode("")
     }
@@ -22,7 +21,7 @@ function ForgetPassword_ID() {
     return (
         <div className="div_design">
             <form className="forgot_pass_form_container" onSubmit={submit}>
-                <h2 className="h1_d">Reset Password</h2>
+                <h2 className="h1_drp">Reset Password</h2>
 
                 <p className="forgot_pass_message">You will receive a verification code by email shortly.
                     <br />Please enter your code below.
