@@ -9,6 +9,7 @@ function Home() {
     <div className="body_s">
       <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div className="container-fluid">
+          <a className="navbar-brand">PSee</a>
           <button
             className="navbar-toggler"
             type="button"
@@ -35,8 +36,7 @@ function Home() {
                     Login
                   </Link>
                 </li>
-                <li className="nav-item">
-                </li>
+                <li className="nav-item"></li>
               </ul>
             </form>
           </div>
@@ -52,10 +52,11 @@ function Home() {
             <div className="container">
               <div className="carousel-caption text-start">
                 <h1 style={{ color: "black" }}>
-                  Welcome to P-See
+                  Welcome to P-See, all you need for your PC
                 </h1>
                 <p style={{ color: "black" }}>
-                  The Ultimate website to easily monitor your owned PCs' healths
+                  The Ultimate website to easily monitor your owned PCs'
+                  healths.
                 </p>
                 <p>
                   <Link className="home_button" to="/register">
@@ -82,10 +83,7 @@ function Home() {
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
             >
-              <image
-                height="240"
-                href="/images/img1.png"
-              />
+              <image height="240" href="/images/img1.png" />
             </svg>
 
             <h2 style={{ color: "black" }}>
@@ -104,10 +102,7 @@ function Home() {
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
             >
-              <image
-                height="240"
-                href="/images/img22.png"
-              />
+              <image height="240" href="/images/img22.png" />
             </svg>
             <h2 style={{ color: "black" }}>
               <br />
@@ -125,10 +120,7 @@ function Home() {
               preserveAspectRatio="xMidYMid slice"
               focusable="false"
             >
-              <image
-                height="240"
-                href="/images/charts2.jpg"
-              />
+              <image height="240" href="/images/charts2.jpg" />
             </svg>
 
             <h2 style={{ color: "black" }}>
@@ -146,7 +138,8 @@ function Home() {
               Step 1: Installation Process <br />
             </h2>
             <p className="lead">
-              First, sign up on our website using your email. Next, install the application using the setup that can be found
+              First, sign up on our website using your email. Next, install the
+              application using the setup that can be found
               <Link>Here</Link>
             </p>
             <p>
@@ -156,7 +149,8 @@ function Home() {
               file of the application manually.
             </p>
             <p>
-              Next, extract the zip folder, and you will now be ready to proceed to Step 2 - Configuartion.
+              Next, extract the zip folder, and you will now be ready to proceed
+              to Step 2 - Configuartion.
             </p>
           </div>
           <div className="col-md-5">
@@ -187,13 +181,17 @@ function Home() {
             <p className="lead">
               After Installing the application, open the folder, and click on
               PC-Configuration.jar and insert the PC's name and contact info and
-              assign an admin email (email used in Step 1) to it. After that, click Apply. After
-              configuring all the PCs, run "PC App.exe"
+              assign an admin email (email used in Step 1) to it. After that,
+              click Apply. After configuring all the PCs, run "PC App"
             </p>
             <p>
-              <i>Note:</i> to make the app run automatically at startup, please follow the intructions in the following  <Link>
-                link
-            </Link>
+              <i>Note:</i> to make the app run automatically at startup, please
+              follow the intructions in the following links: <br />
+              <b>For Windows: </b>
+              <a href="https://support.microsoft.com/en-us/windows/change-which-apps-run-automatically-at-startup-in-windows-10-9115d841-735e-488d-e749-9ba301d441e6#:~:text=Select%20the%20Start%20button%2C%20then,then%20select%20the%20Startup%20tab" target="_blank">
+                help
+              </a>
+              <br/> <b>For Linux: </b> <a href="https://www.simplified.guide/linux/automatically-run-program-on-startup" target="_blank">help</a>
             </p>
           </div>
           <div className="col-md-5 order-md-1">
@@ -221,7 +219,12 @@ function Home() {
         <div className="row featurette">
           <div className="col-md-7">
             <h2 className="featurette-heading">Step 3:</h2>
-            <p className="lead"> After finishing configuring the PCs, log in to the website, and you will be able to see real-time statistics of all configured PCs.</p>
+            <p className="lead">
+              {" "}
+              After finishing configuring the PCs, log in to the website, and
+              you will be able to see real-time statistics of all configured
+              PCs.
+            </p>
           </div>
           <div className="col-md-5">
             <svg
@@ -250,9 +253,7 @@ function Home() {
         <p className="float-end">
           <a href="#">Back to top</a>
         </p>
-        <p>
-          &copy; 2021 CMPS253, Inc.
-        </p>
+        <p>&copy; 2021 CMPS253, Inc.</p>
       </footer>
     </div>
   );
