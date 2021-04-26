@@ -6,7 +6,6 @@ import { FcLinux } from 'react-icons/fc';
 import { AiOutlineWarning } from 'react-icons/ai'
 import { BsQuestionCircle } from "react-icons/bs";
 import Loader from "react-loader-spinner";
-import ReactTooltip from "react-tooltip";
 import axios from "axios";
 import Chart from "react-google-charts";
 import Nav from './Nav'
@@ -169,9 +168,6 @@ function Table() {
                               size="1.5rem"
                               data-tip data-for="registerTip"
                             />
-                            <ReactTooltip id="registerTip" place="top" effect="solid">
-                              Inactive PC
-                              </ReactTooltip>
                           </td>) :
                         (
                           x.HealthStatus === "Healthy" ?
@@ -182,9 +178,6 @@ function Table() {
                                   size="1.5rem"
                                   data-tip data-for="registerTip2"
                                 />
-                                <ReactTooltip id="registerTip2" place="top" effect="solid">
-                                  Active - Healthy
-                                  </ReactTooltip>
                               </td>) :
                             <td>
                               (
@@ -192,9 +185,6 @@ function Table() {
                                 color="red"
                                 size="1.5rem"
                                 data-tip data-for="registerTip3" />
-                              <ReactTooltip id="registerTip3" place="top" effect="solid">
-                                Active - Unhealthy
-                                  </ReactTooltip>
                             </td>
                         )
                       }
