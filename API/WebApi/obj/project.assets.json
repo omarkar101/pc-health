@@ -2490,6 +2490,9 @@
       "ApiModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "CommonModels": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/ApiModels.dll": {}
         },
@@ -8290,8 +8293,8 @@
     },
     "CommonModels/1.0.0": {
       "type": "project",
-      "path": "../../Models/CommonModels.csproj",
-      "msbuildProject": "../../Models/CommonModels.csproj"
+      "path": "../../CommonModels/CommonModels.csproj",
+      "msbuildProject": "../../CommonModels/CommonModels.csproj"
     },
     "Database/1.0.0": {
       "type": "project",
@@ -8358,11 +8361,11 @@
             "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj": {
               "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\ApiModels\\ApiModels.csproj"
             },
+            "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\CommonModels\\CommonModels.csproj": {
+              "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\CommonModels\\CommonModels.csproj"
+            },
             "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj": {
               "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Database\\Database.csproj"
-            },
-            "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj": {
-              "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Models\\CommonModels.csproj"
             },
             "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj": {
               "projectPath": "C:\\Users\\omark\\source\\repos\\omarkar101\\pc-health\\Services\\Services.csproj"

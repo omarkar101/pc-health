@@ -8,7 +8,7 @@ namespace CommonModels
 {
     public class PcHealthData
     {
-        public PcConfiguration PcConfiguration { get; set; } 
+        public PcConfiguration PcConfiguration { get; set; }
         public int CpuHighCounter { get; set; }
         public int MemoryHighCounter { get; set; }
     }
