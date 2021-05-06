@@ -135,11 +135,13 @@ namespace PC_App.Services
             if (_cpuHighBitArray[Counter])
             {
                 CpuHighCounter--;
+                _cpuHighBitArray[Counter] = false;
             }
 
             if (_memoryHighBitArray[Counter])
             {
                 MemoryHighCounter--;
+                _memoryHighBitArray[Counter] = false;
             }
 
             if (diagnosticData.CpuUsage > 80)
